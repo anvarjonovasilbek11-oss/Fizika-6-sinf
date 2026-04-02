@@ -1,161 +1,672 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fizika Dunyosi — Koinot Sirlari</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fizika Dunyosi — 6-sinf</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --bg2: #0f1525;
+      --card: #131a2e;
+      --accent1: #4fd1c5;
+      --accent2: #f6ad55;
+      --accent3: #fc8181;
+      --accent4: #68d391;
+      --accent5: #b794f4;
+      --text: #e2e8f0;
+      --muted: #718096;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Nunito',sans-serif;
+      overflow-x:hidden;
+    }
+    canvas#stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+    /* NAV */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 40px;
+      background:rgba(10,14,26,0.92);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(79,209,197,0.15);
+    }
+    .nav-logo{
+      font-family:'Baloo 2',cursive;font-weight:800;font-size:1.4rem;
+      background:linear-gradient(135deg,var(--accent1),var(--accent5));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .nav-links{display:flex;gap:28px;}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:600;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--accent1);}
+
+    /* HERO */
+    .hero{
+      position:relative;z-index:1;
+      min-height:100vh;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;text-align:center;
+      padding:120px 20px 60px;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(79,209,197,0.12);border:1px solid rgba(79,209,197,0.4);
+      color:var(--accent1);padding:7px 18px;border-radius:99px;
+      font-size:0.8rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+      margin-bottom:24px;animation:fadeDown 0.8s ease both;
+    }
+    .hero h1{
+      font-family:'Baloo 2',cursive;font-size:clamp(2.5rem,7vw,5.5rem);
+      font-weight:800;line-height:1.1;margin-bottom:22px;
+      animation:fadeDown 0.9s 0.1s ease both;
+    }
+    .hero h1 span{
+      background:linear-gradient(120deg,var(--accent1),var(--accent5),var(--accent2));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .hero p{
+      font-size:1.15rem;color:var(--muted);max-width:580px;line-height:1.8;
+      margin-bottom:36px;animation:fadeDown 1s 0.2s ease both;
+    }
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fadeDown 1s 0.3s ease both;}
+
+    /* BUTTONS */
+    .btn-primary{
+      padding:14px 34px;background:var(--accent1);color:#0a0e1a;
+      font-weight:800;border:none;border-radius:14px;cursor:pointer;
+      font-size:1rem;font-family:'Nunito',sans-serif;text-decoration:none;
+      display:inline-block;
+      transition:transform 0.2s,box-shadow 0.2s;
+      box-shadow:0 0 28px rgba(79,209,197,0.4);
+    }
+    .btn-primary:hover{transform:translateY(-4px);box-shadow:0 0 40px rgba(79,209,197,0.6);}
+    .btn-secondary{
+      padding:14px 34px;background:transparent;color:var(--accent1);
+      border:2px solid var(--accent1);border-radius:14px;cursor:pointer;
+      font-size:1rem;font-weight:700;font-family:'Nunito',sans-serif;text-decoration:none;
+      display:inline-block;
+      transition:background 0.2s,transform 0.2s;
+    }
+    .btn-secondary:hover{background:rgba(79,209,197,0.12);transform:translateY(-4px);}
+
+    /* floating atoms */
+    .atom{
+      position:absolute;pointer-events:none;font-size:3.5rem;opacity:0.13;
+      animation:float var(--fd,6s) var(--fdelay,0s) ease-in-out infinite alternate;
+    }
+    @keyframes float{from{transform:translateY(0) rotate(0deg);}to{transform:translateY(-32px) rotate(20deg);}}
+
+    /* STATS */
+    .stats{
+      position:relative;z-index:1;
+      display:flex;justify-content:center;flex-wrap:wrap;gap:24px;
+      padding:0 20px 90px;
+    }
+    .stat-card{
+      background:var(--card);border:1px solid rgba(255,255,255,0.07);
+      border-radius:18px;padding:22px 36px;text-align:center;
+      transition:transform 0.2s,box-shadow 0.2s;
+    }
+    .stat-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+    .stat-num{font-family:'Baloo 2',cursive;font-size:2.2rem;font-weight:800;}
+    .stat-label{color:var(--muted);font-size:0.85rem;margin-top:4px;font-weight:600;}
+
+    /* SECTION */
+    .section{position:relative;z-index:1;padding:90px 20px;}
+    .sec-title{text-align:center;margin-bottom:52px;}
+    .sec-title h2{font-family:'Baloo 2',cursive;font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;margin-bottom:12px;}
+    .sec-title p{color:var(--muted);font-size:1rem;max-width:540px;margin:0 auto;}
+    .pill{
+      display:inline-block;background:rgba(79,209,197,0.12);color:var(--accent1);
+      border:1px solid rgba(79,209,197,0.3);padding:4px 16px;border-radius:99px;
+      font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    /* TOPICS GRID */
+    .topics-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:22px;max-width:1120px;margin:0 auto;
+    }
+    .topic-card{
+      background:var(--card);border:1px solid rgba(255,255,255,0.07);
+      border-radius:22px;padding:30px;cursor:pointer;
+      transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;
+      position:relative;overflow:hidden;
+    }
+    .topic-card::before{
+      content:'';position:absolute;inset:0;opacity:0;
+      background:radial-gradient(circle at top left,var(--c,rgba(79,209,197,0.15)),transparent 70%);
+      transition:opacity 0.3s;
+    }
+    .topic-card:hover::before{opacity:1;}
+    .topic-card:hover{transform:translateY(-8px);border-color:rgba(79,209,197,0.35);box-shadow:0 16px 48px rgba(0,0,0,0.45);}
+    .topic-icon{font-size:2.8rem;margin-bottom:16px;}
+    .topic-tag{
+      display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:1px;
+      text-transform:uppercase;padding:3px 12px;border-radius:99px;margin-bottom:12px;
+    }
+    .topic-card h3{font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:700;margin-bottom:10px;}
+    .topic-card p{color:var(--muted);font-size:0.88rem;line-height:1.65;}
+    .topic-meta{display:flex;gap:14px;margin-top:18px;font-size:0.78rem;color:var(--muted);font-weight:600;}
+
+    /* FORMULA CARDS */
+    .formulas-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:18px;max-width:1050px;margin:0 auto;
+    }
+    .formula-card{
+      background:var(--card);border:1px solid rgba(255,255,255,0.07);
+      border-radius:18px;padding:28px;text-align:center;
+      transition:transform 0.25s,box-shadow 0.25s;
+    }
+    .formula-card:hover{transform:translateY(-6px);box-shadow:0 10px 36px rgba(0,0,0,0.4);}
+    .formula-expr{
+      font-family:'Baloo 2',cursive;font-size:2.2rem;font-weight:800;
+      margin-bottom:12px;padding:14px;border-radius:12px;
+      background:rgba(255,255,255,0.04);
+    }
+    .formula-name{font-weight:700;margin-bottom:8px;font-size:1rem;}
+    .formula-desc{color:var(--muted);font-size:0.83rem;line-height:1.55;}
+
+    /* QUIZ */
+    .quiz-wrap{max-width:700px;margin:0 auto;}
+    .quiz-card{
+      background:var(--card);border:1px solid rgba(255,255,255,0.08);
+      border-radius:22px;padding:36px;
+    }
+    .quiz-q{font-family:'Baloo 2',cursive;font-size:1.25rem;font-weight:700;margin-bottom:24px;line-height:1.45;}
+    .quiz-options{display:flex;flex-direction:column;gap:12px;}
+    .quiz-opt{
+      padding:14px 20px;background:rgba(255,255,255,0.03);
+      border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;
+      cursor:pointer;font-size:0.95rem;font-weight:600;
+      transition:all 0.2s;text-align:left;color:var(--text);
+      font-family:'Nunito',sans-serif;
+    }
+    .quiz-opt:hover{background:rgba(79,209,197,0.1);border-color:var(--accent1);}
+    .quiz-opt.correct{background:rgba(104,211,145,0.18);border-color:var(--accent4);color:var(--accent4);}
+    .quiz-opt.wrong{background:rgba(252,129,129,0.18);border-color:var(--accent3);color:var(--accent3);}
+    .quiz-feedback{margin-top:18px;padding:14px 18px;border-radius:12px;font-weight:700;font-size:0.95rem;display:none;}
+    .quiz-feedback.show{display:block;}
+    .quiz-feedback.ok{background:rgba(104,211,145,0.12);color:var(--accent4);}
+    .quiz-feedback.no{background:rgba(252,129,129,0.12);color:var(--accent3);}
+    .quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;}
+    .quiz-progress-txt{color:var(--muted);font-size:0.86rem;font-weight:600;}
+    .quiz-score{text-align:center;padding:36px;font-family:'Baloo 2',cursive;}
+    .quiz-score .big{font-size:3.5rem;font-weight:800;color:var(--accent1);}
+    .pbar-wrap{height:7px;background:rgba(255,255,255,0.07);border-radius:99px;margin-bottom:30px;}
+    .pbar-inner{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent1),var(--accent5));transition:width 0.5s;}
+
+    /* EXPERIMENTS */
+    .experiments-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:22px;max-width:1050px;margin:0 auto;
+    }
+    .exp-card{
+      background:var(--card);border:1px solid rgba(255,255,255,0.07);
+      border-radius:20px;padding:28px;transition:transform 0.25s;
+    }
+    .exp-card:hover{transform:translateY(-6px);}
+    .exp-icon{font-size:2.4rem;margin-bottom:16px;}
+    .exp-card h3{font-family:'Baloo 2',cursive;font-size:1.15rem;margin-bottom:10px;}
+    .exp-card p{color:var(--muted);font-size:0.87rem;line-height:1.65;margin-bottom:16px;}
+    .exp-steps{list-style:none;counter-reset:step;}
+    .exp-steps li{counter-increment:step;display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;font-size:0.85rem;color:var(--muted);}
+    .exp-steps li::before{
+      content:counter(step);min-width:24px;height:24px;display:flex;align-items:center;justify-content:center;
+      background:rgba(79,209,197,0.18);color:var(--accent1);border-radius:50%;
+      font-weight:700;font-size:0.75rem;flex-shrink:0;margin-top:1px;
+    }
+
+    /* FOOTER */
+    footer{
+      position:relative;z-index:1;text-align:center;padding:44px 20px;
+      border-top:1px solid rgba(255,255,255,0.07);color:var(--muted);font-size:0.87rem;
+    }
+    footer span{color:var(--accent1);}
+
+    /* ANIMATIONS */
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-22px);}to{opacity:1;transform:translateY(0);}}
+    .fade-up{opacity:0;transform:translateY(32px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+
+    /* MODAL */
+    .modal-overlay{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);
+      z-index:200;align-items:center;justify-content:center;padding:20px;
+      backdrop-filter:blur(6px);
+    }
+    .modal-overlay.open{display:flex;}
+    .modal{
+      background:var(--bg2);border:1px solid rgba(79,209,197,0.25);
+      border-radius:26px;max-width:620px;width:100%;padding:40px;
+      position:relative;max-height:82vh;overflow-y:auto;
+      animation:modalIn 0.3s ease;
+    }
+    @keyframes modalIn{from{opacity:0;transform:scale(0.9);}to{opacity:1;transform:scale(1);}}
+    .modal-close{
+      position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.08);
+      border:none;color:var(--text);width:34px;height:34px;border-radius:50%;
+      cursor:pointer;font-size:1.1rem;transition:background 0.2s;
+    }
+    .modal-close:hover{background:rgba(252,129,129,0.25);color:var(--accent3);}
+    .modal h2{font-family:'Baloo 2',cursive;font-size:1.7rem;margin-bottom:14px;}
+    .modal p{color:var(--muted);line-height:1.75;margin-bottom:14px;font-size:0.94rem;}
+    .modal ul{color:var(--muted);padding-left:20px;font-size:0.91rem;line-height:1.85;}
+    .modal strong{color:var(--text);}
+
+    /* RESPONSIVE */
+    @media(max-width:600px){
+      nav{padding:12px 16px;}
+      .nav-links{gap:14px;}
+      .hero h1{font-size:2.2rem;}
+      .quiz-card{padding:22px;}
+      .modal{padding:24px;}
+    }
+  </style>
 </head>
 <body>
 
-    <canvas id="stars-canvas"></canvas>
+<canvas id="stars"></canvas>
 
-    <nav>
-        <div class="logo">⚛ FizikaLab</div>
-        <div class="nav-links">
-            <a href="#topics">Mavzular</a>
-            <a href="#formulas">Formulalar</a>
-            <a href="#quiz">Test</a>
-            <a href="#experiments">Tajribalar</a>
-        </div>
-    </nav>
+<nav>
+  <div class="nav-logo">⚛ FizikaLab</div>
+  <div class="nav-links">
+    <a href="#mavzular">Mavzular</a>
+    <a href="#formulalar">Formulalar</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#tajribalar">Tajribalar</a>
+  </div>
+</nav>
 
-    <section class="hero">
-        <div class="hero-badge">🚀 6-sinf Fizika</div>
-        <h1>Koinotni <span>Kashf Et</span></h1>
-        <p>Atrofimizdagi olam qanday ishlaydi? Fizika sirlarini eng zamonaviy va interaktiv usulda o'rganing.</p>
-        <div class="hero-actions">
-            <a href="#topics" class="btn btn-primary">Darsni Boshlash</a>
-            <a href="#quiz" class="btn btn-secondary">O'zingni Sinab Ko'r</a>
-        </div>
-    </section>
+<!-- HERO -->
+<section class="hero">
+  <div class="atom" style="top:15%;left:8%;--fd:7s;--fdelay:0s">⚛</div>
+  <div class="atom" style="top:60%;left:5%;--fd:5s;--fdelay:1s">🔬</div>
+  <div class="atom" style="top:20%;right:8%;--fd:8s;--fdelay:0.5s">⚡</div>
+  <div class="atom" style="top:70%;right:6%;--fd:6s;--fdelay:2s">🌡</div>
+  <div class="atom" style="top:40%;left:3%;--fd:9s;--fdelay:1.5s">🧲</div>
 
-    <div class="stats">
-        <div class="stat-item">
-            <span class="stat-number" style="color: var(--accent-teal);">12</span>
-            <span class="stat-label">Mavzular</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-number" style="color: var(--accent-orange);">8</span>
-            <span class="stat-label">Tajribalar</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-number" style="color: var(--accent-purple);">50+</span>
-            <span class="stat-label">Savollar</span>
-        </div>
+  <div class="hero-badge">🚀 6-sinf Fizika</div>
+  <h1>Fizika Dunyosi<br><span>Qiziqarli va Oson!</span></h1>
+  <p>Koinotning sirlarini birgalikda kashf etamiz. Animatsiya, tajriba va o'yinlar orqali fizikani sevib o'rganing.</p>
+  <div class="hero-btns">
+    <a href="#mavzular" class="btn-primary">🎯 Darslarni Boshlash</a>
+    <a href="#quiz" class="btn-secondary">🧠 Quiz Ishlash</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-card fade-up">
+    <div class="stat-num" style="color:var(--accent1)">12</div>
+    <div class="stat-label">📚 Mavzu</div>
+  </div>
+  <div class="stat-card fade-up">
+    <div class="stat-num" style="color:var(--accent2)">8</div>
+    <div class="stat-label">🔬 Tajriba</div>
+  </div>
+  <div class="stat-card fade-up">
+    <div class="stat-num" style="color:var(--accent5)">30+</div>
+    <div class="stat-label">🧠 Quiz savol</div>
+  </div>
+  <div class="stat-card fade-up">
+    <div class="stat-num" style="color:var(--accent4)">6</div>
+    <div class="stat-label">⚡ Formula</div>
+  </div>
+</div>
+
+<!-- MAVZULAR -->
+<section class="section" id="mavzular">
+  <div class="sec-title fade-up">
+    <div class="pill">Darslar</div>
+    <h2>Fizika Mavzulari</h2>
+    <p>Har bir mavzuni bosib batafsil o'qing — sodda misollar bilan tushuntirilgan</p>
+  </div>
+  <div class="topics-grid">
+    <div class="topic-card fade-up" style="--c:rgba(79,209,197,0.15)" onclick="openModal('jism')">
+      <div class="topic-icon">🪨</div>
+      <div class="topic-tag" style="background:rgba(79,209,197,0.1);color:var(--accent1)">1-mavzu</div>
+      <h3>Jism, Modda, Materiya</h3>
+      <p>Atrofimizni o'rab turgan narsalar nima? Jism, modda va materianing farqi qanday?</p>
+      <div class="topic-meta"><span>⏱ 20 daqiqa</span><span>⭐ Oson</span></div>
     </div>
-
-    <section id="topics">
-        <div class="section-header reveal">
-            <h2>Mavzular</h2>
-            <p>Fizikaning asosiy tushunchalari bilan tanishing. Har bir karta ostida batafsil ma'lumot bor.</p>
-        </div>
-        <div class="grid">
-            <div class="card reveal" onclick="openTopic('jism')">
-                <div class="card-tag" style="color: var(--accent-teal);">1-Mavzu</div>
-                <img src="assets/icon-atom.png" alt="Atom" class="card-icon">
-                <h3>Jism va Materiya</h3>
-                <p>Olamni nima tashkil etadi? Jismlarning xususiyatlarini bilib oling.</p>
-                <div class="btn btn-secondary" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;">O'qish</div>
-            </div>
-            <div class="card reveal" onclick="openTopic('harakat')">
-                <div class="card-tag" style="color: var(--accent-orange);">2-Mavzu</div>
-                <img src="assets/icon-pressure.png" alt="Motion" class="card-icon">
-                <h3>Mexanik Harakat</h3>
-                <p>Nega hamma narsa harakatlanadi? Tezlik va yo'lning sirlari.</p>
-                <div class="btn btn-secondary" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;">O'qish</div>
-            </div>
-            <div class="card reveal" onclick="openTopic('kuch')">
-                <div class="card-tag" style="color: var(--accent-purple);">3-Mavzu</div>
-                <img src="assets/icon-lightning.png" alt="Force" class="card-icon">
-                <h3>Kuch va Gravitatsiya</h3>
-                <p>Yer bizni qanday ushlab turadi? Kuchlarning ta'sirini o'rganing.</p>
-                <div class="btn btn-secondary" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;">O'qish</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="formulas" style="background: rgba(255,255,255,0.02);">
-        <div class="section-header reveal">
-            <h2>Asosiy Formulalar</h2>
-            <p>Fizik hisob-kitoblar uchun eng kerakli qurollar.</p>
-        </div>
-        <div class="grid">
-            <div class="card formula-card reveal">
-                <div class="formula-display">v = s / t</div>
-                <h3>Tezlik</h3>
-                <p>v — tezlik, s — yo'l, t — vaqt</p>
-            </div>
-            <div class="card formula-card reveal">
-                <div class="formula-display">ρ = m / V</div>
-                <h3>Zichlik</h3>
-                <p>ρ — zichlik, m — massa, V — hajm</p>
-            </div>
-            <div class="card formula-card reveal">
-                <div class="formula-display">P = F / S</div>
-                <h3>Bosim</h3>
-                <p>P — bosim, F — kuch, S — yuza</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="quiz">
-        <div class="section-header reveal">
-            <h2>Bilimingni Sinab Ko'r</h2>
-            <p>Interaktiv test orqali o'zingni tekshirib ko'r.</p>
-        </div>
-        <div class="quiz-container reveal">
-            <div class="quiz-progress">
-                <div id="progress-bar" class="progress-bar"></div>
-            </div>
-            <div id="quiz-content">
-                <!-- JS will populate -->
-            </div>
-        </div>
-    </section>
-
-    <section id="experiments">
-        <div class="section-header reveal">
-            <h2>Uy Tajribalari</h2>
-            <p>Laboratoriyani uyingizda tashkil eting!</p>
-        </div>
-        <div class="grid">
-            <div class="card reveal">
-                <img src="assets/icon-pressure.png" alt="Exp" class="card-icon">
-                <h3>Tuxum Suvda Suzadimi?</h3>
-                <ul class="exp-list">
-                    <li>Zichlikni o'rganish</li>
-                    <li>Suyuq va qattiq jism</li>
-                    <li>Arximed kuchi</li>
-                </ul>
-            </div>
-            <div class="card reveal">
-                <img src="assets/icon-heat.png" alt="Exp" class="card-icon">
-                <h3>Limon Batareyasi</h3>
-                <ul class="exp-list">
-                    <li>Elektr energiyasi</li>
-                    <li>Kimyoviy reaksiya</li>
-                    <li>Tok hosil qilish</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="logo">⚛ FizikaLab</div>
-        <p>Kelajak fiziklari uchun interaktiv qo'llanma.</p>
-        <div class="copyright">© 2025 Barcha huquqlar himoyalangan.</div>
-    </footer>
-
-    <div class="modal-overlay" id="modal-overlay">
-        <div class="modal-content">
-            <button class="close-modal" id="close-modal">×</button>
-            <div id="modal-body">
-                <!-- JS will populate -->
-            </div>
-        </div>
+    <div class="topic-card fade-up" style="--c:rgba(246,173,85,0.15)" onclick="openModal('harakat')">
+      <div class="topic-icon">🏃</div>
+      <div class="topic-tag" style="background:rgba(246,173,85,0.1);color:var(--accent2)">2-mavzu</div>
+      <h3>Mexanik Harakat</h3>
+      <p>Jismlar qanday harakatlanadi? Tezlik, yo'l va vaqt o'rtasidagi bog'liqlik.</p>
+      <div class="topic-meta"><span>⏱ 25 daqiqa</span><span>⭐ O'rtacha</span></div>
     </div>
+    <div class="topic-card fade-up" style="--c:rgba(252,129,129,0.15)" onclick="openModal('kuch')">
+      <div class="topic-icon">💪</div>
+      <div class="topic-tag" style="background:rgba(252,129,129,0.1);color:var(--accent3)">3-mavzu</div>
+      <h3>Kuch va Tortishish</h3>
+      <p>Yerning tortish kuchi nima? Og'irlik va massa o'rtasidagi farqni bilib oling.</p>
+      <div class="topic-meta"><span>⏱ 30 daqiqa</span><span>⭐ O'rtacha</span></div>
+    </div>
+    <div class="topic-card fade-up" style="--c:rgba(104,211,145,0.15)" onclick="openModal('bosim')">
+      <div class="topic-icon">🌊</div>
+      <div class="topic-tag" style="background:rgba(104,211,145,0.1);color:var(--accent4)">4-mavzu</div>
+      <h3>Bosim va Suyuqlik</h3>
+      <p>Bosim qanday hosil bo'ladi? Suv ostidagi bosimni hisoblashni o'rganing.</p>
+      <div class="topic-meta"><span>⏱ 25 daqiqa</span><span>⭐ O'rtacha</span></div>
+    </div>
+    <div class="topic-card fade-up" style="--c:rgba(183,148,244,0.15)" onclick="openModal('energiya')">
+      <div class="topic-icon">⚡</div>
+      <div class="topic-tag" style="background:rgba(183,148,244,0.1);color:var(--accent5)">5-mavzu</div>
+      <h3>Energiya va Ish</h3>
+      <p>Energiya qayerdan keladi va qayerga ketadi? Kinetik va potensial energiya.</p>
+      <div class="topic-meta"><span>⏱ 35 daqiqa</span><span>⭐⭐ Murakkab</span></div>
+    </div>
+    <div class="topic-card fade-up" style="--c:rgba(79,209,197,0.15)" onclick="openModal('issiqlik')">
+      <div class="topic-icon">🔥</div>
+      <div class="topic-tag" style="background:rgba(79,209,197,0.1);color:var(--accent1)">6-mavzu</div>
+      <h3>Issiqlik va Temperatura</h3>
+      <p>Issiqlik qanday o'tadi? Termometr qanday ishlaydi? Harorat o'lchash usullari.</p>
+      <div class="topic-meta"><span>⏱ 20 daqiqa</span><span>⭐ Oson</span></div>
+    </div>
+  </div>
+</section>
 
-    <script src="script.js"></script>
+<!-- FORMULALAR -->
+<section class="section" id="formulalar" style="background:var(--bg2);">
+  <div class="sec-title fade-up">
+    <div class="pill">Formulalar</div>
+    <h2>Asosiy Formulalar</h2>
+    <p>6-sinfda o'rganiladigan eng muhim fizika formulalari</p>
+  </div>
+  <div class="formulas-grid">
+    <div class="formula-card fade-up">
+      <div class="formula-expr" style="color:var(--accent1)">v = s/t</div>
+      <div class="formula-name">Tezlik formulasi</div>
+      <div class="formula-desc">v — tezlik (m/s), s — yo'l (m), t — vaqt (s)</div>
+    </div>
+    <div class="formula-card fade-up">
+      <div class="formula-expr" style="color:var(--accent2)">F = ma</div>
+      <div class="formula-name">Ikkinchi Newton qonuni</div>
+      <div class="formula-desc">F — kuch (N), m — massa (kg), a — tezlanish (m/s²)</div>
+    </div>
+    <div class="formula-card fade-up">
+      <div class="formula-expr" style="color:var(--accent3)">P = F/S</div>
+      <div class="formula-name">Bosim formulasi</div>
+      <div class="formula-desc">P — bosim (Pa), F — kuch (N), S — yuza (m²)</div>
+    </div>
+    <div class="formula-card fade-up">
+      <div class="formula-expr" style="color:var(--accent4)">A = F·s</div>
+      <div class="formula-name">Ish formulasi</div>
+      <div class="formula-desc">A — ish (J), F — kuch (N), s — ko'chish (m)</div>
+    </div>
+    <div class="formula-card fade-up">
+      <div class="formula-expr" style="color:var(--accent5)">ρ = m/V</div>
+      <div class="formula-name">Zichlik formulasi</div>
+      <div class="formula-desc">ρ — zichlik (kg/m³), m — massa (kg), V — hajm (m³)</div>
+    </div>
+    <div class="formula-card fade-up">
+      <div class="formula-expr" style="color:var(--accent2)">W = mgh</div>
+      <div class="formula-name">Potensial energiya</div>
+      <div class="formula-desc">W — energiya (J), m — massa (kg), g = 9.8 m/s², h — balandlik (m)</div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="section" id="quiz">
+  <div class="sec-title fade-up">
+    <div class="pill">Test</div>
+    <h2>Bilimingizni Sinab Ko'ring! 🧠</h2>
+    <p>To'g'ri javobni tanlang va nechta bilishingizni bilib oling</p>
+  </div>
+  <div class="quiz-wrap">
+    <div class="pbar-wrap"><div class="pbar-inner" id="quizBar" style="width:0%"></div></div>
+    <div class="quiz-card fade-up" id="quizCard"></div>
+  </div>
+</section>
+
+<!-- TAJRIBALAR -->
+<section class="section" id="tajribalar" style="background:var(--bg2);">
+  <div class="sec-title fade-up">
+    <div class="pill">Tajriba</div>
+    <h2>Uy Tajribalari 🔬</h2>
+    <p>Uyda oddiy narsalar bilan bajara oladigan qiziqarli fizika tajribalari</p>
+  </div>
+  <div class="experiments-grid">
+    <div class="exp-card fade-up">
+      <div class="exp-icon">🥚</div>
+      <h3>Tuxumni Suvda Suzish</h3>
+      <p>Suvga tuz qo'shib zichlik qanday o'zgarishini ko'ring!</p>
+      <ul class="exp-steps">
+        <li>Stakan suv to'ldiring</li>
+        <li>Tuxumni suvga soling (cho'kadi)</li>
+        <li>3–4 qoshiq tuz solib aralang</li>
+        <li>Tuxum endi suzadi — zichlik o'zgardi!</li>
+      </ul>
+    </div>
+    <div class="exp-card fade-up">
+      <div class="exp-icon">🍋</div>
+      <h3>Limon Batareyasi</h3>
+      <p>Limondan tok hosil qilib, LED chiroq yoqing!</p>
+      <ul class="exp-steps">
+        <li>Limonni yaxshilab uqalang</li>
+        <li>Mis va rux mixlarni sanchib qo'ying</li>
+        <li>Simlar bilan LED ga ulang</li>
+        <li>Chiroq yonadi — kimyoviy energiya elektr energiyasiga aylandi!</li>
+      </ul>
+    </div>
+    <div class="exp-card fade-up">
+      <div class="exp-icon">🌈</div>
+      <h3>Yorug'lik Prisması</h3>
+      <p>Suv shisha orqali ranglarni ko'ring!</p>
+      <ul class="exp-steps">
+        <li>Shisha idishga suv to'ldiring</li>
+        <li>Quyosh nurini to'g'ri tushiring</li>
+        <li>Qog'ozga aks ettirsangiz</li>
+        <li>Kamalak ranglari paydo bo'ladi!</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;margin-bottom:10px;">
+    ⚛ <span>FizikaLab</span>
+  </div>
+  <p>6-sinf o'quvchilari uchun fizikani qiziqarli o'rgatish platformasi</p>
+  <p style="margin-top:8px">Barcha huquqlar himoyalangan © 2025</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ── STARS CANVAS ──
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  initStars();
+}
+function initStars(){
+  stars = [];
+  for(let i = 0; i < 200; i++){
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.6 + 0.3,
+      alpha: Math.random(),
+      dalpha: (Math.random() * 0.008 + 0.002) * (Math.random() > 0.5 ? 1 : -1)
+    });
+  }
+}
+function animateStars(){
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(s => {
+    s.alpha += s.dalpha;
+    if(s.alpha > 1){ s.alpha = 1; s.dalpha *= -1; }
+    if(s.alpha < 0){ s.alpha = 0; s.dalpha *= -1; }
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(animateStars);
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+animateStars();
+
+// ── SCROLL ANIMATIONS ──
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+// ── QUIZ ──
+const questions = [
+  { q:"Tezlik formulasi qaysi?", opts:["v = s/t","v = F/m","v = m·a","v = P/S"], ans:0, exp:"Tezlik = yo'l / vaqt (v = s/t)" },
+  { q:"Yerning tortish tezlanishi necha m/s²?", opts:["5 m/s²","9.8 m/s²","12 m/s²","3 m/s²"], ans:1, exp:"Yerning tortish tezlanishi g = 9.8 m/s²" },
+  { q:"Bosim birligi nima?", opts:["Nyuton","Joule","Paskal","Vatt"], ans:2, exp:"Bosim birligi — Paskal (Pa) = N/m²" },
+  { q:"Massa birligi nima?", opts:["Nyuton","Kilogram","Metr","Joule"], ans:1, exp:"Massa birligi — kilogram (kg)" },
+  { q:"Ish formulasi qaysi?", opts:["A = m·v","A = F·s","A = P·V","A = ρ·g"], ans:1, exp:"Ish = Kuch × Ko'chish (A = F·s)" },
+  { q:"Quyidagilardan qaysi biri energiya birligi?", opts:["Vatt","Amper","Joule","Paskal"], ans:2, exp:"Energiya birligi — Joule (J)" },
+  { q:"Zichlik formulasi qaysi?", opts:["ρ = m·V","ρ = m/V","ρ = V/m","ρ = F/m"], ans:1, exp:"Zichlik = Massa / Hajm (ρ = m/V)" },
+];
+
+let cur = 0, score = 0, answered = false;
+
+function renderQuiz(){
+  answered = false;
+  const q = questions[cur];
+  const total = questions.length;
+  document.getElementById('quizBar').style.width = ((cur / total) * 100) + '%';
+  document.getElementById('quizCard').innerHTML = `
+    <div class="quiz-q">${cur+1}. ${q.q}</div>
+    <div class="quiz-options">
+      ${q.opts.map((o,i) => `<button class="quiz-opt" onclick="answer(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="qfb"></div>
+    <div class="quiz-nav">
+      <span class="quiz-progress-txt">${cur+1} / ${total}</span>
+      <button class="btn-primary" onclick="nextQ()" style="padding:10px 26px;font-size:0.9rem;">Keyingi →</button>
+    </div>
+  `;
+}
+
+function answer(i){
+  if(answered) return;
+  answered = true;
+  const q = questions[cur];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach((o, idx) => {
+    if(idx === q.ans) o.classList.add('correct');
+    else if(idx === i && i !== q.ans) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('qfb');
+  if(i === q.ans){ score++; fb.textContent = "✅ To'g'ri! " + q.exp; fb.className = 'quiz-feedback show ok'; }
+  else { fb.textContent = "❌ Xato! " + q.exp; fb.className = 'quiz-feedback show no'; }
+}
+
+function nextQ(){
+  if(!answered) return;
+  cur++;
+  if(cur >= questions.length){
+    document.getElementById('quizBar').style.width = '100%';
+    const pct = Math.round((score / questions.length) * 100);
+    const emoji = pct >= 80 ? '🏆' : pct >= 50 ? '👍' : '📚';
+    const msg = pct >= 80 ? "Ajoyib! Siz fizikachi bo'lasiz!" : pct >= 50 ? "Yaxshi! Yana o'qing." : "Qo'rqmang, mashq qiling!";
+    document.getElementById('quizCard').innerHTML = `
+      <div class="quiz-score">
+        <div style="font-size:3.5rem;margin-bottom:10px">${emoji}</div>
+        <div class="big">${score}/${questions.length}</div>
+        <div style="font-size:1.15rem;margin:12px 0;font-weight:700">${pct}% to'g'ri</div>
+        <p style="color:var(--muted);margin-bottom:24px">${msg}</p>
+        <button class="btn-primary" onclick="restartQuiz()">🔄 Qayta boshlash</button>
+      </div>`;
+    return;
+  }
+  renderQuiz();
+}
+
+function restartQuiz(){ cur = 0; score = 0; renderQuiz(); }
+renderQuiz();
+
+// ── MODALS ──
+const modalData = {
+  jism:{title:'🪨 Jism, Modda, Materiya',body:`
+    <p>Atrofimizda ko'rgan barcha narsalar — stul, kitob, havo, suv — bularning hammasi <strong>jism</strong>dir.</p>
+    <p><strong>Materiya</strong> — mavjud bo'lgan hamma narsaning umumiy nomi. Uch holatda bo'ladi:</p>
+    <ul>
+      <li>🧊 <strong>Qattiq holat</strong> — buz, tosh, temir</li>
+      <li>💧 <strong>Suyuq holat</strong> — suv, sut, moy</li>
+      <li>💨 <strong>Gaz holat</strong> — havo, bug'</li>
+    </ul>
+    <p>💡 Misol: 1 kg paxta ham, 1 kg temir ham bir xil massaga ega, lekin hajmlari farqli!</p>`},
+  harakat:{title:'🏃 Mexanik Harakat',body:`
+    <p><strong>Mexanik harakat</strong> — jismning vaqt o'tishi bilan o'z o'rnini o'zgartirishi.</p>
+    <ul>
+      <li>🏃 <strong>To'g'ri chiziqli</strong> — poyezd harakati</li>
+      <li>🔄 <strong>Aylanma</strong> — velosiped g'ildiragi</li>
+      <li>🌊 <strong>Tebranma</strong> — mayatnik</li>
+    </ul>
+    <div style="text-align:center;font-size:1.9rem;font-weight:800;color:var(--accent1);padding:14px;background:rgba(79,209,197,0.08);border-radius:12px;margin:14px 0">v = s / t</div>
+    <p>💡 Misol: Mashina 120 km yo'lni 2 soatda bosib o'tsa, tezligi = 120/2 = <strong>60 km/soat</strong></p>`},
+  kuch:{title:'💪 Kuch va Tortishish',body:`
+    <p><strong>Kuch</strong> — jismga ta'sir ko'rsatuvchi kattalik. Nyuton (N) da o'lchanadi.</p>
+    <ul>
+      <li>🌍 <strong>Tortishish kuchi</strong> — Yer barcha jismlarni o'ziga tortadi</li>
+      <li>🖐 <strong>Elastiklik kuchi</strong> — cho'zilgan rezina qaytmoqchi bo'ladi</li>
+      <li>🔵 <strong>Ishqalanish kuchi</strong> — harakatga qarshi ta'sir qiladi</li>
+    </ul>
+    <div style="text-align:center;font-size:1.9rem;font-weight:800;color:var(--accent3);padding:14px;background:rgba(252,129,129,0.08);border-radius:12px;margin:14px 0">F = m × g</div>
+    <p>💡 g = 9.8 m/s². Massasi 5 kg bo'lgan jismning og'irligi: F = 5 × 9.8 = <strong>49 N</strong></p>`},
+  bosim:{title:'🌊 Bosim va Suyuqlik',body:`
+    <p><strong>Bosim</strong> — yuzaga perpendikulyar ta'sir etuvchi kuchning shu yuzaga nisbati.</p>
+    <div style="text-align:center;font-size:1.9rem;font-weight:800;color:var(--accent4);padding:14px;background:rgba(104,211,145,0.08);border-radius:12px;margin:14px 0">P = F / S</div>
+    <p>💡 Nega pichoq kesadi? Sirt yuzasi kichik bo'lgani uchun bosim katta bo'ladi!</p>
+    <ul>
+      <li>Suyuqlik chuqurroq bo'lsa, bosim katta bo'ladi</li>
+      <li>Dengizning tubida bosim juda kuchli</li>
+    </ul>`},
+  energiya:{title:'⚡ Energiya va Ish',body:`
+    <p><strong>Energiya</strong> — ish bajarish qobiliyati. Joule (J) da o'lchanadi.</p>
+    <ul>
+      <li>🏃 <strong>Kinetik energiya</strong>: Ek = mv²/2</li>
+      <li>🏔 <strong>Potensial energiya</strong>: Ep = mgh</li>
+      <li>🔥 <strong>Issiqlik energiyasi</strong> — molekulalar harakatidan</li>
+    </ul>
+    <div style="text-align:center;font-size:1.9rem;font-weight:800;color:var(--accent5);padding:14px;background:rgba(183,148,244,0.08);border-radius:12px;margin:14px 0">A = F × s</div>
+    <p>💡 Energiya saqlanish qonuni: Energiya yo'qolmaydi, faqat bir turdan ikkinchisiga o'zgaradi!</p>`},
+  issiqlik:{title:'🔥 Issiqlik va Temperatura',body:`
+    <p><strong>Temperatura</strong> — jismning issiqligi darajasi. Selsiy (°C) da o'lchanadi.</p>
+    <ul>
+      <li>🤲 <strong>Issiqlik o'tkazuvchanlik</strong> — qattiq jismlar orqali</li>
+      <li>🌡 <strong>Konveksiya</strong> — suyuqlik va gazlar orqali</li>
+      <li>☀️ <strong>Nurlanish</strong> — bo'shliq orqali (Quyosh issiqligi)</li>
+    </ul>
+    <p>💡 0°C — muzning erish nuqtasi | 100°C — suvning qaynash nuqtasi</p>`},
+};
+
+function openModal(id){
+  const d = modalData[id];
+  document.getElementById('modalBody').innerHTML = `<h2>${d.title}</h2><br>${d.body}`;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(e){ if(e.target === document.getElementById('modalOverlay')) closeModalDirect(); }
+function closeModalDirect(){ document.getElementById('modalOverlay').classList.remove('open'); }
+</script>
 </body>
 </html>
