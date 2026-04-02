@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fizika Dunyosi — Koinot Sirlari</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <canvas id="stars-canvas"></canvas>
+
+    <nav>
+        <div class="logo">⚛ FizikaLab</div>
+        <div class="nav-links">
+            <a href="#topics">Mavzular</a>
+            <a href="#formulas">Formulalar</a>
+            <a href="#quiz">Test</a>
+            <a href="#experiments">Tajribalar</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">🚀 6-sinf Fizika</div>
+        <h1>Koinotni <span>Kashf Et</span></h1>
+        <p>Atrofimizdagi olam qanday ishlaydi? Fizika sirlarini eng zamonaviy va interaktiv usulda o'rganing.</p>
+        <div class="hero-actions">
+            <a href="#topics" class="btn btn-primary">Darsni Boshlash</a>
+            <a href="#quiz" class="btn btn-secondary">O'zingni Sinab Ko'r</a>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stat-item">
+            <span class="stat-number" style="color: var(--accent-teal);">12</span>
+            <span class="stat-label">Mavzular</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" style="color: var(--accent-orange);">8</span>
+            <span class="stat-label">Tajribalar</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" style="color: var(--accent-purple);">50+</span>
+            <span class="stat-label">Savollar</span>
+        </div>
+    </div>
+
+    <section id="topics">
+        <div class="section-header reveal">
+            <h2>Mavzular</h2>
+            <p>Fizikaning asosiy tushunchalari bilan tanishing. Har bir karta ostida batafsil ma'lumot bor.</p>
+        </div>
+        <div class="grid">
+            <div class="card reveal" onclick="openTopic('jism')">
+                <div class="card-tag" style="color: var(--accent-teal);">1-Mavzu</div>
+                <img src="assets/icon-atom.png" alt="Atom" class="card-icon">
+                <h3>Jism va Materiya</h3>
+                <p>Olamni nima tashkil etadi? Jismlarning xususiyatlarini bilib oling.</p>
+                <div class="btn btn-secondary" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;">O'qish</div>
+            </div>
+            <div class="card reveal" onclick="openTopic('harakat')">
+                <div class="card-tag" style="color: var(--accent-orange);">2-Mavzu</div>
+                <img src="assets/icon-pressure.png" alt="Motion" class="card-icon">
+                <h3>Mexanik Harakat</h3>
+                <p>Nega hamma narsa harakatlanadi? Tezlik va yo'lning sirlari.</p>
+                <div class="btn btn-secondary" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;">O'qish</div>
+            </div>
+            <div class="card reveal" onclick="openTopic('kuch')">
+                <div class="card-tag" style="color: var(--accent-purple);">3-Mavzu</div>
+                <img src="assets/icon-lightning.png" alt="Force" class="card-icon">
+                <h3>Kuch va Gravitatsiya</h3>
+                <p>Yer bizni qanday ushlab turadi? Kuchlarning ta'sirini o'rganing.</p>
+                <div class="btn btn-secondary" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;">O'qish</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="formulas" style="background: rgba(255,255,255,0.02);">
+        <div class="section-header reveal">
+            <h2>Asosiy Formulalar</h2>
+            <p>Fizik hisob-kitoblar uchun eng kerakli qurollar.</p>
+        </div>
+        <div class="grid">
+            <div class="card formula-card reveal">
+                <div class="formula-display">v = s / t</div>
+                <h3>Tezlik</h3>
+                <p>v — tezlik, s — yo'l, t — vaqt</p>
+            </div>
+            <div class="card formula-card reveal">
+                <div class="formula-display">ρ = m / V</div>
+                <h3>Zichlik</h3>
+                <p>ρ — zichlik, m — massa, V — hajm</p>
+            </div>
+            <div class="card formula-card reveal">
+                <div class="formula-display">P = F / S</div>
+                <h3>Bosim</h3>
+                <p>P — bosim, F — kuch, S — yuza</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="quiz">
+        <div class="section-header reveal">
+            <h2>Bilimingni Sinab Ko'r</h2>
+            <p>Interaktiv test orqali o'zingni tekshirib ko'r.</p>
+        </div>
+        <div class="quiz-container reveal">
+            <div class="quiz-progress">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="quiz-content">
+                <!-- JS will populate -->
+            </div>
+        </div>
+    </section>
+
+    <section id="experiments">
+        <div class="section-header reveal">
+            <h2>Uy Tajribalari</h2>
+            <p>Laboratoriyani uyingizda tashkil eting!</p>
+        </div>
+        <div class="grid">
+            <div class="card reveal">
+                <img src="assets/icon-pressure.png" alt="Exp" class="card-icon">
+                <h3>Tuxum Suvda Suzadimi?</h3>
+                <ul class="exp-list">
+                    <li>Zichlikni o'rganish</li>
+                    <li>Suyuq va qattiq jism</li>
+                    <li>Arximed kuchi</li>
+                </ul>
+            </div>
+            <div class="card reveal">
+                <img src="assets/icon-heat.png" alt="Exp" class="card-icon">
+                <h3>Limon Batareyasi</h3>
+                <ul class="exp-list">
+                    <li>Elektr energiyasi</li>
+                    <li>Kimyoviy reaksiya</li>
+                    <li>Tok hosil qilish</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo">⚛ FizikaLab</div>
+        <p>Kelajak fiziklari uchun interaktiv qo'llanma.</p>
+        <div class="copyright">© 2025 Barcha huquqlar himoyalangan.</div>
+    </footer>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">×</button>
+            <div id="modal-body">
+                <!-- JS will populate -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
