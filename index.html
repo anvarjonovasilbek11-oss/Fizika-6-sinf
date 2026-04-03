@@ -649,8 +649,15 @@ function doGateRegister(){
     err.textContent = '❌ Parol kamida 4 ta belgi bo\'lishi kerak!';
     err.classList.add('show'); return;
   }
-  const user = {name, cls};
+  const user = {name, cls, date: new Date().toLocaleDateString()};
   localStorage.setItem('fizikalab_user', JSON.stringify(user));
+  
+  // Save to all members for Admin view
+  let members = JSON.parse(localStorage.getItem('fizikalab_members') || '[]');
+  members.unshift(user); // Add to start
+  if(members.length > 50) members.pop(); // Keep only last 50
+  localStorage.setItem('fizikalab_members', JSON.stringify(members));
+
   ok.textContent = `🎉 Tabriklaymiz, ${name}! Xush kelibsiz!`;
   ok.classList.add('show');
   setTimeout(()=> unlockSite(name), 1400);
