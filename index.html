@@ -241,44 +241,102 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 /* FADE-UP */
 @keyframes fadeD{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
 .fu{opacity:0;transform:translateY(30px);transition:opacity 0.65s ease,transform 0.65s ease;}
-/* ────── AUTH GATE (Truly Frame-less) ────── */
+/* ────── AUTH PORTAL (Cinematic 3-Column) ────── */
 #authGate{
   position:fixed;inset:0;z-index:900;
-  background:rgba(2,6,23,0.1); /* Ultra transparent for space */
-  backdrop-filter:none; /* Keep space crisp */
+  background:rgba(2,6,23,0.05); /* Deepest transparency */
   display:flex;align-items:center;justify-content:center;padding:20px;
-  transition:opacity 0.6s ease;
-  overflow-y:auto;
+  transition:opacity 0.6s ease;overflow:hidden;
 }
-/* Deep Cosmic Glow */
-#authGate::after{
-  content:'';position:absolute;inset:0;z-index:-2;
-  background:radial-gradient(circle,rgba(99,102,241,0.15) 0%,transparent 70%);
-  pointer-events:none;
+
+/* PORTAL ENGINE */
+.auth-portal{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;max-width:1400px;gap:40px;
 }
+
+/* LEFT: SECTIONS LIST */
+.auth-side-l{
+  flex:1;max-width:300px;display:flex;flex-direction:column;gap:18px;
+  animation:fadeL 1s ease both;
+}
+.auth-side-l h3{font-family:'Exo 2',sans-serif;font-size:1.6rem;font-weight:800;color:var(--t);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase;}
+.auth-nav-item{
+  padding:18px 24px;border-radius:18px;background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);color:var(--muted);
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:1.05rem;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);cursor:not-allowed;
+}
+.auth-nav-item:hover{background:rgba(255,255,255,0.05);transform:translateX(10px);color:white;}
+.auth-nav-item .lock{font-size:0.9rem;opacity:0.6;}
+
+/* RIGHT: PHYSICS OBJECTS */
+.auth-side-r{
+  flex:1;max-width:360px;height:550px;position:relative;
+  display:flex;flex-direction:column;justify-content:space-around;
+  align-items:center;animation:fadeR 1s ease both;
+}
+
+/* ⚛ ATOM ANIMATION */
+.atom{position:relative;width:120px;height:120px;perspective:500px;}
+.nucleus{position:absolute;inset:44px;background:var(--t);border-radius:50%;box-shadow:0 0 20px var(--t);}
+.orbit{
+  position:absolute;inset:0;border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:50%;animation:rotate 3s linear infinite;
+}
+.orbit::after{
+  content:'';position:absolute;top:-5px;left:50%;width:10px;height:10px;
+  background:var(--p);border-radius:50%;box-shadow:0 0 10px var(--p);
+}
+.orbit:nth-child(2){transform:rotateX(60deg);animation-duration:4s;}
+.orbit:nth-child(3){transform:rotateY(60deg);animation-duration:5s;}
+
+/* 🧲 MAGNET ANIMATION */
+.magnet-u{
+  width:80px;height:100px;border:10px solid #fc8181;border-bottom:none;
+  border-radius:40px 40px 0 0;position:relative;
+  filter:drop-shadow(0 0 15px rgba(252,129,129,0.3));
+}
+.magnet-u::after{
+  content:'';position:absolute;inset:0;border:10px solid #4fd1c5;
+  border-top:none;border-radius:0 0 40px 40px;top:50px;
+}
+
+/* ⚙ NEWTON CRADLE */
+.cradle{display:flex;gap:2px;padding-top:40px;}
+.ball{
+  width:20px;height:20px;background:var(--t);border-radius:50%;
+  position:relative;transform-origin:top center;
+}
+.ball::before{content:'';position:absolute;top:-30px;left:50%;width:1px;height:30px;background:rgba(255,255,255,0.2);}
+.ball:first-child{animation:swing-l 1s ease-in-out infinite alternate;}
+.ball:last-child{animation:swing-r 1s ease-in-out infinite alternate-reverse;}
+
+@keyframes rotate{100%{transform:rotate(360deg);}}
+@keyframes swing-l{0%{transform:rotate(30deg);} 50%,100%{transform:rotate(0deg);}}
+@keyframes swing-r{0%,50%{transform:rotate(0deg);} 100%{transform:rotate(-30deg);}}
+@keyframes fadeL{from{opacity:0;transform:translateX(-50px);}to{opacity:1;transform:translateX(0);}}
+@keyframes fadeR{from{opacity:0;transform:translateX(50px);}to{opacity:1;transform:translateX(0);}}
 
 #authGate.hidden{opacity:0;pointer-events:none;}
 
-/* AUTH CARD - Zero Frame Cinematic */
+/* AUTH CARD */
 .auth-card{
-  background:transparent;
-  max-width:680px;width:100%;padding:60px 20px;
-  animation:float 6s ease-in-out infinite;
-  position:relative;
-  text-shadow:0 0 15px rgba(0,0,0,0.8);
+  flex:2;background:transparent;
+  max-width:620px;width:100%;padding:20px;
+  animation:float 6s ease-in-out infinite;position:relative;
 }
-.auth-tabs{display:flex;gap:20px;margin-bottom:50px;justify-content:center;}
+.auth-tabs{display:flex;gap:15px;margin-bottom:44px;justify-content:center;}
 .auth-tab{
-  padding:14px 40px;font-family:'Outfit',sans-serif;font-weight:900;font-size:1.15rem;
-  background:rgba(255,255,255,0.04);border:none;
+  padding:14px 34px;font-family:'Outfit',sans-serif;font-weight:900;font-size:1.1rem;
+  background:rgba(255,255,255,0.03);border:none;
   color:var(--muted);cursor:pointer;transition:all 0.4s;
-  border-radius:20px;
-  letter-spacing:1px;
+  border-radius:18px;
 }
 .auth-tab.active{
   background:var(--neon-b);color:white;
-  box-shadow:0 0 30px rgba(0,242,254,0.5),0 0 100px rgba(0,242,254,0.1);
-  transform:scale(1.05);
+  box-shadow:0 0 25px rgba(0,242,254,0.4);
 }
 
 .auth-panel{display:none;}
@@ -342,6 +400,8 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 /* RESPONSIVE */
 @media(max-width:991px){
   .sidebar{transform:translateX(-100%);}
+  .auth-side-l, .auth-side-r {display:none;}
+  .auth-portal{justify-content:center;}
   .sidebar.open{transform:translateX(0);}
   .content-wrapper{margin-left:0;}
   .hero{grid-template-columns:1fr;padding:100px 20px 40px;text-align:center;}
@@ -358,43 +418,76 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 
 <!-- ══ AUTH GATE ══ -->
 <div id="authGate">
-  <div class="auth-card">
-    <div style="text-align:center;margin-bottom:34px">
-      <div style="font-size:4rem;margin-bottom:12px">✨</div>
-      <h2 style="font-family:'Exo 2',sans-serif;font-size:2.4rem;font-weight:900;margin-bottom:10px">
-        Fizika Dunyosiga <br><span>Xush Kelibsiz!</span>
-      </h2>
-      <p style="color:var(--muted);font-size:1rem;max-width:400px;margin:0 auto">Platformadan to'liq foydalanish uchun tizimga kiring 🌌</p>
+  <div class="auth-portal">
+    <!-- LEFT: Sections -->
+    <div class="auth-side-l">
+      <h3>Darslar Portali</h3>
+      <div class="auth-nav-item">📚 Mavzular <span class="lock">🔒</span></div>
+      <div class="auth-nav-item">⚡ Formulalar <span class="lock">🔒</span></div>
+      <div class="auth-nav-item">🧠 Quiz Testlar <span class="lock">🔒</span></div>
+      <div class="auth-nav-item">🔬 Tajribalar <span class="lock">🔒</span></div>
+      <div style="margin-top:20px;color:rgba(255,255,255,0.3);font-size:0.8rem;">* Kirish uchun ro'yxatdan o'ting</div>
     </div>
 
-    <!-- TABS -->
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="tabReg" onclick="switchAuthTab('reg')">Ro'yxatdan O'tish</button>
-      <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">Kirish</button>
-    </div>
-
-    <!-- REGISTER PANEL -->
-    <div class="auth-panel active" id="panelReg">
-      <div class="inp-wrap"><label>TO'LIQ ISMINGIZ</label><input type="text" id="gRegName" placeholder="Ismingizni kiriting"></div>
-      <div class="inp-wrap"><label>SINF</label>
-        <select id="gRegClass">
-          <option value="">Sinfingizni tanlang...</option>
-          <option>6-A</option><option>6-B</option><option>6-C</option><option>6-D</option><option>Boshqa</option>
-        </select>
+    <!-- CENTER: Auth Card -->
+    <div class="auth-card">
+      <div style="text-align:center;margin-bottom:34px">
+        <div style="font-size:4rem;margin-bottom:12px">✨</div>
+        <h2 style="font-family:'Exo 2',sans-serif;font-size:2.4rem;font-weight:900;margin-bottom:10px">
+          Fizika Dunyosiga <br><span>Xush Kelibsiz!</span>
+        </h2>
+        <p style="color:var(--muted);font-size:1rem;max-width:400px;margin:0 auto">Platformadan to'liq foydalanish uchun tizimga kiring 🌌</p>
       </div>
-      <div class="inp-wrap"><label>PAROL</label><input type="password" id="gRegPass" placeholder="Xavfsiz parol yarating"></div>
-      <div class="modal-err" id="gRegErr"></div>
-      <div class="modal-ok" id="gRegOk"></div>
-      <button class="btn-neon primary" style="width:100%;margin-top:10px;padding:16px" onclick="doGateRegister()">🚀 Boshlash</button>
+
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabReg" onclick="switchAuthTab('reg')">Ro'yxatdan O'tish</button>
+        <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">Kirish</button>
+      </div>
+
+      <!-- REGISTER PANEL -->
+      <div class="auth-panel active" id="panelReg">
+        <div class="inp-wrap"><label>TO'LIQ ISMINGIZ</label><input type="text" id="gRegName" placeholder="Ismingizni kiriting"></div>
+        <div class="inp-wrap"><label>SINF</label>
+          <select id="gRegClass">
+            <option value="">Sinfingizni tanlang...</option>
+            <option>6-A</option><option>6-B</option><option>6-C</option><option>6-D</option><option>Boshqa</option>
+          </select>
+        </div>
+        <div class="inp-wrap"><label>PAROL</label><input type="password" id="gRegPass" placeholder="Xavfsiz parol yarating"></div>
+        <div class="modal-err" id="gRegErr"></div>
+        <div class="modal-ok" id="gRegOk"></div>
+        <button class="btn-neon primary" style="width:100%;margin-top:10px;padding:16px" onclick="doGateRegister()">🚀 Boshlash</button>
+      </div>
+
+      <!-- LOGIN PANEL -->
+      <div class="auth-panel" id="panelLogin">
+        <div class="inp-wrap"><label>LOGIN (ADMIN) YOKI ISM</label><input type="text" id="gLoginUser" placeholder="Asilbek yoki Ism"></div>
+        <div class="inp-wrap"><label>PAROL</label><input type="password" id="gLoginPass" placeholder="••••••••"></div>
+        <div class="modal-err" id="gLoginErr"></div>
+        <div class="modal-ok" id="gLoginOk"></div>
+        <button class="btn-neon primary" style="width:100%;margin-top:10px;padding:16px" onclick="doGateLogin()">🔑 Kirish</button>
+      </div>
     </div>
 
-    <!-- LOGIN PANEL -->
-    <div class="auth-panel" id="panelLogin">
-      <div class="inp-wrap"><label>LOGIN (ADMIN) YOKI ISM</label><input type="text" id="gLoginUser" placeholder="Asilbek yoki Ism"></div>
-      <div class="inp-wrap"><label>PAROL</label><input type="password" id="gLoginPass" placeholder="••••••••"></div>
-      <div class="modal-err" id="gLoginErr"></div>
-      <div class="modal-ok" id="gLoginOk"></div>
-      <button class="btn-neon primary" style="width:100%;margin-top:10px;padding:16px" onclick="doGateLogin()">🔑 Kirish</button>
+    <!-- RIGHT: Physics Animations -->
+    <div class="auth-side-r">
+      <div class="atom">
+        <div class="nucleus"></div>
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+      </div>
+      
+      <div class="magnet-u"></div>
+      
+      <div class="cradle">
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div>
     </div>
   </div>
 </div>
