@@ -26,7 +26,7 @@ nav{
 }
 .nav-logo{font-family:'Exo 2',sans-serif;font-weight:900;font-size:1.4rem;
   background:linear-gradient(135deg,var(--t),var(--p));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 .nav-center{display:flex;gap:28px;}
 .nav-center a{color:var(--muted);text-decoration:none;font-size:0.88rem;font-weight:600;transition:color 0.2s;}
 .nav-center a:hover{color:var(--t);}
@@ -60,7 +60,7 @@ nav{
 }
 .hero h1 span{
   background:linear-gradient(120deg,var(--t),var(--p),var(--o));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 .hero p{font-size:1.1rem;color:var(--muted);max-width:560px;line-height:1.8;margin-bottom:36px;animation:fadeD 1s 0.2s ease both;}
 .hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fadeD 1s 0.3s ease both;}
@@ -179,6 +179,56 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 .fu{opacity:0;transform:translateY(30px);transition:opacity 0.65s ease,transform 0.65s ease;}
 .fu.vis{opacity:1;transform:translateY(0);}
 
+/* ────── AUTH GATE ────── */
+#authGate{
+  position:fixed;inset:0;z-index:900;
+  background:linear-gradient(135deg,rgba(5,8,16,0.97) 0%,rgba(11,16,32,0.97) 100%);
+  backdrop-filter:blur(18px);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  transition:opacity 0.6s ease;
+}
+#authGate.hidden{opacity:0;pointer-events:none;}
+
+/* Chris mascot — always visible */
+#chrisMascot{
+  position:fixed;bottom:24px;right:24px;z-index:1000;
+  width:110px;cursor:pointer;
+  filter:drop-shadow(0 0 18px rgba(79,209,197,0.55));
+  animation:chrisBob 3s ease-in-out infinite;
+  transition:transform 0.2s;
+}
+#chrisMascot:hover{transform:scale(1.08);}
+@keyframes chrisBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.chris-bubble{
+  position:fixed;bottom:148px;right:24px;z-index:1000;
+  background:rgba(11,16,32,0.92);border:1.5px solid rgba(79,209,197,0.4);
+  border-radius:16px 16px 4px 16px;padding:10px 14px;
+  font-size:0.8rem;font-weight:700;color:var(--t);max-width:190px;
+  animation:fadeD 0.5s ease both;box-shadow:0 4px 24px rgba(0,0,0,0.4);
+  transition:opacity 0.3s;
+}
+.chris-bubble.hidden{opacity:0;pointer-events:none;}
+
+/* AUTH CARD */
+.auth-card{
+  background:rgba(11,16,32,0.88);backdrop-filter:blur(32px) saturate(180%);
+  border:1px solid rgba(79,209,197,0.25);border-radius:28px;
+  max-width:460px;width:100%;padding:44px;
+  animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both;
+  position:relative;
+}
+.auth-tabs{display:flex;gap:0;margin-bottom:28px;border-radius:12px;overflow:hidden;border:1.5px solid rgba(79,209,197,0.2);}
+.auth-tab{
+  flex:1;padding:11px;font-family:'Exo 2',sans-serif;font-weight:700;font-size:0.88rem;
+  background:transparent;border:none;color:var(--muted);cursor:pointer;transition:all 0.25s;
+}
+.auth-tab.active{background:var(--t);color:#050810;}
+.auth-tab:first-child{border-radius:10px 0 0 10px;}
+.auth-tab:last-child{border-radius:0 10px 10px 0;}
+
+.auth-panel{display:none;}
+.auth-panel.active{display:block;}
+
 /* ────── MODALS ────── */
 .overlay{
   display:none;position:fixed;inset:0;z-index:500;
@@ -242,8 +292,95 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 <body>
 <canvas id="stars"></canvas>
 
+<!-- ══ AUTH GATE ══ -->
+<div id="authGate">
+  <div class="auth-card">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:3rem;margin-bottom:8px">🚀</div>
+      <h2 style="font-family:'Exo 2',sans-serif;font-size:1.8rem;font-weight:900;margin-bottom:6px">
+        <span style="background:linear-gradient(135deg,var(--t),var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent">FizikaLab</span>ga Xush Kelibsiz!
+      </h2>
+      <p style="color:var(--muted);font-size:0.88rem">Davom etish uchun ro'yxatdan o'ting yoki kiring 🌌</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabReg" onclick="switchAuthTab('reg')">🚀 Ro'yxatdan O'tish</button>
+      <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">🔑 Kirish</button>
+    </div>
+
+    <!-- REGISTER PANEL -->
+    <div class="auth-panel active" id="panelReg">
+      <div class="inp-wrap"><label>TO'LIQ ISMING</label><input type="text" id="gRegName" placeholder="Ismingiz"></div>
+      <div class="inp-wrap">
+        <label>🌌 KOSMONAVT ISMING</label>
+        <input type="text" id="gRegCosmo" placeholder="Yulduz_Asilbek, Nebula_Dilnoza...">
+        <p style="color:var(--muted);font-size:0.75rem;margin-top:4px">Platformada shu ism ko'rinadi 🛸</p>
+      </div>
+      <div class="inp-wrap"><label>SINF</label>
+        <select id="gRegClass">
+          <option value="">Sinfingizni tanlang...</option>
+          <option>6-A</option><option>6-B</option><option>6-C</option><option>6-D</option><option>Boshqa</option>
+        </select>
+      </div>
+      <div class="inp-wrap"><label>PAROL</label><input type="password" id="gRegPass" placeholder="Xavfsiz parol yarating"></div>
+      <div class="modal-err" id="gRegErr"></div>
+      <div class="modal-ok" id="gRegOk"></div>
+      <button class="btn-neon primary" style="width:100%;margin-top:4px" onclick="doGateRegister()">🚀 Ro'yxatdan O'tish va Boshlash</button>
+    </div>
+
+    <!-- LOGIN PANEL -->
+    <div class="auth-panel" id="panelLogin">
+      <div class="inp-wrap"><label>LOGIN</label><input type="text" id="gLoginUser" placeholder="FizikaLab_Admin"></div>
+      <div class="inp-wrap"><label>PAROL</label><input type="password" id="gLoginPass" placeholder="••••••••••••"></div>
+      <div class="modal-err" id="gLoginErr"></div>
+      <div class="modal-ok" id="gLoginOk"></div>
+      <button class="btn-neon primary" style="width:100%;margin-top:4px" onclick="doGateLogin()">🔑 Kirish</button>
+      <p style="text-align:center;margin-top:14px;color:var(--muted);font-size:0.8rem">Hisobingiz yo'qmi? <span style="color:var(--t);cursor:pointer;font-weight:700" onclick="switchAuthTab('reg')">Ro'yxatdan o'ting →</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CHRIS MASCOT (always visible) ══ -->
+<div class="chris-bubble" id="chrisBubble">Salom! Keling, fizikani birga o'rganamiz! 🌟</div>
+<div id="chrisMascot" onclick="toggleChrisBubble()" title="Chris - Kosmonavt">
+  <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+    <!-- space suit body -->
+    <ellipse cx="60" cy="95" rx="34" ry="38" fill="#c8e6fa" stroke="#4fd1c5" stroke-width="2.5"/>
+    <!-- helmet -->
+    <circle cx="60" cy="52" r="30" fill="#dff2ff" stroke="#4fd1c5" stroke-width="2.5"/>
+    <!-- visor -->
+    <ellipse cx="60" cy="52" rx="20" ry="18" fill="#0b1a3a" opacity="0.88"/>
+    <!-- visor shine -->
+    <ellipse cx="52" cy="44" rx="6" ry="4" fill="rgba(255,255,255,0.2)" transform="rotate(-15,52,44)"/>
+    <!-- eyes inside visor -->
+    <circle cx="52" cy="52" r="4.5" fill="#4fd1c5"/>
+    <circle cx="68" cy="52" r="4.5" fill="#4fd1c5"/>
+    <circle cx="53.5" cy="51" r="1.8" fill="white"/>
+    <circle cx="69.5" cy="51" r="1.8" fill="white"/>
+    <!-- smile -->
+    <path d="M52 61 Q60 68 68 61" stroke="#4fd1c5" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- suit chest badge -->
+    <rect x="45" y="82" width="30" height="18" rx="6" fill="#4fd1c5" opacity="0.3"/>
+    <text x="60" y="95" text-anchor="middle" font-size="9" fill="#4fd1c5" font-weight="bold">FIZIKA</text>
+    <!-- arms -->
+    <ellipse cx="28" cy="95" rx="10" ry="18" fill="#c8e6fa" stroke="#4fd1c5" stroke-width="2" transform="rotate(-15,28,95)"/>
+    <ellipse cx="92" cy="95" rx="10" ry="18" fill="#c8e6fa" stroke="#4fd1c5" stroke-width="2" transform="rotate(15,92,95)"/>
+    <!-- gloves -->
+    <ellipse cx="22" cy="112" rx="8" ry="6" fill="#4fd1c5" transform="rotate(-10,22,112)"/>
+    <ellipse cx="98" cy="112" rx="8" ry="6" fill="#4fd1c5" transform="rotate(10,98,112)"/>
+    <!-- legs -->
+    <ellipse cx="46" cy="130" rx="12" ry="9" fill="#4fd1c5"/>
+    <ellipse cx="74" cy="130" rx="12" ry="9" fill="#4fd1c5"/>
+    <!-- stars around helmet -->
+    <text x="10" y="30" font-size="10" fill="#b794f4" opacity="0.8">✦</text>
+    <text x="98" y="25" font-size="8" fill="#f6ad55" opacity="0.8">✦</text>
+    <text x="15" y="75" font-size="7" fill="#4fd1c5" opacity="0.6">·</text>
+  </svg>
+</div>
+
 <!-- NAV -->
-<nav>
+<nav id="mainNav">
   <div class="nav-logo">⚛ FizikaLab</div>
   <div class="nav-center">
     <a href="#mavzular">Mavzular</a>
@@ -251,9 +388,8 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
     <a href="#quiz">Quiz</a>
     <a href="#tajribalar">Tajribalar</a>
   </div>
-  <div class="nav-right">
-    <button class="nav-btn ghost" onclick="openRegister()">🚀 Ro'yxatdan o'tish</button>
-    <button class="nav-btn solid" onclick="openLogin()">🔑 Kirish</button>
+  <div class="nav-right" id="navUserArea">
+    <!-- filled after login -->
   </div>
 </nav>
 
@@ -368,50 +504,6 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
   <p style="margin-top:8px">Barcha huquqlar himoyalangan © 2025</p>
 </footer>
 
-<!-- LOGIN MODAL -->
-<div class="overlay" id="loginOverlay">
-  <div class="modal-glass">
-    <button class="modal-close-x" onclick="closeOverlay('loginOverlay')">✕</button>
-    <h2>Tizimga <span>Xush kelibsiz!</span></h2>
-    <p class="sub">Fizika olamini biz bilan kashf qiling. 🚀</p>
-    <div class="inp-wrap"><label>LOGIN</label><input type="text" id="loginUser" placeholder="FizikaLab_Admin"></div>
-    <div class="inp-wrap"><label>PAROL</label><input type="password" id="loginPass" placeholder="••••••••••••"></div>
-    <div class="modal-err" id="loginErr">❌ Login yoki parol xato!</div>
-    <div class="modal-ok" id="loginOk">✅ Xush kelibsiz, Admin! Yo'naltirilmoqda...</div>
-    <button class="btn-neon primary" style="width:100%;margin-top:4px" onclick="doLogin()">🔑 Kirish</button>
-    <p style="text-align:center;margin-top:16px;color:var(--muted);font-size:0.82rem">
-      Hisobingiz yo'qmi? <span style="color:var(--t);cursor:pointer;font-weight:700" onclick="switchToRegister()">Ro'yxatdan o'ting →</span>
-    </p>
-  </div>
-</div>
-
-<!-- REGISTER MODAL -->
-<div class="overlay" id="regOverlay">
-  <div class="modal-glass">
-    <button class="modal-close-x" onclick="closeOverlay('regOverlay')">✕</button>
-    <h2>🚀 <span>Koinotga Ulaning!</span></h2>
-    <p class="sub">O'quvchi sifatida ro'yxatdan o'ting va fizika sayohatini boshlang!</p>
-    <div class="inp-wrap"><label>TO'LIQ ISHING</label><input type="text" id="regName" placeholder="Ismingiz"></div>
-    <div class="inp-wrap">
-      <label>🌌 SENING KOSMONAVT SIFATIDAGI ISMING NIMA?</label>
-      <input type="text" id="regCosmo" placeholder="Masalan: Yulduz_Asilbek, Nebula_Dilnoza...">
-      <p style="color:var(--muted);font-size:0.76rem;margin-top:5px">Bu ism platformada ko'rsatiladi 🛸</p>
-    </div>
-    <div class="inp-wrap"><label>SINF</label>
-      <select id="regClass">
-        <option value="">Sinfingizni tanlang...</option>
-        <option>6-A</option><option>6-B</option><option>6-C</option><option>6-D</option><option>Boshqa</option>
-      </select>
-    </div>
-    <div class="inp-wrap"><label>PAROL</label><input type="password" id="regPass" placeholder="Xavfsiz parol yarating"></div>
-    <div class="modal-ok" id="regOk" style="display:none">🎉 Tabriklaymiz, <span id="regOkName"></span>! Platformaga xush kelibsiz!</div>
-    <button class="btn-neon primary" style="width:100%;margin-top:4px" onclick="doRegister()">🚀 Ro'yxatdan O'tish</button>
-    <p style="text-align:center;margin-top:16px;color:var(--muted);font-size:0.82rem">
-      Hisobingiz bormi? <span style="color:var(--t);cursor:pointer;font-weight:700" onclick="switchToLogin()">Kirish →</span>
-    </p>
-  </div>
-</div>
-
 <!-- TOPIC MODAL -->
 <div class="overlay" id="topicOverlay" onclick="closeTopicOutside(event)">
   <div class="modal-glass topic-modal" id="topicContent">
@@ -464,54 +556,116 @@ const obs = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.ta
 document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
 
 // ── MODALS ──
-function openLogin(){ closeAll(); document.getElementById('loginOverlay').classList.add('open'); }
-function openRegister(){ closeAll(); document.getElementById('regOverlay').classList.add('open'); }
 function closeOverlay(id){ document.getElementById(id).classList.remove('open'); }
 function closeAll(){ document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open')); }
-function switchToRegister(){ closeAll(); openRegister(); }
-function switchToLogin(){ closeAll(); openLogin(); }
-window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeAll(); });
+window.addEventListener('keydown', e=>{ if(e.key==='Escape' && !document.getElementById('authGate').style.opacity) closeAll(); });
 
-// close login/register by clicking backdrop
-document.getElementById('loginOverlay').addEventListener('click',function(e){ if(e.target===this) closeAll(); });
-document.getElementById('regOverlay').addEventListener('click',function(e){ if(e.target===this) closeAll(); });
+// ── AUTH GATE ──
+function switchAuthTab(t){
+  document.getElementById('tabReg').classList.toggle('active', t==='reg');
+  document.getElementById('tabLogin').classList.toggle('active', t==='login');
+  document.getElementById('panelReg').classList.toggle('active', t==='reg');
+  document.getElementById('panelLogin').classList.toggle('active', t==='login');
+}
 
-// ── LOGIN LOGIC ──
-function doLogin(){
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value;
-  const err = document.getElementById('loginErr');
-  const ok = document.getElementById('loginOk');
+function unlockSite(displayName){
+  const gate = document.getElementById('authGate');
+  gate.style.transition = 'opacity 0.7s ease';
+  gate.style.opacity = '0';
+  setTimeout(()=>{ gate.style.display='none'; }, 700);
+  // Show user in nav
+  document.getElementById('navUserArea').innerHTML =
+    `<span style="color:var(--t);font-weight:700;font-size:0.85rem">👨‍🚀 ${displayName}</span>
+     <button class="nav-btn ghost" onclick="logoutSite()" style="font-size:0.78rem">Chiqish</button>`;
+  // Update Chris bubble
+  const bubble = document.getElementById('chrisBubble');
+  bubble.textContent = `Salom, ${displayName}! Keling boshlaymiz! 🎯`;
+  setTimeout(()=>{ bubble.classList.add('hidden'); }, 5000);
+}
+
+function logoutSite(){
+  localStorage.removeItem('fizikalab_user');
+  location.reload();
+}
+
+// Gate Register
+function doGateRegister(){
+  const name  = document.getElementById('gRegName').value.trim();
+  const cosmo = document.getElementById('gRegCosmo').value.trim();
+  const cls   = document.getElementById('gRegClass').value;
+  const pass  = document.getElementById('gRegPass').value;
+  const err   = document.getElementById('gRegErr');
+  const ok    = document.getElementById('gRegOk');
   err.classList.remove('show'); ok.classList.remove('show');
+  if(!name||!cosmo||!cls||!pass){
+    err.textContent = '❌ Iltimos, barcha maydonlarni to\'ldiring!';
+    err.classList.add('show'); return;
+  }
+  if(pass.length < 4){
+    err.textContent = '❌ Parol kamida 4 ta belgi bo\'lishi kerak!';
+    err.classList.add('show'); return;
+  }
+  const user = {name, cosmo, cls};
+  localStorage.setItem('fizikalab_user', JSON.stringify(user));
+  ok.textContent = `🎉 Tabriklaymiz, ${cosmo}! Platformaga xush kelibsiz!`;
+  ok.classList.add('show');
+  setTimeout(()=> unlockSite(cosmo), 1400);
+}
+
+// Gate Login
+function doGateLogin(){
+  const u   = document.getElementById('gLoginUser').value.trim();
+  const p   = document.getElementById('gLoginPass').value;
+  const err = document.getElementById('gLoginErr');
+  const ok  = document.getElementById('gLoginOk');
+  err.classList.remove('show'); ok.classList.remove('show');
+  // Admin login → redirect
   if(u === 'FizikaLab_Admin' && p === 'MasterPhysics2026!'){
+    ok.textContent = '✅ Xush kelibsiz, Admin! Yo\'naltirilmoqda...';
     ok.classList.add('show');
     localStorage.setItem('fizikalab_admin','true');
-    setTimeout(()=>{ window.location.href='admin.html'; }, 1500);
-  } else {
-    err.classList.add('show');
-    document.getElementById('loginUser').style.borderColor='var(--r)';
-    document.getElementById('loginPass').style.borderColor='var(--r)';
-    setTimeout(()=>{
-      document.getElementById('loginUser').style.borderColor='';
-      document.getElementById('loginPass').style.borderColor='';
-    }, 1500);
+    setTimeout(()=>{ window.location.href='admin.html'; }, 1400);
+    return;
   }
+  // Student login check
+  const saved = localStorage.getItem('fizikalab_user');
+  if(saved){
+    try{
+      const user = JSON.parse(saved);
+      if(p && p.length >= 4){
+        ok.textContent = `✅ Xush kelibsiz, ${user.cosmo}!`;
+        ok.classList.add('show');
+        setTimeout(()=> unlockSite(user.cosmo), 1200);
+        return;
+      }
+    }catch(e){}
+  }
+  err.textContent = '❌ Login yoki parol xato!';
+  err.classList.add('show');
+  ['gLoginUser','gLoginPass'].forEach(id=>{
+    const el = document.getElementById(id);
+    el.style.borderColor='var(--r)';
+    setTimeout(()=>el.style.borderColor='',1500);
+  });
 }
-document.getElementById('loginPass').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    if(document.getElementById('panelLogin').classList.contains('active')) doGateLogin();
+    else doGateRegister();
+  }
+});
 
-// ── REGISTER LOGIC ──
-function doRegister(){
-  const name = document.getElementById('regName').value.trim();
-  const cosmo = document.getElementById('regCosmo').value.trim();
-  const cls = document.getElementById('regClass').value;
-  const pass = document.getElementById('regPass').value;
-  if(!name||!cosmo||!cls||!pass){ alert("Iltimos, barcha maydonlarni to'ldiring! 🚀"); return; }
-  const ok = document.getElementById('regOk');
-  document.getElementById('regOkName').textContent = cosmo || name;
-  ok.style.display='block';
-  ok.classList.add('show');
-  setTimeout(()=>closeAll(), 3000);
-}
+// ── CHECK EXISTING SESSION ──
+(function(){
+  const saved = localStorage.getItem('fizikalab_user');
+  if(saved){
+    try{
+      const user = JSON.parse(saved);
+      // Auto-unlock after brief star animation
+      setTimeout(()=> unlockSite(user.cosmo), 600);
+    }catch(e){ localStorage.removeItem('fizikalab_user'); }
+  }
+})();
 
 // ── QUIZ ──
 const Qs=[
@@ -576,6 +730,10 @@ function openTopic(id){
   const d=TD[id];
   document.getElementById('topicBody').innerHTML=`<h2 style="font-family:'Exo 2',sans-serif;font-size:1.7rem;margin-bottom:16px">${d.title}</h2>${d.body}`;
   document.getElementById('topicOverlay').classList.add('open');
+}
+function toggleChrisBubble(){
+  const b = document.getElementById('chrisBubble');
+  b.classList.toggle('hidden');
 }
 function closeTopicOutside(e){ if(e.target===document.getElementById('topicOverlay')) closeOverlay('topicOverlay'); }
 </script>
