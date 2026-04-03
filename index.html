@@ -275,14 +275,108 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 .sticky-auth-banner.hidden{display:none;}
 @keyframes slideUpBanner{from{opacity:0;transform:translate(-50%, 50px);}to{opacity:1;transform:translate(-50%, 0);}}
 
-/* ────── AUTH PORTAL (Antigravity Extreme) ────── */
-#authGate{
-  position:fixed;inset:0;z-index:1000;
-  background:rgba(2,6,23,0.85);backdrop-filter:blur(25px);
-  display:none;align-items:center;justify-content:center;padding:20px;
-  opacity:0;transition:opacity 0.5s ease;
+/* ────── HERO PORTAL (Antigravity Extreme) ────── */
+.hero{
+  min-height:100vh;padding:120px 40px 60px;display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:5;overflow:hidden;
 }
-#authGate.open{display:flex;opacity:1;}
+.hero-portal{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;max-width:1580px;gap:60px;position:relative;
+}
+
+/* LEFT: ANTIGRAVITY GALLERY (Integrated) */
+.hero-side-l{
+  flex:1;max-width:320px;display:flex;flex-direction:column;gap:15px;
+  background:rgba(15,23,42,0.45);backdrop-filter:blur(25px);
+  padding:34px;border-radius:32px;
+  border:1.5px solid rgba(139,92,246,0.25);
+  box-shadow:0 0 50px rgba(0,0,0,0.5), inset 0 0 15px rgba(139,92,246,0.1);
+}
+.hero-side-l h3{font-family:'Outfit',sans-serif;font-size:1.45rem;font-weight:900;color:var(--text);margin-bottom:28px;}
+.auth-nav-item{
+  padding:16px 22px;border-radius:16px;background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:0.95rem;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:all 0.4s;cursor:not-allowed;
+}
+.auth-nav-item:hover{background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);color:white;transform:scale(1.03);}
+.auth-nav-item .lock{font-size:0.85rem;opacity:0.5;}
+
+/* GHOST FORMULAS (Relative to Hero) */
+.ghost-formula{
+  position:absolute;font-family:'Exo 2',sans-serif;font-size:1.8rem;font-weight:800;
+  color:rgba(168,85,247,0.12);pointer-events:none;z-index:-1;
+  filter:blur(1px);animation:formulaFloat 8s infinite alternate ease-in-out;
+  text-shadow:0 0 20px rgba(168,85,247,0.3);
+}
+@keyframes formulaFloat{0%{transform:translate(0,0) rotate(0);}100%{transform:translate(30px,-40px) rotate(8deg);}}
+
+/* CENTER CARD - ANTIGRAVITY PROJECTOR */
+#heroAuthCard{
+  flex:2;background:transparent;max-width:650px;width:100%;
+  padding:20px;position:relative; transition:all 0.6s cubic-bezier(0.19,1,0.22,1);
+}
+#heroAuthCard.hidden{display:none;opacity:0;transform:scale(0.9);}
+#heroAuthCard h2{
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:3.2rem;line-height:1.2;
+  margin-bottom:12px;text-align:center;
+}
+#heroAuthCard h2 span{background:linear-gradient(135deg,var(--t),var(--mainv));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* UNLOCKED HERO (After Signup) */
+.hero-unlocked{display:none;text-align:center;animation:fadeUp 0.8s both;}
+.hero-unlocked h1{font-size:4rem;font-weight:900;margin-bottom:20px;}
+.hero-unlocked .welcome-msg{color:var(--muted);font-size:1.2rem;max-width:600px;margin:0 auto 40px;}
+
+/* PROJECTION INPUTS */
+.inp-wrap{margin-bottom:32px;position:relative;}
+.inp-wrap label{
+  display:block;font-size:0.8rem;font-weight:900;color:var(--t);margin-bottom:12px;
+  letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 0 10px rgba(34,211,238,0.4);
+}
+.inp-wrap input,.inp-wrap select{
+  width:100%;padding:18px 24px;background:rgba(255,255,255,0.03);
+  border:1.5px solid rgba(255,255,255,0.08);border-radius:18px;
+  color:white;font-family:'Nunito',sans-serif;font-size:1.1rem;
+  outline:none;transition:all 0.4s;
+  box-shadow:inset 0 0 20px rgba(0,0,0,0.3);
+  caret-color:var(--t);
+}
+.inp-wrap input:focus{
+  background:rgba(255,255,255,0.05);border-color:var(--t);
+  box-shadow:0 10px 40px -15px rgba(34,211,238,0.4), inset 0 0 10px rgba(34,211,238,0.1);
+  transform:translateY(-2px);
+}
+
+/* RIGHT: COSMIC ENGINE / ATOM (Integrated) */
+.hero-side-r{
+  flex:1;max-width:360px;display:flex;flex-direction:column;align-items:center;gap:40px;
+}
+
+/* HOLOGRAPHIC GAUGE */
+.hologram-dots{display:flex;gap:12px;margin:25px 0;justify-content:center;position:relative;}
+.hologram-dots::after{content:'';position:absolute;bottom:-10px;width:200px;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);}
+.h-dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 15px currentColor;opacity:0.8;animation:pulseH 2s infinite alternate;}
+@keyframes pulseH{from{opacity:0.4;transform:scale(0.85);} to{opacity:1;transform:scale(1.1);}}
+
+/* ⚛ ATOM ANIMATION (Integrated) */
+.atom{position:relative;width:120px;height:120px;perspective:500px;}
+.nucleus{position:absolute;inset:44px;background:var(--t);border-radius:50%;box-shadow:0 0 20px var(--t);}
+.orbit{
+  position:absolute;inset:0;border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:50%;animation:rotate 3s linear infinite;
+}
+.orbit::after{
+  content:'';position:absolute;top:-5px;left:50%;width:10px;height:10px;
+  background:var(--p);border-radius:50%;box-shadow:0 0 10px var(--p);
+}
+.orbit:nth-child(2){transform:rotateX(60deg);animation-duration:4s;}
+.orbit:nth-child(3){transform:rotateY(60deg);animation-duration:5s;}
+@keyframes rotate{100%{transform:rotate(360deg);}}
+
+#authGate{display:none !important;} /* Disabled modal */
 
 /* PORTAL ENGINE */
 .auth-portal{
@@ -356,21 +450,6 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 .h-dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 15px currentColor;opacity:0.8;animation:pulseH 2s infinite alternate;}
 @keyframes pulseH{from{opacity:0.4;transform:scale(0.85);} to{opacity:1;transform:scale(1.1);}}
 
-/* NEON INTERACTION POPUP */
-.neon-modal-overlay{
-  position:absolute;inset:0;background:rgba(2,6,23,0.3);backdrop-filter:blur(12px);
-  z-index:100;display:flex;align-items:center;justify-content:center;
-  animation:fadeInModal 0.6s cubic-bezier(0.19,1,0.22,1) both;
-}
-.neon-modal{
-  background:rgba(15,23,42,0.7);border:2px solid rgba(168,85,247,0.5);
-  border-radius:24px;padding:34px 44px;text-align:center;
-  box-shadow:0 0 60px rgba(168,85,247,0.3), inset 0 0 20px rgba(168,85,247,0.2);
-  max-width:440px;transform:translateY(20px);
-}
-.neon-modal h4{font-family:'Outfit',sans-serif;font-size:1.15rem;color:white;line-height:1.6;font-weight:700;}
-
-@keyframes fadeInModal{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
 @keyframes sideSlideL{from{opacity:0;transform:translateX(-80px);}to{opacity:1;transform:translateX(0);}}
 
 /* ────── MODALS ────── */
@@ -460,94 +539,7 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
   <button class="btn-neon primary" style="padding:8px 20px;font-size:0.8rem;" onclick="openGate()">Hozir Boshlash</button>
 </div>
 
-<!-- ══ AUTH GATE ══ -->
-<div id="authGate" onclick="closeGateOutside(event)">
-  <div class="auth-portal">
-    <!-- GHOST FORMULAS (Floating in depth) -->
-    <div class="ghost-formula" style="top:10%;left:35%;animation-delay:-2s;">G = mg</div>
-    <div class="ghost-formula" style="top:60%;left:25%;animation-delay:-5s;">ρ = m/V</div>
-    <div class="ghost-formula" style="top:30%;right:30%;animation-delay:-1s;">F = ma</div>
-
-    <!-- LEFT: ANTIGRAVITY GALLERY SIDEBAR -->
-    <div class="auth-side-l">
-      <h3>Antigravitatsiya</h3>
-      <div class="auth-nav-item">🔬 Mavzular <span class="lock">🔒</span></div>
-      <div class="auth-nav-item" style="color:white;background:rgba(99,102,241,0.08);">🧪 Tajribalar <span class="lock">🔒</span></div>
-      <div class="auth-nav-item">📝 Testlar <span class="lock">🔒</span></div>
-      <div class="auth-nav-item">📚 Kutubxona <span class="lock">🔒</span></div>
-      <div class="auth-nav-item">🏅 Yutuqlar <span class="lock">🔒</span></div>
-    </div>
-
-    <!-- CENTER: AUTH CARD (Projector) -->
-    <div class="auth-card">
-      <div style="text-align:center;margin-bottom:40px">
-        <div style="font-size:3.5rem;margin-bottom:15px;filter:drop-shadow(0 0 15px var(--t));">✨</div>
-        <h2 style="text-transform:none;">
-          Fizika <span>dunyosiga</span> <br>xush kelibsiz!
-        </h2>
-        <p style="color:var(--muted);font-size:0.95rem;max-width:380px;margin:10px auto 0;letter-spacing:0.5px;">Platformadan to'liq foydalanish uchun tizimga kiring 🌌</p>
-      </div>
-
-      <!-- TABS -->
-      <div class="auth-tabs" style="display:flex;gap:12px;margin-bottom:30px;justify-content:center;">
-        <button class="auth-tab active" id="tabReg" onclick="switchAuthTab('reg')">Ro'yxatdan O'tish</button>
-        <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">Kirish</button>
-      </div>
-
-      <!-- INTERACTION POPUP (Neon Modal) -->
-      <div class="neon-modal-overlay" id="regAlertPopup">
-        <div class="neon-modal">
-          <div style="font-size:2.5rem;margin-bottom:15px;">🔒</div>
-          <h4>Darsni boshlash yoki sinov uchun, <br><span style="color:var(--p)">iltimos, avval ro'yhatdan o'ting!</span></h4>
-          <button class="btn-neon secondary" style="margin-top:20px;padding:10px 24px;font-size:0.85rem;" onclick="closeRegPopup()">Tushunarli</button>
-        </div>
-      </div>
-
-      <!-- REGISTER PANEL -->
-      <div class="auth-panel active" id="panelReg">
-        <div class="inp-wrap"><label>To'liq ismingiz</label><input type="text" id="gRegName" placeholder="Asilbek"></div>
-        <div class="inp-wrap"><label>Sinf</label>
-          <select id="gRegClass">
-            <option value="">Sinfingizni tanlang...</option>
-            <option>6-A</option><option>6-B</option><option>6-C</option><option>6-D</option><option>Boshqa</option>
-          </select>
-        </div>
-        <div class="inp-wrap"><label>Parol</label><input type="password" id="gRegPass" placeholder="••••••••"></div>
-        
-        <div class="hologram-dots">
-          <div class="h-dot" style="background:#ef4444;color:#ef4444;"></div>
-          <div class="h-dot" style="background:#fbbf24;color:#fbbf24;"></div>
-          <div class="h-dot" style="background:#10b981;color:#10b981;"></div>
-          <div class="h-dot" style="background:#22d3ee;color:#22d3ee;"></div>
-        </div>
-
-        <div class="modal-err" id="gRegErr"></div>
-        <div class="modal-ok" id="gRegOk"></div>
-        <button class="btn-m primary" style="width:100%;padding:20px;justify-content:center;font-size:1.2rem;letter-spacing:1px;" onclick="doGateRegister()">🚀 Boshlash</button>
-      </div>
-
-      <!-- LOGIN PANEL (hidden initially) -->
-      <div class="auth-panel" id="panelLogin">
-        <div class="inp-wrap"><label>Login yoki Ism</label><input type="text" id="gLoginUser" placeholder="Asilbek"></div>
-        <div class="inp-wrap"><label>Parol</label><input type="password" id="gLoginPass" placeholder="••••••••"></div>
-        <div class="modal-err" id="gLoginErr"></div>
-        <div class="modal-ok" id="gLoginOk"></div>
-        <button class="btn-m primary" style="width:100%;padding:20px;justify-content:center;" onclick="doGateLogin()">🔑 Kirish</button>
-      </div>
-    </div>
-
-    <!-- RIGHT: COSMIC ENGINE / ATOM -->
-    <div class="auth-side-r" style="flex:1;max-width:360px;display:flex;flex-direction:column;align-items:center;gap:40px;">
-       <div class="atom">
-        <div class="nucleus"></div>
-        <div class="orbit"></div>
-        <div class="orbit"></div>
-        <div class="orbit"></div>
-      </div>
-      <div style="color:var(--muted);font-size:0.8rem;text-align:center;letter-spacing:2px;opacity:0.6;margin-top:20px;">GRAVITY ENGINE v3.0</div>
-    </div>
-  </div>
-</div>
+<!-- ══ AUTH GATE (Disabled/Deleted in favor of Unified Hero) ══ -->
 
 <!-- ══ SIDEBAR ══ -->
 <aside class="sidebar">
@@ -571,38 +563,6 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 </aside>
 
 <main class="content-wrapper">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">⚡ PHYSICS MASTERY 6-SINF</div>
-      <h1 class="fu"><span class="text-mask">Fizika Dunyosiga</span> <span>Xush Kelibsiz!</span></h1>
-      <p class="fu">Zamonayiv texnologiyalar va animatsiyalar yordamida fizikani professional darajada o'rganing. Kelajak olimlari aynan shu yerdan boshlaydi.</p>
-      <div class="hero-btns fu">
-        <button class="btn-m primary" onclick="openGate()">Bepul Boshlash 🚀</button>
-        <a href="#mavzular" class="btn-m secondary">Darslar Haqida ⭐</a>
-      </div>
-      
-      <div style="margin-top:50px;display:flex;align-items:center;gap:15px;" class="fu">
-        <div style="display:flex;margin-left:10px;">
-          <div style="width:36px;height:36px;border-radius:50%;background:#444;border:2px solid var(--bg);margin-left:-10px;"></div>
-          <div style="width:36px;height:36px;border-radius:50%;background:#666;border:2px solid var(--bg);margin-left:-10px;"></div>
-          <div style="width:36px;height:36px;border-radius:50%;background:#888;border:2px solid var(--bg);margin-left:-10px;"></div>
-        </div>
-        <div style="color:var(--muted);font-size:0.9rem;font-weight:700;">1,200+ O'quvchilar ⭐⭐⭐⭐⭐</div>
-      </div>
-    </div>
-
-    <div class="hero-visual fu">
-      <div class="code-window">
-        <div class="code-dots"><div style="background:#ff5f56"></div><div style="background:#ffbd2e"></div><div style="background:#27c93f"></div></div>
-        <div style="color:#d1d5db;line-height:1.6;">
-          <span class="kw">class</span> <span class="fn">PhysicsStudent</span> {<br>
-          &nbsp;&nbsp;<span class="kw">private</span> <span class="str">$iqLevel</span> = <span class="str">'Genius'</span>;<br><br>
-          &nbsp;&nbsp;<span class="kw">public function</span> <span class="fn">masterPhysics</span>() {<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">"Unlock Infinite Potential"</span>;<br>
-          &nbsp;&nbsp;}<br>
-          }<br><br>
-          <span class="comment">// Sintaksis mukammal. Davom etishga tayyormiz.</span>
         </div>
       </div>
     </div>
@@ -803,13 +763,7 @@ function closeOverlay(id){ document.getElementById(id).classList.remove('open');
 function closeAll(){ document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open')); }
 window.addEventListener('keydown', e=>{ if(e.key==='Escape' && !document.getElementById('authGate').style.opacity) closeAll(); });
 
-// ── AUTH GATE ──
-function closeRegPopup(){
-  const p = document.getElementById('regAlertPopup');
-  p.style.opacity = '0';
-  setTimeout(()=> p.style.display='none', 600);
-}
-
+// ── AUTH & SESSION ──
 function switchAuthTab(t){
   document.getElementById('tabReg').classList.toggle('active', t==='reg');
   document.getElementById('tabLogin').classList.toggle('active', t==='login');
@@ -818,24 +772,25 @@ function switchAuthTab(t){
 }
 
 function openGate(){
-  const gate = document.getElementById('authGate');
-  gate.style.display = 'flex';
-  setTimeout(()=> gate.classList.add('open'), 10);
-}
-
-function closeGateOutside(e){
-  if(e.target.id === 'authGate'){
-    const gate = document.getElementById('authGate');
-    gate.classList.remove('open');
-    setTimeout(()=> gate.style.display='none', 500);
-  }
+  // Now scrolls to Hero form instead of opening a modal
+  document.getElementById('homeHero').scrollIntoView({ behavior: 'smooth' });
 }
 
 function unlockSite(displayName){
-  const gate = document.getElementById('authGate');
-  gate.classList.remove('open');
-  setTimeout(()=>{ gate.style.display='none'; }, 600);
+  // Hide the registration card in the Hero
+  const card = document.getElementById('heroAuthCard');
+  if(card) {
+    card.classList.add('hidden');
+    setTimeout(()=> card.style.display='none', 600);
+  }
   
+  // Show the Welcome UI in the Hero
+  const welcome = document.getElementById('heroUnlocked');
+  if(welcome) {
+    welcome.style.display = 'block';
+    document.getElementById('welcomeName').textContent = displayName;
+  }
+
   // Hide guest UI
   document.getElementById('topAuthNav').classList.add('hidden');
   document.getElementById('stickyAuthBanner').classList.add('hidden');
@@ -940,17 +895,12 @@ document.addEventListener('keydown',e=>{
     try{
       const user = JSON.parse(saved);
       // Hide guest UI
-      const p = document.getElementById('regAlertPopup');
-      if(p) p.style.display = 'none';
       document.getElementById('topAuthNav').classList.add('hidden');
       document.getElementById('stickyAuthBanner').classList.add('hidden');
       
       const n = user.name || user.cosmo || "O'quvchi";
       unlockSite(n);
     }catch(e){ localStorage.removeItem('fizikalab_user'); }
-  } else {
-    // Initial guest state: ensure gate is hidden
-    document.getElementById('authGate').style.display='none';
   }
 })();
 
