@@ -4,66 +4,102 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fizika Dunyosi — 6-sinf | FizikaLab</title>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#050810;--bg2:#0b1020;--card:rgba(20,28,50,0.7);
-  --t:#4fd1c5;--o:#f6ad55;--r:#fc8181;--g:#68d391;--p:#b794f4;
+  --bg:#050810;--sidebar:#0b1020;--card:rgba(20,28,50,0.7);
+  --t:#4fd1c5;--o:#f6ad55;--r:#fc8181;--g:#68d391;--p:#b794f4;--mainv:#6366f1;
   --text:#e2e8f0;--muted:#94a3b8;
+  --sb-w:260px;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;overflow-x:hidden;display:flex;}
 canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
-/* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 40px;
-  background:rgba(5,8,16,0.8);backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(79,209,197,0.1);
+/* ────── SIDEBAR ────── */
+.sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sb-w);
+  background:var(--sidebar);border-right:1px solid rgba(255,255,255,0.06);
+  z-index:200;display:flex;flex-direction:column;padding:30px 20px;
+  transition:transform 0.3s;
 }
-.nav-logo{font-family:'Exo 2',sans-serif;font-weight:900;font-size:1.4rem;
-  background:linear-gradient(135deg,var(--t),var(--p));
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.nav-center{display:flex;gap:28px;}
-.nav-center a{color:var(--muted);text-decoration:none;font-size:0.88rem;font-weight:600;transition:color 0.2s;}
-.nav-center a:hover{color:var(--t);}
-.nav-right{display:flex;gap:10px;}
-.nav-btn{
-  padding:8px 18px;border-radius:10px;font-family:'Exo 2',sans-serif;
-  font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.2s;border:none;
+.sb-logo{
+  font-family:'Outfit',sans-serif;font-weight:900;font-size:1.6rem;color:var(--text);
+  margin-bottom:50px;display:flex;align-items:center;gap:12px;
 }
-.nav-btn.ghost{background:transparent;border:1.5px solid rgba(79,209,197,0.5);color:var(--t);}
-.nav-btn.ghost:hover{background:rgba(79,209,197,0.12);}
-.nav-btn.solid{background:var(--t);color:#050810;}
-.nav-btn.solid:hover{box-shadow:0 0 20px rgba(79,209,197,0.5);transform:translateY(-2px);}
+.sb-logo span{background:linear-gradient(135deg,var(--t),var(--mainv));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 
-/* HERO */
-.hero{
-  position:relative;z-index:1;min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:120px 20px 60px;
+.sb-nav{display:flex;flex-direction:column;gap:8px;flex:1;}
+.sb-nav-group{display:none;} /* Hidden initially */
+.sb-nav-group.visible{display:flex;flex-direction:column;gap:8px;}
+
+.sb-link{
+  display:flex;align-items:center;gap:14px;padding:12px 16px;
+  color:var(--muted);text-decoration:none;font-weight:600;font-size:0.92rem;
+  border-radius:12px;transition:all 0.25s;
 }
+.sb-link:hover{background:rgba(255,255,255,0.04);color:var(--text);}
+.sb-link.active{background:rgba(99,102,241,0.15);color:var(--mainv);}
+
+.sb-footer{margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.05);}
+.auth-btn-sb{
+  width:100%;padding:14px;border-radius:12px;border:none;
+  background:linear-gradient(45deg,var(--mainv),var(--p));color:white;
+  font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;
+  transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.auth-btn-sb:hover{box-shadow:0 0 20px rgba(99,102,241,0.4);transform:translateY(-2px);}
+
+/* ────── CONTENT WRAPPER ────── */
+.content-wrapper{
+  flex:1;margin-left:var(--sb-w);position:relative;z-index:1;
+}
+
+/* ────── HERO (Refined) ────── */
+.hero{
+  min-height:100vh;display:grid;grid-template-columns:1.2fr 1fr;align-items:center;
+  padding:60px 80px;gap:60px;
+}
+.hero-content{text-align:left;}
 .hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(79,209,197,0.08);border:1px solid rgba(79,209,197,0.35);
-  color:var(--t);padding:7px 18px;border-radius:99px;
-  font-size:0.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  margin-bottom:24px;animation:fadeD 0.8s ease both;
+  display:inline-flex;padding:8px 18px;border-radius:99px;
+  background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.25);
+  color:var(--mainv);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.7rem;
+  letter-spacing:1.5px;text-transform:uppercase;margin-bottom:30px;
 }
 .hero h1{
-  font-family:'Exo 2',sans-serif;font-size:clamp(2.6rem,7vw,5.5rem);
-  font-weight:900;line-height:1.08;margin-bottom:22px;
-  animation:fadeD 0.9s 0.1s ease both;
+  font-family:'Outfit',sans-serif;font-size:clamp(3rem,5vw,5.5rem);font-weight:900;
+  line-height:1;margin-bottom:28px;color:white;
 }
 .hero h1 span{
-  background:linear-gradient(120deg,var(--t),var(--p),var(--o));
+  display:block;background:linear-gradient(90deg,var(--t),#c084fc);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.hero p{font-size:1.1rem;color:var(--muted);max-width:560px;line-height:1.8;margin-bottom:36px;animation:fadeD 1s 0.2s ease both;}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fadeD 1s 0.3s ease both;}
+.hero p{font-size:1.15rem;color:var(--muted);max-width:540px;line-height:1.7;margin-bottom:44px;}
+.hero-btns{display:flex;gap:18px;}
+
+/* Glass Code Window */
+.code-window{
+  background:rgba(15,23,42,0.6);backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,0.08);border-radius:24px;
+  padding:30px;box-shadow:0 30px 60px rgba(0,0,0,0.5);
+  font-family:'Consolas',monospace;font-size:0.9rem;position:relative;
+}
+.code-dots{display:flex;gap:6px;margin-bottom:20px;}
+.code-dots div{width:10px;height:10px;border-radius:50%;}
+.kw{color:var(--p);} .fn{color:var(--t);} .str{color:var(--o);} .comment{color:var(--muted);font-style:italic;}
+
+/* BUTTONS */
+.btn-m{
+  padding:16px 36px;border-radius:14px;font-family:'Outfit',sans-serif;
+  font-size:1.05rem;font-weight:700;text-decoration:none;transition:all 0.3s;
+  cursor:pointer;border:none;display:inline-flex;align-items:center;gap:10px;
+}
+.btn-m.primary{background:white;color:#050810;}
+.btn-m.primary:hover{transform:translateY(-4px);box-shadow:0 15px 30px rgba(255,255,255,0.15);}
+.btn-m.secondary{background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:white;}
+.btn-m.secondary:hover{background:rgba(255,255,255,0.05);border-color:white;transform:translateY(-4px);}
 
 /* NEON BUTTONS */
 .btn-neon{
@@ -234,7 +270,7 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 }
 .modal-close-x:hover{background:rgba(252,129,129,0.2);color:var(--r);}
 .modal-glass h2{font-family:'Exo 2',sans-serif;font-size:1.85rem;font-weight:800;margin-bottom:6px;text-align:center;}
-.modal-glass h2 span{background:linear-gradient(135deg,var(--t),var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.modal-glass h2 span{background:linear-gradient(135deg,var(--t),var(--p));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 .modal-glass .sub{color:var(--muted);text-align:center;margin-bottom:28px;font-size:0.92rem;}
 .inp-wrap{margin-bottom:16px;}
 .inp-wrap label{display:block;font-size:0.8rem;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;}
@@ -263,9 +299,15 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 }
 
 /* RESPONSIVE */
+@media(max-width:991px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .content-wrapper{margin-left:0;}
+  .hero{grid-template-columns:1fr;padding:100px 20px 40px;text-align:center;}
+  .hero-content{text-align:center;}
+  .hero-btns{justify-content:center;}
+}
 @media(max-width:640px){
-  nav{padding:12px 14px;}
-  .nav-center{display:none;}
   .modal-glass{padding:26px;}
 }
 </style>
@@ -316,35 +358,64 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
   </div>
 </div>
 
-<!-- NAV -->
-<nav id="mainNav">
-  <div class="nav-logo">⚛ FizikaLab</div>
-  <div class="nav-center">
-    <a href="#mavzular">Mavzular</a>
-    <a href="#formulalar">Formulalar</a>
-    <a href="#quiz">Quiz</a>
-    <a href="#tajribalar">Tajribalar</a>
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar">
+  <div class="sb-logo">⚛ <span>FizikaLab</span></div>
+  
+  <div class="sb-nav">
+    <a href="#" class="sb-link active">🏠 Bosh sahifa</a>
+    
+    <!-- Hidden links (visible after registration) -->
+    <div class="sb-nav-group" id="sbNavLinks">
+      <a href="#mavzular" class="sb-link">📚 Mavzular</a>
+      <a href="#formulalar" class="sb-link">⚡ Formulalar</a>
+      <a href="#quiz" class="sb-link">🧠 Quiz</a>
+      <a href="#tajribalar" class="sb-link">🔬 Tajribalar</a>
+    </div>
   </div>
-  <div class="nav-right" id="navUserArea">
-    <!-- filled after login -->
-  </div>
-</nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="atom" style="top:14%;left:8%;--fd:7s;--fdi:0s">⚛</div>
-  <div class="atom" style="top:62%;left:5%;--fd:5s;--fdi:1s">🔬</div>
-  <div class="atom" style="top:18%;right:8%;--fd:8s;--fdi:.5s">⚡</div>
-  <div class="atom" style="top:72%;right:6%;--fd:6s;--fdi:2s">🌡</div>
-  <div class="atom" style="top:40%;left:3%;--fd:9s;--fdi:1.5s">🧲</div>
-  <div class="hero-badge">🚀 6-sinf Fizika</div>
-  <h1>Fizika Dunyosi<br><span>Qiziqarli va Oson!</span></h1>
-  <p>Koinotning sirlarini birgalikda kashf etamiz. Animatsiya, tajriba va o'yinlar orqali fizikani sevib o'rganing.</p>
-  <div class="hero-btns">
-    <a href="#mavzular" class="btn-neon primary">🎯 Darslarni Boshlash</a>
-    <a href="#quiz" class="btn-neon secondary">🧠 Quiz Ishlash</a>
+  <div class="sb-footer" id="sbFooterArea">
+    <button class="auth-btn-sb" onclick="openGate()">🔑 Kirish</button>
   </div>
-</section>
+</aside>
+
+<main class="content-wrapper">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">⚡ PHYSICS MASTERY 6-SINF</div>
+      <h1 class="fu">Fizikani <span>San'atga Aylantiring</span></h1>
+      <p class="fu">Zamonayiv texnologiyalar va animatsiyalar yordamida fizikani professional darajada o'rganing. Kelajak olimlari aynan shu yerdan boshlaydi.</p>
+      <div class="hero-btns fu">
+        <button class="btn-m primary" onclick="openGate()">Bepul Boshlash 🚀</button>
+        <a href="#mavzular" class="btn-m secondary">Darslar Haqida ⭐</a>
+      </div>
+      
+      <div style="margin-top:50px;display:flex;align-items:center;gap:15px;" class="fu">
+        <div style="display:flex;margin-left:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#444;border:2px solid var(--bg);margin-left:-10px;"></div>
+          <div style="width:36px;height:36px;border-radius:50%;background:#666;border:2px solid var(--bg);margin-left:-10px;"></div>
+          <div style="width:36px;height:36px;border-radius:50%;background:#888;border:2px solid var(--bg);margin-left:-10px;"></div>
+        </div>
+        <div style="color:var(--muted);font-size:0.9rem;font-weight:700;">1,200+ O'quvchilar ⭐⭐⭐⭐⭐</div>
+      </div>
+    </div>
+
+    <div class="hero-visual fu">
+      <div class="code-window">
+        <div class="code-dots"><div style="background:#ff5f56"></div><div style="background:#ffbd2e"></div><div style="background:#27c93f"></div></div>
+        <div style="color:#d1d5db;line-height:1.6;">
+          <span class="kw">class</span> <span class="fn">PhysicsStudent</span> {<br>
+          &nbsp;&nbsp;<span class="kw">private</span> <span class="str">$iqLevel</span> = <span class="str">'Genius'</span>;<br><br>
+          &nbsp;&nbsp;<span class="kw">public function</span> <span class="fn">masterPhysics</span>() {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">"Unlock Infinite Potential"</span>;<br>
+          &nbsp;&nbsp;}<br>
+          }<br><br>
+          <span class="comment">// Sintaksis mukammal. Davom etishga tayyormiz.</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
 <!-- STATS -->
 <div class="stats">
@@ -435,11 +506,12 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
   </div>
 </section>
 
-<footer>
-  <div class="flogo">⚛ FizikaLab</div>
-  <p>6-sinf o'quvchilari uchun fizikani qiziqarli o'rgatish platformasi</p>
-  <p style="margin-top:8px">Barcha huquqlar himoyalangan © 2025</p>
-</footer>
+  <footer>
+    <div class="flogo">⚛ FizikaLab</div>
+    <p>6-sinf o'quvchilari uchun fizikani qiziqarli o'rgatish platformasi</p>
+    <p style="margin-top:8px">Barcha huquqlar himoyalangan © 2025</p>
+  </footer>
+</main>
 
 <!-- TOPIC MODAL -->
 <div class="overlay" id="topicOverlay" onclick="closeTopicOutside(event)">
@@ -505,15 +577,29 @@ function switchAuthTab(t){
   document.getElementById('panelLogin').classList.toggle('active', t==='login');
 }
 
+function openGate(){
+  document.getElementById('authGate').style.display='flex';
+  document.getElementById('authGate').style.opacity='1';
+}
+
 function unlockSite(displayName){
   const gate = document.getElementById('authGate');
-  gate.style.transition = 'opacity 0.7s ease';
   gate.style.opacity = '0';
   setTimeout(()=>{ gate.style.display='none'; }, 700);
-  // Show user in nav
-  document.getElementById('navUserArea').innerHTML =
-    `<span style="color:var(--t);font-weight:700;font-size:0.85rem">👤 ${displayName}</span>
-     <button class="nav-btn ghost" onclick="logoutSite()" style="font-size:0.78rem">Chiqish</button>`;
+  
+  // Show side nav links
+  document.getElementById('sbNavLinks').classList.add('visible');
+  
+  // Update sidebar footer
+  document.getElementById('sbFooterArea').innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;padding:10px;">
+      <div style="width:40px;height:40px;background:var(--mainv);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;">${displayName[0]}</div>
+      <div style="flex:1">
+        <div style="font-size:0.85rem;font-weight:700;color:white;">${displayName}</div>
+        <div style="font-size:0.7rem;color:var(--muted);cursor:pointer;" onclick="logoutSite()">Chiqish</div>
+      </div>
+    </div>
+  `;
 }
 
 function logoutSite(){
@@ -594,7 +680,8 @@ document.addEventListener('keydown',e=>{
     try{
       const user = JSON.parse(saved);
       // Auto-unlock after brief star animation
-      setTimeout(()=> unlockSite(user.cosmo), 600);
+      const n = user.name || user.cosmo || "O'quvchi";
+      setTimeout(()=> unlockSite(n), 600);
     }catch(e){ localStorage.removeItem('fizikalab_user'); }
   }
 })();
