@@ -177,54 +177,35 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 /* FADE-UP */
 @keyframes fadeD{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
 .fu{opacity:0;transform:translateY(30px);transition:opacity 0.65s ease,transform 0.65s ease;}
-.fu.vis{opacity:1;transform:translateY(0);}
-
 /* ────── AUTH GATE ────── */
 #authGate{
   position:fixed;inset:0;z-index:900;
-  background:linear-gradient(135deg,rgba(5,8,16,0.97) 0%,rgba(11,16,32,0.97) 100%);
-  backdrop-filter:blur(18px);
+  background:linear-gradient(135deg,rgba(5,8,16,0.98) 0%,rgba(11,16,32,0.98) 100%);
+  backdrop-filter:blur(20px);
   display:flex;align-items:center;justify-content:center;padding:20px;
   transition:opacity 0.6s ease;
 }
 #authGate.hidden{opacity:0;pointer-events:none;}
 
-/* Chris mascot — always visible */
-#chrisMascot{
-  position:fixed;bottom:24px;right:24px;z-index:1000;
-  width:110px;cursor:pointer;
-  filter:drop-shadow(0 0 18px rgba(79,209,197,0.55));
-  animation:chrisBob 3s ease-in-out infinite;
-  transition:transform 0.2s;
-}
-#chrisMascot:hover{transform:scale(1.08);}
-@keyframes chrisBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
-.chris-bubble{
-  position:fixed;bottom:148px;right:24px;z-index:1000;
-  background:rgba(11,16,32,0.92);border:1.5px solid rgba(79,209,197,0.4);
-  border-radius:16px 16px 4px 16px;padding:10px 14px;
-  font-size:0.8rem;font-weight:700;color:var(--t);max-width:190px;
-  animation:fadeD 0.5s ease both;box-shadow:0 4px 24px rgba(0,0,0,0.4);
-  transition:opacity 0.3s;
-}
-.chris-bubble.hidden{opacity:0;pointer-events:none;}
-
-/* AUTH CARD */
+/* AUTH CARD - Expanded and cleaner */
 .auth-card{
-  background:rgba(11,16,32,0.88);backdrop-filter:blur(32px) saturate(180%);
-  border:1px solid rgba(79,209,197,0.25);border-radius:28px;
-  max-width:460px;width:100%;padding:44px;
-  animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both;
+  background:transparent;
+  max-width:600px;width:100%;padding:20px;
+  animation:popIn 0.4s ease both;
   position:relative;
 }
-.auth-tabs{display:flex;gap:0;margin-bottom:28px;border-radius:12px;overflow:hidden;border:1.5px solid rgba(79,209,197,0.2);}
+.auth-tabs{display:flex;gap:10px;margin-bottom:34px;justify-content:center;}
 .auth-tab{
-  flex:1;padding:11px;font-family:'Exo 2',sans-serif;font-weight:700;font-size:0.88rem;
-  background:transparent;border:none;color:var(--muted);cursor:pointer;transition:all 0.25s;
+  padding:12px 30px;font-family:'Exo 2',sans-serif;font-weight:800;font-size:1rem;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(79,209,197,0.2);
+  color:var(--muted);cursor:pointer;transition:all 0.3s;
+  border-radius:14px;
 }
-.auth-tab.active{background:var(--t);color:#050810;}
-.auth-tab:first-child{border-radius:10px 0 0 10px;}
-.auth-tab:last-child{border-radius:0 10px 10px 0;}
+.auth-tab.active{
+  background:var(--t);color:#050810;
+  box-shadow:0 0 20px rgba(79,209,197,0.3);
+  border-color:var(--t);
+}
 
 .auth-panel{display:none;}
 .auth-panel.active{display:block;}
@@ -295,28 +276,23 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 <!-- ══ AUTH GATE ══ -->
 <div id="authGate">
   <div class="auth-card">
-    <div style="text-align:center;margin-bottom:24px">
-      <div style="font-size:3rem;margin-bottom:8px">🚀</div>
-      <h2 style="font-family:'Exo 2',sans-serif;font-size:1.8rem;font-weight:900;margin-bottom:6px">
-        <span style="background:linear-gradient(135deg,var(--t),var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent">FizikaLab</span>ga Xush Kelibsiz!
+    <div style="text-align:center;margin-bottom:34px">
+      <div style="font-size:4rem;margin-bottom:12px">✨</div>
+      <h2 style="font-family:'Exo 2',sans-serif;font-size:2.4rem;font-weight:900;margin-bottom:10px">
+        Fizika Dunyosiga <br><span>Xush Kelibsiz!</span>
       </h2>
-      <p style="color:var(--muted);font-size:0.88rem">Davom etish uchun ro'yxatdan o'ting yoki kiring 🌌</p>
+      <p style="color:var(--muted);font-size:1rem;max-width:400px;margin:0 auto">Platformadan to'liq foydalanish uchun tizimga kiring 🌌</p>
     </div>
 
     <!-- TABS -->
     <div class="auth-tabs">
-      <button class="auth-tab active" id="tabReg" onclick="switchAuthTab('reg')">🚀 Ro'yxatdan O'tish</button>
-      <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">🔑 Kirish</button>
+      <button class="auth-tab active" id="tabReg" onclick="switchAuthTab('reg')">Ro'yxatdan O'tish</button>
+      <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">Kirish</button>
     </div>
 
     <!-- REGISTER PANEL -->
     <div class="auth-panel active" id="panelReg">
-      <div class="inp-wrap"><label>TO'LIQ ISMING</label><input type="text" id="gRegName" placeholder="Ismingiz"></div>
-      <div class="inp-wrap">
-        <label>🌌 KOSMONAVT ISMING</label>
-        <input type="text" id="gRegCosmo" placeholder="Yulduz_Asilbek, Nebula_Dilnoza...">
-        <p style="color:var(--muted);font-size:0.75rem;margin-top:4px">Platformada shu ism ko'rinadi 🛸</p>
-      </div>
+      <div class="inp-wrap"><label>TO'LIQ ISMINGIZ</label><input type="text" id="gRegName" placeholder="Ismingizni kiriting"></div>
       <div class="inp-wrap"><label>SINF</label>
         <select id="gRegClass">
           <option value="">Sinfingizni tanlang...</option>
@@ -326,57 +302,18 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
       <div class="inp-wrap"><label>PAROL</label><input type="password" id="gRegPass" placeholder="Xavfsiz parol yarating"></div>
       <div class="modal-err" id="gRegErr"></div>
       <div class="modal-ok" id="gRegOk"></div>
-      <button class="btn-neon primary" style="width:100%;margin-top:4px" onclick="doGateRegister()">🚀 Ro'yxatdan O'tish va Boshlash</button>
+      <button class="btn-neon primary" style="width:100%;margin-top:10px;padding:16px" onclick="doGateRegister()">🚀 Boshlash</button>
     </div>
 
     <!-- LOGIN PANEL -->
     <div class="auth-panel" id="panelLogin">
-      <div class="inp-wrap"><label>LOGIN</label><input type="text" id="gLoginUser" placeholder="FizikaLab_Admin"></div>
-      <div class="inp-wrap"><label>PAROL</label><input type="password" id="gLoginPass" placeholder="••••••••••••"></div>
+      <div class="inp-wrap"><label>FOYDALANUVCHI NOMI (ADMIN) YOKI ISM</label><input type="text" id="gLoginUser" placeholder="Ismingiz"></div>
+      <div class="inp-wrap"><label>PAROL</label><input type="password" id="gLoginPass" placeholder="••••••••"></div>
       <div class="modal-err" id="gLoginErr"></div>
       <div class="modal-ok" id="gLoginOk"></div>
-      <button class="btn-neon primary" style="width:100%;margin-top:4px" onclick="doGateLogin()">🔑 Kirish</button>
-      <p style="text-align:center;margin-top:14px;color:var(--muted);font-size:0.8rem">Hisobingiz yo'qmi? <span style="color:var(--t);cursor:pointer;font-weight:700" onclick="switchAuthTab('reg')">Ro'yxatdan o'ting →</span></p>
+      <button class="btn-neon primary" style="width:100%;margin-top:10px;padding:16px" onclick="doGateLogin()">🔑 Kirish</button>
     </div>
   </div>
-</div>
-
-<!-- ══ CHRIS MASCOT (always visible) ══ -->
-<div class="chris-bubble" id="chrisBubble">Salom! Keling, fizikani birga o'rganamiz! 🌟</div>
-<div id="chrisMascot" onclick="toggleChrisBubble()" title="Chris - Kosmonavt">
-  <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-    <!-- space suit body -->
-    <ellipse cx="60" cy="95" rx="34" ry="38" fill="#c8e6fa" stroke="#4fd1c5" stroke-width="2.5"/>
-    <!-- helmet -->
-    <circle cx="60" cy="52" r="30" fill="#dff2ff" stroke="#4fd1c5" stroke-width="2.5"/>
-    <!-- visor -->
-    <ellipse cx="60" cy="52" rx="20" ry="18" fill="#0b1a3a" opacity="0.88"/>
-    <!-- visor shine -->
-    <ellipse cx="52" cy="44" rx="6" ry="4" fill="rgba(255,255,255,0.2)" transform="rotate(-15,52,44)"/>
-    <!-- eyes inside visor -->
-    <circle cx="52" cy="52" r="4.5" fill="#4fd1c5"/>
-    <circle cx="68" cy="52" r="4.5" fill="#4fd1c5"/>
-    <circle cx="53.5" cy="51" r="1.8" fill="white"/>
-    <circle cx="69.5" cy="51" r="1.8" fill="white"/>
-    <!-- smile -->
-    <path d="M52 61 Q60 68 68 61" stroke="#4fd1c5" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <!-- suit chest badge -->
-    <rect x="45" y="82" width="30" height="18" rx="6" fill="#4fd1c5" opacity="0.3"/>
-    <text x="60" y="95" text-anchor="middle" font-size="9" fill="#4fd1c5" font-weight="bold">FIZIKA</text>
-    <!-- arms -->
-    <ellipse cx="28" cy="95" rx="10" ry="18" fill="#c8e6fa" stroke="#4fd1c5" stroke-width="2" transform="rotate(-15,28,95)"/>
-    <ellipse cx="92" cy="95" rx="10" ry="18" fill="#c8e6fa" stroke="#4fd1c5" stroke-width="2" transform="rotate(15,92,95)"/>
-    <!-- gloves -->
-    <ellipse cx="22" cy="112" rx="8" ry="6" fill="#4fd1c5" transform="rotate(-10,22,112)"/>
-    <ellipse cx="98" cy="112" rx="8" ry="6" fill="#4fd1c5" transform="rotate(10,98,112)"/>
-    <!-- legs -->
-    <ellipse cx="46" cy="130" rx="12" ry="9" fill="#4fd1c5"/>
-    <ellipse cx="74" cy="130" rx="12" ry="9" fill="#4fd1c5"/>
-    <!-- stars around helmet -->
-    <text x="10" y="30" font-size="10" fill="#b794f4" opacity="0.8">✦</text>
-    <text x="98" y="25" font-size="8" fill="#f6ad55" opacity="0.8">✦</text>
-    <text x="15" y="75" font-size="7" fill="#4fd1c5" opacity="0.6">·</text>
-  </svg>
 </div>
 
 <!-- NAV -->
@@ -575,12 +512,8 @@ function unlockSite(displayName){
   setTimeout(()=>{ gate.style.display='none'; }, 700);
   // Show user in nav
   document.getElementById('navUserArea').innerHTML =
-    `<span style="color:var(--t);font-weight:700;font-size:0.85rem">👨‍🚀 ${displayName}</span>
+    `<span style="color:var(--t);font-weight:700;font-size:0.85rem">👤 ${displayName}</span>
      <button class="nav-btn ghost" onclick="logoutSite()" style="font-size:0.78rem">Chiqish</button>`;
-  // Update Chris bubble
-  const bubble = document.getElementById('chrisBubble');
-  bubble.textContent = `Salom, ${displayName}! Keling boshlaymiz! 🎯`;
-  setTimeout(()=>{ bubble.classList.add('hidden'); }, 5000);
 }
 
 function logoutSite(){
@@ -591,13 +524,12 @@ function logoutSite(){
 // Gate Register
 function doGateRegister(){
   const name  = document.getElementById('gRegName').value.trim();
-  const cosmo = document.getElementById('gRegCosmo').value.trim();
   const cls   = document.getElementById('gRegClass').value;
   const pass  = document.getElementById('gRegPass').value;
   const err   = document.getElementById('gRegErr');
   const ok    = document.getElementById('gRegOk');
   err.classList.remove('show'); ok.classList.remove('show');
-  if(!name||!cosmo||!cls||!pass){
+  if(!name||!cls||!pass){
     err.textContent = '❌ Iltimos, barcha maydonlarni to\'ldiring!';
     err.classList.add('show'); return;
   }
@@ -605,11 +537,11 @@ function doGateRegister(){
     err.textContent = '❌ Parol kamida 4 ta belgi bo\'lishi kerak!';
     err.classList.add('show'); return;
   }
-  const user = {name, cosmo, cls};
+  const user = {name, cls};
   localStorage.setItem('fizikalab_user', JSON.stringify(user));
-  ok.textContent = `🎉 Tabriklaymiz, ${cosmo}! Platformaga xush kelibsiz!`;
+  ok.textContent = `🎉 Tabriklaymiz, ${name}! Xush kelibsiz!`;
   ok.classList.add('show');
-  setTimeout(()=> unlockSite(cosmo), 1400);
+  setTimeout(()=> unlockSite(name), 1400);
 }
 
 // Gate Login
@@ -633,9 +565,9 @@ function doGateLogin(){
     try{
       const user = JSON.parse(saved);
       if(p && p.length >= 4){
-        ok.textContent = `✅ Xush kelibsiz, ${user.cosmo}!`;
+        ok.textContent = `✅ Xush kelibsiz, ${user.name}!`;
         ok.classList.add('show');
-        setTimeout(()=> unlockSite(user.cosmo), 1200);
+        setTimeout(()=> unlockSite(user.name), 1200);
         return;
       }
     }catch(e){}
@@ -731,11 +663,7 @@ function openTopic(id){
   document.getElementById('topicBody').innerHTML=`<h2 style="font-family:'Exo 2',sans-serif;font-size:1.7rem;margin-bottom:16px">${d.title}</h2>${d.body}`;
   document.getElementById('topicOverlay').classList.add('open');
 }
-function toggleChrisBubble(){
-  const b = document.getElementById('chrisBubble');
-  b.classList.toggle('hidden');
-}
-function closeTopicOutside(e){ if(e.target===document.getElementById('topicOverlay')) closeOverlay('topicOverlay'); }
+ function closeTopicOutside(e){ if(e.target===document.getElementById('topicOverlay')) closeOverlay('topicOverlay'); }
 </script>
 </body>
 </html>
