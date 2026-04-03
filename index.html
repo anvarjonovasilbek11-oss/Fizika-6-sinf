@@ -18,15 +18,23 @@ html{scroll-behavior:smooth;}
 body{
   background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;overflow-x:hidden;display:flex;
   background-image:
-    radial-gradient(circle at 15% 15%,rgba(99,102,241,0.08),transparent 40%),
-    radial-gradient(circle at 85% 85%,rgba(168,85,247,0.08),transparent 40%),
-    radial-gradient(circle at 50% 50%,rgba(34,211,238,0.04),transparent 60%);
-  animation:cosmicPulse 20s infinite alternate;
+    radial-gradient(circle at 10% 20%,rgba(99,102,241,0.12),transparent 45%),
+    radial-gradient(circle at 90% 80%,rgba(168,85,247,0.12),transparent 45%),
+    radial-gradient(circle at 50% 50%,rgba(34,211,238,0.06),transparent 65%);
+  animation:cosmicPulse 25s infinite alternate;
 }
 @keyframes cosmicPulse{
   0%{background-position:0% 0%;}
-  100%{background-position:5% 5%;}
+  100%{background-position:10% 10%;}
 }
+/* Deep Space 3.0: Gravity Lens */
+body::after{
+  content:'';position:fixed;top:50%;right:5%;width:450px;height:450px;
+  background:radial-gradient(circle,#000 30%,rgba(99,102,241,0.2) 60%,transparent 90%);
+  border-radius:50%;z-index:-1;filter:blur(30px);
+  animation:gravityLens 15s infinite alternate ease-in-out;opacity:0.6;
+}
+@keyframes gravityLens{from{transform:scale(1) translate(0,0);} to{transform:scale(1.1) translate(20px,20px);}}
 canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 /* ────── SIDEBAR ────── */
@@ -241,111 +249,107 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 /* FADE-UP */
 @keyframes fadeD{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
 .fu{opacity:0;transform:translateY(30px);transition:opacity 0.65s ease,transform 0.65s ease;}
-/* ────── AUTH PORTAL (Cinematic 3-Column) ────── */
+/* ────── AUTH PORTAL (Antigravity Extreme) ────── */
 #authGate{
-  position:fixed;inset:0;z-index:900;
-  background:rgba(2,6,23,0.05); /* Deepest transparency */
+  position:fixed;inset:0;z-index:950;
+  background:rgba(2,6,23,0.06); 
   display:flex;align-items:center;justify-content:center;padding:20px;
-  transition:opacity 0.6s ease;overflow:hidden;
+  transition:opacity 0.8s cubic-bezier(0.4,0,0.2,1);overflow:hidden;
 }
 
 /* PORTAL ENGINE */
 .auth-portal{
   display:flex;align-items:center;justify-content:space-between;
-  width:100%;max-width:1400px;gap:40px;
+  width:100%;max-width:1500px;gap:60px;position:relative;
 }
 
-/* LEFT: SECTIONS LIST */
+/* LEFT: ANTIGRAVITY GALLERY SIDEBAR */
 .auth-side-l{
-  flex:1;max-width:300px;display:flex;flex-direction:column;gap:18px;
-  animation:fadeL 1s ease both;
+  flex:1;max-width:320px;display:flex;flex-direction:column;gap:15px;
+  background:rgba(15,23,42,0.45);backdrop-filter:blur(25px);
+  padding:34px;border-radius:32px;
+  border:1.5px solid rgba(139,92,246,0.25);
+  box-shadow:0 0 50px rgba(0,0,0,0.5), inset 0 0 15px rgba(139,92,246,0.1);
+  animation:sideSlideL 1.2s cubic-bezier(0.19,1,0.22,1) both;
 }
-.auth-side-l h3{font-family:'Exo 2',sans-serif;font-size:1.6rem;font-weight:800;color:var(--t);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase;}
+.auth-side-l h3{font-family:'Outfit',sans-serif;font-size:1.45rem;font-weight:900;color:var(--text);margin-bottom:28px;}
 .auth-nav-item{
-  padding:18px 24px;border-radius:18px;background:rgba(255,255,255,0.02);
-  border:1px solid rgba(255,255,255,0.05);color:var(--muted);
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:1.05rem;
+  padding:16px 22px;border-radius:16px;background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:0.95rem;
   display:flex;justify-content:space-between;align-items:center;
-  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);cursor:not-allowed;
+  transition:all 0.4s;cursor:not-allowed;
 }
-.auth-nav-item:hover{background:rgba(255,255,255,0.05);transform:translateX(10px);color:white;}
-.auth-nav-item .lock{font-size:0.9rem;opacity:0.6;}
+.auth-nav-item:hover{background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);color:white;transform:scale(1.03);}
+.auth-nav-item .lock{font-size:0.85rem;opacity:0.5;}
 
-/* RIGHT: PHYSICS OBJECTS */
-.auth-side-r{
-  flex:1;max-width:360px;height:550px;position:relative;
-  display:flex;flex-direction:column;justify-content:space-around;
-  align-items:center;animation:fadeR 1s ease both;
+/* GHOST FORMULAS */
+.ghost-formula{
+  position:absolute;font-family:'Exo 2',sans-serif;font-size:1.8rem;font-weight:800;
+  color:rgba(168,85,247,0.12);pointer-events:none;z-index:-1;
+  filter:blur(1px);animation:formulaFloat 8s infinite alternate ease-in-out;
+  text-shadow:0 0 20px rgba(168,85,247,0.3);
 }
+@keyframes formulaFloat{0%{transform:translate(0,0) rotate(0);}100%{transform:translate(30px,-40px) rotate(8deg);}}
 
-/* ⚛ ATOM ANIMATION */
-.atom{position:relative;width:120px;height:120px;perspective:500px;}
-.nucleus{position:absolute;inset:44px;background:var(--t);border-radius:50%;box-shadow:0 0 20px var(--t);}
-.orbit{
-  position:absolute;inset:0;border:1.5px solid rgba(255,255,255,0.1);
-  border-radius:50%;animation:rotate 3s linear infinite;
-}
-.orbit::after{
-  content:'';position:absolute;top:-5px;left:50%;width:10px;height:10px;
-  background:var(--p);border-radius:50%;box-shadow:0 0 10px var(--p);
-}
-.orbit:nth-child(2){transform:rotateX(60deg);animation-duration:4s;}
-.orbit:nth-child(3){transform:rotateY(60deg);animation-duration:5s;}
-
-/* 🧲 MAGNET ANIMATION */
-.magnet-u{
-  width:80px;height:100px;border:10px solid #fc8181;border-bottom:none;
-  border-radius:40px 40px 0 0;position:relative;
-  filter:drop-shadow(0 0 15px rgba(252,129,129,0.3));
-}
-.magnet-u::after{
-  content:'';position:absolute;inset:0;border:10px solid #4fd1c5;
-  border-top:none;border-radius:0 0 40px 40px;top:50px;
-}
-
-/* ⚙ NEWTON CRADLE */
-.cradle{display:flex;gap:2px;padding-top:40px;}
-.ball{
-  width:20px;height:20px;background:var(--t);border-radius:50%;
-  position:relative;transform-origin:top center;
-}
-.ball::before{content:'';position:absolute;top:-30px;left:50%;width:1px;height:30px;background:rgba(255,255,255,0.2);}
-.ball:first-child{animation:swing-l 1s ease-in-out infinite alternate;}
-.ball:last-child{animation:swing-r 1s ease-in-out infinite alternate-reverse;}
-
-@keyframes rotate{100%{transform:rotate(360deg);}}
-@keyframes swing-l{0%{transform:rotate(30deg);} 50%,100%{transform:rotate(0deg);}}
-@keyframes swing-r{0%,50%{transform:rotate(0deg);} 100%{transform:rotate(-30deg);}}
-@keyframes fadeL{from{opacity:0;transform:translateX(-50px);}to{opacity:1;transform:translateX(0);}}
-@keyframes fadeR{from{opacity:0;transform:translateX(50px);}to{opacity:1;transform:translateX(0);}}
-
-#authGate.hidden{opacity:0;pointer-events:none;}
-
-/* AUTH CARD */
+/* CENTER CARD - ANTIGRAVITY PROJECTOR */
 .auth-card{
-  flex:2;background:transparent;
-  max-width:620px;width:100%;padding:20px;
-  animation:float 6s ease-in-out infinite;position:relative;
+  flex:2;background:transparent;max-width:650px;width:100%;
+  padding:20px;animation:float 7s ease-in-out infinite both;position:relative;
 }
-.auth-tabs{display:flex;gap:15px;margin-bottom:44px;justify-content:center;}
-.auth-tab{
-  padding:14px 34px;font-family:'Outfit',sans-serif;font-weight:900;font-size:1.1rem;
-  background:rgba(255,255,255,0.03);border:none;
-  color:var(--muted);cursor:pointer;transition:all 0.4s;
-  border-radius:18px;
+.auth-card h2{
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:2.8rem;line-height:1.2;
+  margin-bottom:12px;text-align:center;
 }
-.auth-tab.active{
-  background:var(--neon-b);color:white;
-  box-shadow:0 0 25px rgba(0,242,254,0.4);
+.auth-card h2 span{background:linear-gradient(135deg,var(--t),var(--mainv));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* PROJECTION INPUTS */
+.inp-wrap{margin-bottom:32px;position:relative;}
+.inp-wrap label{
+  display:block;font-size:0.8rem;font-weight:900;color:var(--t);margin-bottom:12px;
+  letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 0 10px rgba(34,211,238,0.4);
+}
+.inp-wrap input,.inp-wrap select{
+  width:100%;padding:18px 24px;background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);border-radius:18px;
+  color:white;font-family:'Nunito',sans-serif;font-size:1.1rem;
+  outline:none;transition:all 0.4s;
+  box-shadow:inset 0 0 20px rgba(0,0,0,0.3);
+  caret-color:var(--t);
+}
+.inp-wrap input:focus{
+  background:rgba(255,255,255,0.05);border-color:var(--t);
+  box-shadow:0 10px 40px -15px rgba(34,211,238,0.4), inset 0 0 10px rgba(34,211,238,0.1);
+  transform:translateY(-2px);
 }
 
-.auth-panel{display:none;}
-.auth-panel.active{display:block;}
+/* HOLOGRAPHIC GAUGE */
+.hologram-dots{display:flex;gap:12px;margin:25px 0;justify-content:center;position:relative;}
+.hologram-dots::after{content:'';position:absolute;bottom:-10px;width:200px;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);}
+.h-dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 15px currentColor;opacity:0.8;animation:pulseH 2s infinite alternate;}
+@keyframes pulseH{from{opacity:0.4;transform:scale(0.85);} to{opacity:1;transform:scale(1.1);}}
+
+/* NEON INTERACTION POPUP */
+.neon-modal-overlay{
+  position:absolute;inset:0;background:rgba(2,6,23,0.3);backdrop-filter:blur(12px);
+  z-index:100;display:flex;align-items:center;justify-content:center;
+  animation:fadeInModal 0.6s cubic-bezier(0.19,1,0.22,1) both;
+}
+.neon-modal{
+  background:rgba(15,23,42,0.7);border:2px solid rgba(168,85,247,0.5);
+  border-radius:24px;padding:34px 44px;text-align:center;
+  box-shadow:0 0 60px rgba(168,85,247,0.3), inset 0 0 20px rgba(168,85,247,0.2);
+  max-width:440px;transform:translateY(20px);
+}
+.neon-modal h4{font-family:'Outfit',sans-serif;font-size:1.15rem;color:white;line-height:1.6;font-weight:700;}
+
+@keyframes fadeInModal{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
+@keyframes sideSlideL{from{opacity:0;transform:translateX(-80px);}to{opacity:1;transform:translateX(0);}}
 
 /* ────── MODALS ────── */
 .overlay{
-  display:none;position:fixed;inset:0;z-index:500;
-  background:rgba(0,0,0,0.9);backdrop-filter:blur(20px);
+  display:none;position:fixed;inset:0;z-index:999;
+  background:rgba(0,0,0,0.92);backdrop-filter:blur(25px);
   align-items:center;justify-content:center;padding:20px;
 }
 .overlay.open{display:flex;}
@@ -419,75 +423,88 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 <!-- ══ AUTH GATE ══ -->
 <div id="authGate">
   <div class="auth-portal">
-    <!-- LEFT: Sections -->
+    <!-- GHOST FORMULAS (Floating in depth) -->
+    <div class="ghost-formula" style="top:10%;left:35%;animation-delay:-2s;">G = mg</div>
+    <div class="ghost-formula" style="top:60%;left:25%;animation-delay:-5s;">ρ = m/V</div>
+    <div class="ghost-formula" style="top:30%;right:30%;animation-delay:-1s;">F = ma</div>
+
+    <!-- LEFT: ANTIGRAVITY GALLERY SIDEBAR -->
     <div class="auth-side-l">
-      <h3>Darslar Portali</h3>
-      <div class="auth-nav-item">📚 Mavzular <span class="lock">🔒</span></div>
-      <div class="auth-nav-item">⚡ Formulalar <span class="lock">🔒</span></div>
-      <div class="auth-nav-item">🧠 Quiz Testlar <span class="lock">🔒</span></div>
-      <div class="auth-nav-item">🔬 Tajribalar <span class="lock">🔒</span></div>
-      <div style="margin-top:20px;color:rgba(255,255,255,0.3);font-size:0.8rem;">* Kirish uchun ro'yxatdan o'ting</div>
+      <h3>Antigravitatsiya</h3>
+      <div class="auth-nav-item">🔬 Mavzular <span class="lock">🔒</span></div>
+      <div class="auth-nav-item" style="color:white;background:rgba(99,102,241,0.08);">🧪 Tajribalar <span class="lock">🔒</span></div>
+      <div class="auth-nav-item">📝 Testlar <span class="lock">🔒</span></div>
+      <div class="auth-nav-item">📚 Kutubxona <span class="lock">🔒</span></div>
+      <div class="auth-nav-item">🏅 Yutuqlar <span class="lock">🔒</span></div>
     </div>
 
-    <!-- CENTER: Auth Card -->
+    <!-- CENTER: AUTH CARD (Projector) -->
     <div class="auth-card">
-      <div style="text-align:center;margin-bottom:34px">
-        <div style="font-size:4rem;margin-bottom:12px">✨</div>
-        <h2 style="font-family:'Exo 2',sans-serif;font-size:2.4rem;font-weight:900;margin-bottom:10px">
-          Fizika Dunyosiga <br><span>Xush Kelibsiz!</span>
+      <div style="text-align:center;margin-bottom:40px">
+        <div style="font-size:3.5rem;margin-bottom:15px;filter:drop-shadow(0 0 15px var(--t));">✨</div>
+        <h2 style="text-transform:none;">
+          Fizika <span>dunyosiga</span> <br>xush kelibsiz!
         </h2>
-        <p style="color:var(--muted);font-size:1rem;max-width:400px;margin:0 auto">Platformadan to'liq foydalanish uchun tizimga kiring 🌌</p>
+        <p style="color:var(--muted);font-size:0.95rem;max-width:380px;margin:10px auto 0;letter-spacing:0.5px;">Platformadan to'liq foydalanish uchun tizimga kiring 🌌</p>
       </div>
 
       <!-- TABS -->
-      <div class="auth-tabs">
+      <div class="auth-tabs" style="display:flex;gap:12px;margin-bottom:30px;justify-content:center;">
         <button class="auth-tab active" id="tabReg" onclick="switchAuthTab('reg')">Ro'yxatdan O'tish</button>
         <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">Kirish</button>
       </div>
 
+      <!-- INTERACTION POPUP (Neon Modal) -->
+      <div class="neon-modal-overlay" id="regAlertPopup">
+        <div class="neon-modal">
+          <div style="font-size:2.5rem;margin-bottom:15px;">🔒</div>
+          <h4>Darsni boshlash yoki sinov uchun, <br><span style="color:var(--p)">iltimos, avval ro'yhatdan o'ting!</span></h4>
+          <button class="btn-neon secondary" style="margin-top:20px;padding:10px 24px;font-size:0.85rem;" onclick="closeRegPopup()">Tushunarli</button>
+        </div>
+      </div>
+
       <!-- REGISTER PANEL -->
       <div class="auth-panel active" id="panelReg">
-        <div class="inp-wrap"><label>TO'LIQ ISMINGIZ</label><input type="text" id="gRegName" placeholder="Ismingizni kiriting"></div>
-        <div class="inp-wrap"><label>SINF</label>
+        <div class="inp-wrap"><label>To'liq ismingiz</label><input type="text" id="gRegName" placeholder="Asilbek"></div>
+        <div class="inp-wrap"><label>Sinf</label>
           <select id="gRegClass">
             <option value="">Sinfingizni tanlang...</option>
             <option>6-A</option><option>6-B</option><option>6-C</option><option>6-D</option><option>Boshqa</option>
           </select>
         </div>
-        <div class="inp-wrap"><label>PAROL</label><input type="password" id="gRegPass" placeholder="Xavfsiz parol yarating"></div>
+        <div class="inp-wrap"><label>Parol</label><input type="password" id="gRegPass" placeholder="••••••••"></div>
+        
+        <div class="hologram-dots">
+          <div class="h-dot" style="background:#ef4444;color:#ef4444;"></div>
+          <div class="h-dot" style="background:#fbbf24;color:#fbbf24;"></div>
+          <div class="h-dot" style="background:#10b981;color:#10b981;"></div>
+          <div class="h-dot" style="background:#22d3ee;color:#22d3ee;"></div>
+        </div>
+
         <div class="modal-err" id="gRegErr"></div>
         <div class="modal-ok" id="gRegOk"></div>
-        <button class="btn-neon primary" style="width:100%;margin-top:10px;padding:16px" onclick="doGateRegister()">🚀 Boshlash</button>
+        <button class="btn-m primary" style="width:100%;padding:20px;justify-content:center;font-size:1.2rem;letter-spacing:1px;" onclick="doGateRegister()">🚀 Boshlash</button>
       </div>
 
-      <!-- LOGIN PANEL -->
+      <!-- LOGIN PANEL (hidden initially) -->
       <div class="auth-panel" id="panelLogin">
-        <div class="inp-wrap"><label>LOGIN (ADMIN) YOKI ISM</label><input type="text" id="gLoginUser" placeholder="Asilbek yoki Ism"></div>
-        <div class="inp-wrap"><label>PAROL</label><input type="password" id="gLoginPass" placeholder="••••••••"></div>
+        <div class="inp-wrap"><label>Login yoki Ism</label><input type="text" id="gLoginUser" placeholder="Asilbek"></div>
+        <div class="inp-wrap"><label>Parol</label><input type="password" id="gLoginPass" placeholder="••••••••"></div>
         <div class="modal-err" id="gLoginErr"></div>
         <div class="modal-ok" id="gLoginOk"></div>
-        <button class="btn-neon primary" style="width:100%;margin-top:10px;padding:16px" onclick="doGateLogin()">🔑 Kirish</button>
+        <button class="btn-m primary" style="width:100%;padding:20px;justify-content:center;" onclick="doGateLogin()">🔑 Kirish</button>
       </div>
     </div>
 
-    <!-- RIGHT: Physics Animations -->
-    <div class="auth-side-r">
-      <div class="atom">
+    <!-- RIGHT: COSMIC ENGINE / ATOM -->
+    <div class="auth-side-r" style="flex:1;max-width:360px;display:flex;flex-direction:column;align-items:center;gap:40px;">
+       <div class="atom">
         <div class="nucleus"></div>
         <div class="orbit"></div>
         <div class="orbit"></div>
         <div class="orbit"></div>
       </div>
-      
-      <div class="magnet-u"></div>
-      
-      <div class="cradle">
-        <div class="ball"></div>
-        <div class="ball"></div>
-        <div class="ball"></div>
-        <div class="ball"></div>
-        <div class="ball"></div>
-      </div>
+      <div style="color:var(--muted);font-size:0.8rem;text-align:center;letter-spacing:2px;opacity:0.6;margin-top:20px;">GRAVITY ENGINE v3.0</div>
     </div>
   </div>
 </div>
@@ -747,6 +764,12 @@ function closeAll(){ document.querySelectorAll('.overlay').forEach(o=>o.classLis
 window.addEventListener('keydown', e=>{ if(e.key==='Escape' && !document.getElementById('authGate').style.opacity) closeAll(); });
 
 // ── AUTH GATE ──
+function closeRegPopup(){
+  const p = document.getElementById('regAlertPopup');
+  p.style.opacity = '0';
+  setTimeout(()=> p.style.display='none', 600);
+}
+
 function switchAuthTab(t){
   document.getElementById('tabReg').classList.toggle('active', t==='reg');
   document.getElementById('tabLogin').classList.toggle('active', t==='login');
@@ -863,6 +886,10 @@ document.addEventListener('keydown',e=>{
   if(saved){
     try{
       const user = JSON.parse(saved);
+      // Hide popup if logged in
+      const p = document.getElementById('regAlertPopup');
+      if(p) p.style.display = 'none';
+      
       // Auto-unlock after brief star animation
       const n = user.name || user.cosmo || "O'quvchi";
       setTimeout(()=> unlockSite(n), 600);
