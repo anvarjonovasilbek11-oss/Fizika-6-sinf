@@ -249,13 +249,40 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 /* FADE-UP */
 @keyframes fadeD{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
 .fu{opacity:0;transform:translateY(30px);transition:opacity 0.65s ease,transform 0.65s ease;}
+/* ────── TOP AUTH NAV (Corner Buttons) ────── */
+.top-auth-nav{
+  position:fixed;top:24px;right:24px;z-index:900;
+  display:flex;gap:12px;opacity:1;transition:opacity 0.4s;
+}
+.top-auth-nav.hidden{opacity:0;pointer-events:none;}
+.btn-glass-auth{
+  padding:10px 22px;border-radius:12px;background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,0.1);
+  color:white;font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;
+  cursor:pointer;transition:all 0.3s;
+}
+.btn-glass-auth:hover{background:rgba(255,255,255,0.1);border-color:var(--t);transform:translateY(-2px);}
+
+/* ────── STICKY BANNER ────── */
+.sticky-auth-banner{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  z-index:800;background:rgba(15,23,42,0.85);backdrop-filter:blur(20px);
+  padding:16px 36px;border-radius:99px;border:1.5px solid rgba(168,85,247,0.4);
+  display:flex;align-items:center;gap:18px;color:white;
+  box-shadow:0 15px 40px rgba(0,0,0,0.5), 0 0 20px rgba(168,85,247,0.2);
+  animation:slideUpBanner 0.6s cubic-bezier(0.19,1,0.22,1) both;
+}
+.sticky-auth-banner.hidden{display:none;}
+@keyframes slideUpBanner{from{opacity:0;transform:translate(-50%, 50px);}to{opacity:1;transform:translate(-50%, 0);}}
+
 /* ────── AUTH PORTAL (Antigravity Extreme) ────── */
 #authGate{
-  position:fixed;inset:0;z-index:950;
-  background:rgba(2,6,23,0.06); 
-  display:flex;align-items:center;justify-content:center;padding:20px;
-  transition:opacity 0.8s cubic-bezier(0.4,0,0.2,1);overflow:hidden;
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(2,6,23,0.85);backdrop-filter:blur(25px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+  opacity:0;transition:opacity 0.5s ease;
 }
+#authGate.open{display:flex;opacity:1;}
 
 /* PORTAL ENGINE */
 .auth-portal{
@@ -295,7 +322,7 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 /* CENTER CARD - ANTIGRAVITY PROJECTOR */
 .auth-card{
   flex:2;background:transparent;max-width:650px;width:100%;
-  padding:20px;animation:float 7s ease-in-out infinite both;position:relative;
+  padding:20px;position:relative; /* Removed float animation as requested */
 }
 .auth-card h2{
   font-family:'Outfit',sans-serif;font-weight:700;font-size:2.8rem;line-height:1.2;
@@ -420,8 +447,21 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 <body>
 <canvas id="stars"></canvas>
 
+<!-- ══ TOP AUTH NAV ══ -->
+<div class="top-auth-nav" id="topAuthNav">
+  <button class="btn-glass-auth" onclick="switchAuthTab('login');openGate()">Kirish</button>
+  <button class="btn-glass-auth" style="background:var(--neon-b);border:none;" onclick="switchAuthTab('reg');openGate()">Ro'yxatdan O'tish</button>
+</div>
+
+<!-- ══ STICKY AUTH BANNER ══ -->
+<div class="sticky-auth-banner" id="stickyAuthBanner">
+  <div style="font-size:1.5rem">🔒</div>
+  <div style="font-weight:700;font-size:0.95rem;">Darslarni ko'rish va test topshirish uchun, iltimos ro'yxatdan o'ting!</div>
+  <button class="btn-neon primary" style="padding:8px 20px;font-size:0.8rem;" onclick="openGate()">Hozir Boshlash</button>
+</div>
+
 <!-- ══ AUTH GATE ══ -->
-<div id="authGate">
+<div id="authGate" onclick="closeGateOutside(event)">
   <div class="auth-portal">
     <!-- GHOST FORMULAS (Floating in depth) -->
     <div class="ghost-formula" style="top:10%;left:35%;animation-delay:-2s;">G = mg</div>
@@ -778,14 +818,27 @@ function switchAuthTab(t){
 }
 
 function openGate(){
-  document.getElementById('authGate').style.display='flex';
-  document.getElementById('authGate').style.opacity='1';
+  const gate = document.getElementById('authGate');
+  gate.style.display = 'flex';
+  setTimeout(()=> gate.classList.add('open'), 10);
+}
+
+function closeGateOutside(e){
+  if(e.target.id === 'authGate'){
+    const gate = document.getElementById('authGate');
+    gate.classList.remove('open');
+    setTimeout(()=> gate.style.display='none', 500);
+  }
 }
 
 function unlockSite(displayName){
   const gate = document.getElementById('authGate');
-  gate.style.opacity = '0';
-  setTimeout(()=>{ gate.style.display='none'; }, 700);
+  gate.classList.remove('open');
+  setTimeout(()=>{ gate.style.display='none'; }, 600);
+  
+  // Hide guest UI
+  document.getElementById('topAuthNav').classList.add('hidden');
+  document.getElementById('stickyAuthBanner').classList.add('hidden');
   
   // Show side nav links
   document.getElementById('sbNavLinks').classList.add('visible');
@@ -886,14 +939,18 @@ document.addEventListener('keydown',e=>{
   if(saved){
     try{
       const user = JSON.parse(saved);
-      // Hide popup if logged in
+      // Hide guest UI
       const p = document.getElementById('regAlertPopup');
       if(p) p.style.display = 'none';
+      document.getElementById('topAuthNav').classList.add('hidden');
+      document.getElementById('stickyAuthBanner').classList.add('hidden');
       
-      // Auto-unlock after brief star animation
       const n = user.name || user.cosmo || "O'quvchi";
-      setTimeout(()=> unlockSite(n), 600);
+      unlockSite(n);
     }catch(e){ localStorage.removeItem('fizikalab_user'); }
+  } else {
+    // Initial guest state: ensure gate is hidden
+    document.getElementById('authGate').style.display='none';
   }
 })();
 
@@ -922,6 +979,9 @@ function renderQ(){
     </div>`;
 }
 function answer(i){
+  const saved = localStorage.getItem('fizikalab_user');
+  if(!saved){ openGate(); return; }
+  
   if(answered)return; answered=true;
   const q=Qs[cur];
   document.querySelectorAll('.quiz-opt').forEach((o,idx)=>{
@@ -957,6 +1017,9 @@ const TD={
   issiqlik:{title:'🔥 Issiqlik va Temperatura',body:`<p><strong>Temperatura</strong> — jismning issiqligi. Selsiy (°C).</p><ul><li>🤲 Issiqlik o'tkazuvchanlik</li><li>🌡 Konveksiya</li><li>☀️ Nurlanish (Quyosh)</li></ul><p>💡 0°C — muz | 100°C — qaynash</p>`},
 };
 function openTopic(id){
+  const saved = localStorage.getItem('fizikalab_user');
+  if(!saved){ openGate(); return; }
+  
   const d=TD[id];
   document.getElementById('topicBody').innerHTML=`<h2 style="font-family:'Exo 2',sans-serif;font-size:1.7rem;margin-bottom:16px">${d.title}</h2>${d.body}`;
   document.getElementById('topicOverlay').classList.add('open');
