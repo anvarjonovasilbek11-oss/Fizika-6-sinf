@@ -371,7 +371,7 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 
     <!-- LOGIN PANEL -->
     <div class="auth-panel" id="panelLogin">
-      <div class="inp-wrap"><label>FOYDALANUVCHI NOMI (ADMIN) YOKI ISM</label><input type="text" id="gLoginUser" placeholder="Ismingiz"></div>
+      <div class="inp-wrap"><label>LOGIN (ADMIN) YOKI ISM</label><input type="text" id="gLoginUser" placeholder="Asilbek yoki Ism"></div>
       <div class="inp-wrap"><label>PAROL</label><input type="password" id="gLoginPass" placeholder="••••••••"></div>
       <div class="modal-err" id="gLoginErr"></div>
       <div class="modal-ok" id="gLoginOk"></div>
@@ -664,8 +664,8 @@ function doGateLogin(){
   const ok  = document.getElementById('gLoginOk');
   err.classList.remove('show'); ok.classList.remove('show');
   // Admin login → redirect
-  if(u === 'FizikaLab_Admin' && p === 'MasterPhysics2026!'){
-    ok.textContent = '✅ Xush kelibsiz, Admin! Yo\'naltirilmoqda...';
+  if(u === 'Asilbek' && p === 'Asilbe5785'){
+    ok.textContent = '✅ Xush kelibsiz, Asilbek! Yo\'naltirilmoqda...';
     ok.classList.add('show');
     localStorage.setItem('fizikalab_admin','true');
     setTimeout(()=>{ window.location.href='admin.html'; }, 1400);
