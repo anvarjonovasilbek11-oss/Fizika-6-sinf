@@ -563,8 +563,95 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 </aside>
 
 <main class="content-wrapper">
+  <!-- HERO PORTAL -->
+  <section class="hero" id="homeHero">
+    <div class="hero-portal">
+      <!-- GHOST FORMULAS -->
+      <div class="ghost-formula" style="top:10%;left:35%;animation-delay:-2s;">G = mg</div>
+      <div class="ghost-formula" style="top:60%;left:25%;animation-delay:-5s;">ρ = m/V</div>
+      <div class="ghost-formula" style="top:30%;right:30%;animation-delay:-1s;">F = ma</div>
+
+      <!-- LEFT: Side Navigation -->
+      <div class="hero-side-l">
+        <h3>Antigravitatsiya</h3>
+        <div class="auth-nav-item">🔬 Mavzular <span class="lock">🔒</span></div>
+        <div class="auth-nav-item" style="color:white;background:rgba(99,102,241,0.08);">🧪 Tajribalar <span class="lock">🔒</span></div>
+        <div class="auth-nav-item">📝 Testlar <span class="lock">🔒</span></div>
+        <div class="auth-nav-item">📚 Kutubxona <span class="lock">🔒</span></div>
+        <div class="auth-nav-item">🏅 Yutuqlar <span class="lock">🔒</span></div>
+      </div>
+
+      <!-- CENTER: Main Auth Card -->
+      <div id="heroAuthCard">
+        <div style="text-align:center;margin-bottom:40px">
+          <div style="font-size:3.5rem;margin-bottom:15px;filter:drop-shadow(0 0 15px var(--t));">✨</div>
+          <h2 style="text-transform:none;">
+            Fizika <span>dunyosiga</span> <br>xush kelibsiz!
+          </h2>
+          <p style="color:var(--muted);font-size:0.95rem;max-width:380px;margin:10px auto 0;letter-spacing:0.5px;">Platformadan to'liq foydalanish uchun tizimga kiring 🌌</p>
+        </div>
+
+        <!-- TABS -->
+        <div class="auth-tabs" style="display:flex;gap:12px;margin-bottom:30px;justify-content:center;">
+          <button class="auth-tab active" id="tabReg" onclick="switchAuthTab('reg')">Ro'yxatdan O'tish</button>
+          <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">Kirish</button>
+        </div>
+
+        <!-- REGISTER PANEL -->
+        <div class="auth-panel active" id="panelReg">
+          <div class="inp-wrap"><label>To'liq ismingiz</label><input type="text" id="gRegName" placeholder="Asilbek"></div>
+          <div class="inp-wrap"><label>Sinf</label>
+            <select id="gRegClass">
+              <option value="">Sinfingizni tanlang...</option>
+              <option>6-A</option><option>6-B</option><option>6-C</option><option>6-D</option><option>Boshqa</option>
+            </select>
+          </div>
+          <div class="inp-wrap"><label>Parol</label><input type="password" id="gRegPass" placeholder="••••••••"></div>
+          
+          <div class="hologram-dots">
+            <div class="h-dot" style="background:#ef4444;color:#ef4444;"></div>
+            <div class="h-dot" style="background:#fbbf24;color:#fbbf24;"></div>
+            <div class="h-dot" style="background:#10b981;color:#10b981;"></div>
+            <div class="h-dot" style="background:#22d3ee;color:#22d3ee;"></div>
+          </div>
+
+          <div class="modal-err" id="gRegErr"></div>
+          <div class="modal-ok" id="gRegOk"></div>
+          <button class="btn-m primary" style="width:100%;padding:20px;justify-content:center;font-size:1.2rem;letter-spacing:1px;" onclick="doGateRegister()">🚀 Boshlash</button>
+        </div>
+
+        <!-- LOGIN PANEL (hidden) -->
+        <div class="auth-panel" id="panelLogin">
+          <div class="inp-wrap"><label>Login yoki Ism</label><input type="text" id="gLoginUser" placeholder="Asilbek"></div>
+          <div class="inp-wrap"><label>Parol</label><input type="password" id="gLoginPass" placeholder="••••••••"></div>
+          <div class="modal-err" id="gLoginErr"></div>
+          <div class="modal-ok" id="gLoginOk"></div>
+          <button class="btn-m primary" style="width:100%;padding:20px;justify-content:center;" onclick="doGateLogin()">🔑 Kirish</button>
         </div>
       </div>
+
+      <!-- UNLOCKED HERO UI -->
+      <div class="hero-unlocked" id="heroUnlocked">
+        <div style="font-size:5rem;margin-bottom:20px;">🧑‍🚀</div>
+        <h1>Fizika Dunyosi <span>Ochiq!</span></h1>
+        <p class="welcome-msg">Xush kelibsiz, <span id="welcomeName" style="color:var(--t)">O'quvchi</span>! Laboratoriya va darslar sizni kutmoqda. Barcha bo'limlar endi to'liq ochiq.</p>
+        <div style="display:flex;gap:20px;justify-content:center;">
+          <a href="#mavzular" class="btn-m primary">📚 Darslarni Boshlash</a>
+          <a href="#tajribalar" class="btn-m secondary">🔬 Laboratoriyaga O'tish</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: COSMIC ENGINE -->
+      <div class="hero-side-r">
+        <div class="atom">
+          <div class="nucleus"></div>
+          <div class="orbit"></div>
+          <div class="orbit"></div>
+          <div class="orbit"></div>
+        </div>
+        <div style="color:var(--muted);font-size:0.8rem;text-align:center;letter-spacing:2px;opacity:0.6;margin-top:20px;">GRAVITY ENGINE v3.0</div>
+      </div>
+
     </div>
   </section>
 
