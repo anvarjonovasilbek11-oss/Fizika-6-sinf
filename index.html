@@ -53,8 +53,7 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .sb-logo span{background:linear-gradient(135deg,var(--t),var(--mainv));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 
 .sb-nav{display:flex;flex-direction:column;gap:8px;flex:1;}
-.sb-nav-group{display:none;} /* Hidden initially */
-.sb-nav-group.visible{display:flex;flex-direction:column;gap:8px;}
+.sb-nav-group{display:flex;flex-direction:column;gap:8px;}
 
 .sb-link{
   display:flex;align-items:center;gap:14px;padding:12px 16px;
@@ -65,63 +64,24 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .sb-link.active{background:rgba(99,102,241,0.15);color:var(--mainv);}
 
 .sb-footer{margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.05);}
-.auth-btn-sb{
-  width:100%;padding:14px;border-radius:14px;border:none;
-  background:var(--neon-b);color:white;
-  font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;
-  transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px;
-  box-shadow:0 0 15px rgba(0,242,254,0.3);
-}
-.auth-btn-sb:hover{box-shadow:0 0 25px rgba(0,242,254,0.6);transform:translateY(-3px);}
 
 /* ────── CONTENT WRAPPER ────── */
 .content-wrapper{
   flex:1;margin-left:var(--sb-w);position:relative;z-index:1;
 }
 
-/* ────── HERO (Refined) ────── */
+/* ────── HERO ────── */
 .hero{
-  min-height:100vh;display:grid;grid-template-columns:1.2fr 1fr;align-items:center;
-  padding:60px 80px;gap:60px;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:60px 80px;gap:60px;position:relative;overflow:hidden;
 }
-.hero-content{text-align:left;}
-.hero-badge{
-  display:inline-flex;padding:8px 18px;border-radius:99px;
-  background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.25);
-  color:var(--mainv);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.7rem;
-  letter-spacing:1.5px;text-transform:uppercase;margin-bottom:30px;
+.hero-portal{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;max-width:1580px;gap:60px;position:relative;
 }
-.hero h1{
-  font-family:'Outfit',sans-serif;font-size:clamp(3rem,5vw,5.5rem);font-weight:900;
-  line-height:1;margin-bottom:28px;color:white;
-}
-
-/* Text Masking Animation */
-.text-mask{
-  background:linear-gradient(90deg,var(--t),var(--p),var(--o),var(--t));
-  background-size:300% auto;
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  animation:shine 5s linear infinite;
-}
-@keyframes shine{0%{background-position:0% 50%;}100%{background-position:300% 50%;}}
-
-.hero p{font-size:1.15rem;color:var(--muted);max-width:540px;line-height:1.7;margin-bottom:44px;}
-.hero-btns{display:flex;gap:18px;}
 
 /* Animations */
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);}}
-
-/* Glass Code Window */
-.code-window{
-  background:rgba(15,23,42,0.6);backdrop-filter:blur(15px);
-  border:1px solid rgba(255,255,255,0.1);border-radius:24px;
-  padding:30px;box-shadow:0 30px 60px rgba(0,0,0,0.5);
-  font-family:'Consolas',monospace;font-size:0.9rem;position:relative;
-  animation:float 4s ease-in-out infinite both;
-}
-.code-dots{display:flex;gap:6px;margin-bottom:20px;}
-.code-dots div{width:10px;height:10px;border-radius:50%;}
-.kw{color:var(--p);} .fn{color:var(--t);} .str{color:var(--o);} .comment{color:var(--muted);font-style:italic;}
 
 /* BUTTONS */
 .btn-m{
@@ -139,7 +99,7 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 /* NEON BUTTONS */
 .btn-neon{
-  padding:14px 34px;border-radius:14px;font-family:'Exo 2',sans-serif;
+  padding:14px 34px;border-radius:14px;font-family:'Outfit',sans-serif;
   font-size:1rem;font-weight:700;text-decoration:none;display:inline-block;
   cursor:pointer;border:none;transition:all 0.25s;
 }
@@ -148,17 +108,15 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
   box-shadow:0 0 20px rgba(79,209,197,0.45),0 0 60px rgba(79,209,197,0.15);
 }
 .btn-neon.primary:hover{box-shadow:0 0 30px rgba(79,209,197,0.7),0 0 80px rgba(79,209,197,0.25);transform:translateY(-4px);}
-.btn-neon.secondary{
-  background:transparent;color:var(--p);
-  border:2px solid var(--p);
-  box-shadow:0 0 15px rgba(183,148,244,0.25);
-}
-.btn-neon.secondary:hover{background:rgba(183,148,244,0.1);box-shadow:0 0 25px rgba(183,148,244,0.5);transform:translateY(-4px);}
 
-/* FLOATING ATOMS */
-.atom{position:absolute;pointer-events:none;font-size:3rem;opacity:0.1;
-  animation:flt var(--fd,6s) var(--fdi,0s) ease-in-out infinite alternate;}
-@keyframes flt{from{transform:translateY(0) rotate(0);}to{transform:translateY(-30px) rotate(18deg);}}
+/* GHOST FORMULAS */
+.ghost-formula{
+  position:absolute;font-family:'Nunito',sans-serif;font-size:1.8rem;font-weight:800;
+  color:rgba(168,85,247,0.12);pointer-events:none;z-index:-1;
+  filter:blur(1px);animation:formulaFloat 8s infinite alternate ease-in-out;
+  text-shadow:0 0 20px rgba(168,85,247,0.3);
+}
+@keyframes formulaFloat{0%{transform:translate(0,0) rotate(0);}100%{transform:translate(30px,-40px) rotate(8deg);}}
 
 /* STATS */
 .stats{position:relative;z-index:1;display:flex;justify-content:center;flex-wrap:wrap;gap:22px;padding:0 20px 80px;}
@@ -168,13 +126,13 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
   padding:22px 36px;text-align:center;transition:transform 0.2s;
 }
 .stat-card:hover{transform:translateY(-5px);}
-.stat-num{font-family:'Exo 2',sans-serif;font-size:2.2rem;font-weight:800;}
+.stat-num{font-family:'Outfit',sans-serif;font-size:2.2rem;font-weight:800;}
 .stat-lbl{color:var(--muted);font-size:0.83rem;margin-top:4px;font-weight:600;}
 
 /* SECTION */
 .sec{position:relative;z-index:1;padding:90px 20px;}
 .sec-hdr{text-align:center;margin-bottom:50px;}
-.sec-hdr h2{font-family:'Exo 2',sans-serif;font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;margin-bottom:12px;}
+.sec-hdr h2{font-family:'Outfit',sans-serif;font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;margin-bottom:12px;}
 .sec-hdr p{color:var(--muted);max-width:520px;margin:0 auto;}
 .pill{display:inline-block;background:rgba(79,209,197,0.1);color:var(--t);border:1px solid rgba(79,209,197,0.3);padding:4px 16px;border-radius:99px;font-size:0.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;}
 
@@ -190,7 +148,7 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .topic-card:hover{transform:translateY(-8px);border-color:rgba(79,209,197,0.3);box-shadow:0 16px 48px rgba(0,0,0,0.45);}
 .topic-icon{font-size:2.6rem;margin-bottom:14px;}
 .topic-tag{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 12px;border-radius:99px;margin-bottom:10px;}
-.topic-card h3{font-family:'Exo 2',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;}
+.topic-card h3{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:8px;}
 .topic-card p{color:var(--muted);font-size:0.87rem;line-height:1.6;}
 .topic-meta{display:flex;gap:12px;margin-top:16px;font-size:0.77rem;color:var(--muted);font-weight:600;}
 
@@ -202,14 +160,14 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
   transition:transform 0.25s,box-shadow 0.25s;
 }
 .formula-card:hover{transform:translateY(-6px);box-shadow:0 10px 36px rgba(0,0,0,0.4);}
-.f-expr{font-family:'Exo 2',sans-serif;font-size:2.1rem;font-weight:800;margin-bottom:12px;padding:14px;border-radius:12px;background:rgba(255,255,255,0.04);}
+.f-expr{font-family:'Outfit',sans-serif;font-size:2.1rem;font-weight:800;margin-bottom:12px;padding:14px;border-radius:12px;background:rgba(255,255,255,0.04);}
 .f-name{font-weight:700;margin-bottom:6px;}
 .f-desc{color:var(--muted);font-size:0.82rem;line-height:1.5;}
 
 /* QUIZ */
 .quiz-wrap{max-width:700px;margin:0 auto;}
 .quiz-card{background:var(--card);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:36px;}
-.quiz-q{font-family:'Exo 2',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:22px;line-height:1.45;}
+.quiz-q{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:22px;line-height:1.45;}
 .quiz-opts{display:flex;flex-direction:column;gap:10px;}
 .quiz-opt{
   padding:13px 18px;background:rgba(255,255,255,0.03);
@@ -228,7 +186,7 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .quiz-ptxt{color:var(--muted);font-size:0.84rem;font-weight:600;}
 .pbar-wrap{height:6px;background:rgba(255,255,255,0.06);border-radius:99px;margin-bottom:26px;}
 .pbar{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--t),var(--p));transition:width 0.5s;}
-.quiz-score{text-align:center;padding:30px;font-family:'Exo 2',sans-serif;}
+.quiz-score{text-align:center;padding:30px;font-family:'Outfit',sans-serif;}
 .score-big{font-size:3.2rem;font-weight:800;color:var(--t);}
 
 /* EXPERIMENTS */
@@ -236,7 +194,7 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .exp-card{background:var(--card);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:26px;transition:transform 0.25s;}
 .exp-card:hover{transform:translateY(-6px);}
 .exp-icon{font-size:2.2rem;margin-bottom:14px;}
-.exp-card h3{font-family:'Exo 2',sans-serif;font-size:1.1rem;margin-bottom:8px;}
+.exp-card h3{font-family:'Outfit',sans-serif;font-size:1.1rem;margin-bottom:8px;}
 .exp-card p{color:var(--muted);font-size:0.86rem;line-height:1.6;margin-bottom:14px;}
 .exp-steps{list-style:none;counter-reset:s;}
 .exp-steps li{counter-increment:s;display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-size:0.83rem;color:var(--muted);}
@@ -244,125 +202,13 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 /* FOOTER */
 footer{position:relative;z-index:1;text-align:center;padding:44px 20px;border-top:1px solid rgba(255,255,255,0.06);color:var(--muted);font-size:0.85rem;}
-footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;color:var(--t);margin-bottom:8px;}
+footer .flogo{font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:800;color:var(--t);margin-bottom:8px;}
 
 /* FADE-UP */
 @keyframes fadeD{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
 .fu{opacity:0;transform:translateY(30px);transition:opacity 0.65s ease,transform 0.65s ease;}
-/* ────── TOP AUTH NAV (Corner Buttons) ────── */
-.top-auth-nav{
-  position:fixed;top:24px;right:24px;z-index:900;
-  display:flex;gap:12px;opacity:1;transition:opacity 0.4s;
-}
-.top-auth-nav.hidden{opacity:0;pointer-events:none;}
-.btn-glass-auth{
-  padding:10px 22px;border-radius:12px;background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,0.1);
-  color:white;font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;
-  cursor:pointer;transition:all 0.3s;
-}
-.btn-glass-auth:hover{background:rgba(255,255,255,0.1);border-color:var(--t);transform:translateY(-2px);}
 
-/* ────── STICKY BANNER ────── */
-.sticky-auth-banner{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-  z-index:800;background:rgba(15,23,42,0.85);backdrop-filter:blur(20px);
-  padding:16px 36px;border-radius:99px;border:1.5px solid rgba(168,85,247,0.4);
-  display:flex;align-items:center;gap:18px;color:white;
-  box-shadow:0 15px 40px rgba(0,0,0,0.5), 0 0 20px rgba(168,85,247,0.2);
-  animation:slideUpBanner 0.6s cubic-bezier(0.19,1,0.22,1) both;
-}
-.sticky-auth-banner.hidden{display:none;}
-@keyframes slideUpBanner{from{opacity:0;transform:translate(-50%, 50px);}to{opacity:1;transform:translate(-50%, 0);}}
-
-/* ────── HERO PORTAL (Antigravity Extreme) ────── */
-.hero{
-  min-height:100vh;padding:120px 40px 60px;display:flex;align-items:center;justify-content:center;
-  position:relative;z-index:5;overflow:hidden;
-}
-.hero-portal{
-  display:flex;align-items:center;justify-content:space-between;
-  width:100%;max-width:1580px;gap:60px;position:relative;
-}
-
-/* LEFT: ANTIGRAVITY GALLERY (Integrated) */
-.hero-side-l{
-  flex:1;max-width:320px;display:flex;flex-direction:column;gap:15px;
-  background:rgba(15,23,42,0.45);backdrop-filter:blur(25px);
-  padding:34px;border-radius:32px;
-  border:1.5px solid rgba(139,92,246,0.25);
-  box-shadow:0 0 50px rgba(0,0,0,0.5), inset 0 0 15px rgba(139,92,246,0.1);
-}
-.hero-side-l h3{font-family:'Outfit',sans-serif;font-size:1.45rem;font-weight:900;color:var(--text);margin-bottom:28px;}
-.auth-nav-item{
-  padding:16px 22px;border-radius:16px;background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:0.95rem;
-  display:flex;justify-content:space-between;align-items:center;
-  transition:all 0.4s;cursor:not-allowed;
-}
-.auth-nav-item:hover{background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);color:white;transform:scale(1.03);}
-.auth-nav-item .lock{font-size:0.85rem;opacity:0.5;}
-
-/* GHOST FORMULAS (Relative to Hero) */
-.ghost-formula{
-  position:absolute;font-family:'Exo 2',sans-serif;font-size:1.8rem;font-weight:800;
-  color:rgba(168,85,247,0.12);pointer-events:none;z-index:-1;
-  filter:blur(1px);animation:formulaFloat 8s infinite alternate ease-in-out;
-  text-shadow:0 0 20px rgba(168,85,247,0.3);
-}
-@keyframes formulaFloat{0%{transform:translate(0,0) rotate(0);}100%{transform:translate(30px,-40px) rotate(8deg);}}
-
-/* CENTER CARD - ANTIGRAVITY PROJECTOR */
-#heroAuthCard{
-  flex:2;background:transparent;max-width:650px;width:100%;
-  padding:20px;position:relative; transition:all 0.6s cubic-bezier(0.19,1,0.22,1);
-}
-#heroAuthCard.hidden{display:none;opacity:0;transform:scale(0.9);}
-#heroAuthCard h2{
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:3.2rem;line-height:1.2;
-  margin-bottom:12px;text-align:center;
-}
-#heroAuthCard h2 span{background:linear-gradient(135deg,var(--t),var(--mainv));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-
-/* UNLOCKED HERO (After Signup) */
-.hero-unlocked{display:none;text-align:center;animation:fadeUp 0.8s both;}
-.hero-unlocked h1{font-size:4rem;font-weight:900;margin-bottom:20px;}
-.hero-unlocked .welcome-msg{color:var(--muted);font-size:1.2rem;max-width:600px;margin:0 auto 40px;}
-
-/* PROJECTION INPUTS */
-.inp-wrap{margin-bottom:32px;position:relative;}
-.inp-wrap label{
-  display:block;font-size:0.8rem;font-weight:900;color:var(--t);margin-bottom:12px;
-  letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 0 10px rgba(34,211,238,0.4);
-}
-.inp-wrap input,.inp-wrap select{
-  width:100%;padding:18px 24px;background:rgba(255,255,255,0.03);
-  border:1.5px solid rgba(255,255,255,0.08);border-radius:18px;
-  color:white;font-family:'Nunito',sans-serif;font-size:1.1rem;
-  outline:none;transition:all 0.4s;
-  box-shadow:inset 0 0 20px rgba(0,0,0,0.3);
-  caret-color:var(--t);
-}
-.inp-wrap input:focus{
-  background:rgba(255,255,255,0.05);border-color:var(--t);
-  box-shadow:0 10px 40px -15px rgba(34,211,238,0.4), inset 0 0 10px rgba(34,211,238,0.1);
-  transform:translateY(-2px);
-}
-
-/* RIGHT: COSMIC ENGINE / ATOM (Integrated) */
-.hero-side-r{
-  flex:1;max-width:360px;display:flex;flex-direction:column;align-items:center;gap:40px;
-}
-
-/* HOLOGRAPHIC GAUGE */
-.hologram-dots{display:flex;gap:12px;margin:25px 0;justify-content:center;position:relative;}
-.hologram-dots::after{content:'';position:absolute;bottom:-10px;width:200px;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);}
-.h-dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 15px currentColor;opacity:0.8;animation:pulseH 2s infinite alternate;}
-@keyframes pulseH{from{opacity:0.4;transform:scale(0.85);} to{opacity:1;transform:scale(1.1);}}
-
-/* ⚛ ATOM ANIMATION (Integrated) */
-.atom{position:relative;width:120px;height:120px;perspective:500px;}
+/* ⚛ ATOM ANIMATION */
 .nucleus{position:absolute;inset:44px;background:var(--t);border-radius:50%;box-shadow:0 0 20px var(--t);}
 .orbit{
   position:absolute;inset:0;border:1.5px solid rgba(255,255,255,0.1);
@@ -376,147 +222,12 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 .orbit:nth-child(3){transform:rotateY(60deg);animation-duration:5s;}
 @keyframes rotate{100%{transform:rotate(360deg);}}
 
-#authGate{display:none !important;} /* Disabled modal */
-
-/* PORTAL ENGINE */
-.auth-portal{
-  display:flex;align-items:center;justify-content:space-between;
-  width:100%;max-width:1500px;gap:60px;position:relative;
-}
-
-/* LEFT: ANTIGRAVITY GALLERY SIDEBAR */
-.auth-side-l{
-  flex:1;max-width:320px;display:flex;flex-direction:column;gap:15px;
-  background:rgba(15,23,42,0.45);backdrop-filter:blur(25px);
-  padding:34px;border-radius:32px;
-  border:1.5px solid rgba(139,92,246,0.25);
-  box-shadow:0 0 50px rgba(0,0,0,0.5), inset 0 0 15px rgba(139,92,246,0.1);
-  animation:sideSlideL 1.2s cubic-bezier(0.19,1,0.22,1) both;
-}
-.auth-side-l h3{font-family:'Outfit',sans-serif;font-size:1.45rem;font-weight:900;color:var(--text);margin-bottom:28px;}
-.auth-nav-item{
-  padding:16px 22px;border-radius:16px;background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:0.95rem;
-  display:flex;justify-content:space-between;align-items:center;
-  transition:all 0.4s;cursor:not-allowed;
-}
-.auth-nav-item:hover{background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);color:white;transform:scale(1.03);}
-.auth-nav-item .lock{font-size:0.85rem;opacity:0.5;}
-
-/* GHOST FORMULAS */
-.ghost-formula{
-  position:absolute;font-family:'Exo 2',sans-serif;font-size:1.8rem;font-weight:800;
-  color:rgba(168,85,247,0.12);pointer-events:none;z-index:-1;
-  filter:blur(1px);animation:formulaFloat 8s infinite alternate ease-in-out;
-  text-shadow:0 0 20px rgba(168,85,247,0.3);
-}
-@keyframes formulaFloat{0%{transform:translate(0,0) rotate(0);}100%{transform:translate(30px,-40px) rotate(8deg);}}
-
-/* CENTER CARD - ANTIGRAVITY PROJECTOR */
-.auth-card{
-  flex:2;background:transparent;max-width:650px;width:100%;
-  padding:20px;position:relative; /* Removed float animation as requested */
-}
-.auth-card h2{
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:2.8rem;line-height:1.2;
-  margin-bottom:12px;text-align:center;
-}
-.auth-card h2 span{background:linear-gradient(135deg,var(--t),var(--mainv));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-
-/* PROJECTION INPUTS */
-.inp-wrap{margin-bottom:32px;position:relative;}
-.inp-wrap label{
-  display:block;font-size:0.8rem;font-weight:900;color:var(--t);margin-bottom:12px;
-  letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 0 10px rgba(34,211,238,0.4);
-}
-.inp-wrap input,.inp-wrap select{
-  width:100%;padding:18px 24px;background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);border-radius:18px;
-  color:white;font-family:'Nunito',sans-serif;font-size:1.1rem;
-  outline:none;transition:all 0.4s;
-  box-shadow:inset 0 0 20px rgba(0,0,0,0.3);
-  caret-color:var(--t);
-}
-.inp-wrap input:focus{
-  background:rgba(255,255,255,0.05);border-color:var(--t);
-  box-shadow:0 10px 40px -15px rgba(34,211,238,0.4), inset 0 0 10px rgba(34,211,238,0.1);
-  transform:translateY(-2px);
-}
-
-/* HOLOGRAPHIC GAUGE */
-.hologram-dots{display:flex;gap:12px;margin:25px 0;justify-content:center;position:relative;}
-.hologram-dots::after{content:'';position:absolute;bottom:-10px;width:200px;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);}
-.h-dot{width:14px;height:14px;border-radius:50%;box-shadow:0 0 15px currentColor;opacity:0.8;animation:pulseH 2s infinite alternate;}
-@keyframes pulseH{from{opacity:0.4;transform:scale(0.85);} to{opacity:1;transform:scale(1.1);}}
-
-@keyframes sideSlideL{from{opacity:0;transform:translateX(-80px);}to{opacity:1;transform:translateX(0);}}
-
-/* ────── MODALS ────── */
-.overlay{
-  display:none;position:fixed;inset:0;z-index:999;
-  background:rgba(0,0,0,0.92);backdrop-filter:blur(25px);
-  align-items:center;justify-content:center;padding:20px;
-}
-.overlay.open{display:flex;}
-
-/* LOGIN MODAL */
-.modal-glass{
-  background:rgba(11,16,32,0.75);backdrop-filter:blur(30px) saturate(180%);
-  border:1px solid rgba(79,209,197,0.22);border-radius:28px;
-  max-width:480px;width:100%;padding:44px;position:relative;
-  animation:popIn 0.35s cubic-bezier(0.175,0.885,0.32,1.275) both;
-}
-@keyframes popIn{from{opacity:0;transform:scale(0.88);}to{opacity:1;transform:scale(1);}}
-.modal-close-x{
-  position:absolute;top:16px;right:16px;
-  background:rgba(255,255,255,0.07);border:none;color:var(--muted);
-  width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1rem;
-  transition:background 0.2s;
-}
-.modal-close-x:hover{background:rgba(252,129,129,0.2);color:var(--r);}
-.modal-glass h2{font-family:'Exo 2',sans-serif;font-size:1.85rem;font-weight:800;margin-bottom:6px;text-align:center;}
-.modal-glass h2 span{background:linear-gradient(135deg,var(--t),var(--p));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.modal-glass .sub{color:var(--muted);text-align:center;margin-bottom:28px;font-size:0.92rem;}
-.inp-wrap{margin-bottom:20px;}
-.inp-wrap label{display:block;font-size:0.75rem;font-weight:800;color:var(--t);margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;}
-.inp-wrap input,.inp-wrap select{
-  width:100%;padding:14px 4px;
-  background:transparent;
-  border:none;border-bottom:1.5px solid rgba(255,255,255,0.15);
-  color:var(--text);font-family:'Nunito',sans-serif;font-size:1rem;
-  outline:none;transition:all 0.3s;
-}
-.inp-wrap input:focus,.inp-wrap select:focus{
-  border-bottom-color:var(--t);
-  box-shadow:0 8px 10px -10px rgba(34,211,238,0.5);
-}
-.inp-wrap select option{background:#0b1020;color:var(--text);}
-.modal-err{color:var(--r);font-size:0.85rem;font-weight:700;margin-bottom:12px;display:none;}
-.modal-err.show{display:block;}
-.modal-ok{color:var(--g);font-size:0.85rem;font-weight:700;margin-bottom:12px;display:none;}
-.modal-ok.show{display:block;}
-
-/* TOPIC MODAL */
-.topic-modal{max-width:600px;}
-.topic-modal p{color:var(--muted);line-height:1.75;margin-bottom:12px;font-size:0.93rem;}
-.topic-modal ul{color:var(--muted);padding-left:20px;font-size:0.9rem;line-height:1.85;margin-bottom:12px;}
-.topic-modal strong{color:var(--text);}
-.formula-highlight{
-  text-align:center;font-family:'Exo 2',sans-serif;font-size:1.9rem;font-weight:800;
-  padding:14px;border-radius:12px;margin:14px 0;
-}
-
 /* RESPONSIVE */
 @media(max-width:991px){
   .sidebar{transform:translateX(-100%);}
-  .auth-side-l, .auth-side-r {display:none;}
-  .auth-portal{justify-content:center;}
   .sidebar.open{transform:translateX(0);}
   .content-wrapper{margin-left:0;}
-  .hero{grid-template-columns:1fr;padding:100px 20px 40px;text-align:center;}
-  .hero-content{text-align:center;}
-  .hero-btns{justify-content:center;}
+  .hero{padding:100px 20px 40px;text-align:center;}
 }
 @media(max-width:640px){
   .modal-glass{padding:26px;}
@@ -526,132 +237,54 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 <body>
 <canvas id="stars"></canvas>
 
-<!-- ══ TOP AUTH NAV ══ -->
-<div class="top-auth-nav" id="topAuthNav">
-  <button class="btn-glass-auth" onclick="switchAuthTab('login');openGate()">Kirish</button>
-  <button class="btn-glass-auth" style="background:var(--neon-b);border:none;" onclick="switchAuthTab('reg');openGate()">Ro'yxatdan O'tish</button>
-</div>
-
-<!-- ══ STICKY AUTH BANNER ══ -->
-<div class="sticky-auth-banner" id="stickyAuthBanner">
-  <div style="font-size:1.5rem">🔒</div>
-  <div style="font-weight:700;font-size:0.95rem;">Darslarni ko'rish va test topshirish uchun, iltimos ro'yxatdan o'ting!</div>
-  <button class="btn-neon primary" style="padding:8px 20px;font-size:0.8rem;" onclick="openGate()">Hozir Boshlash</button>
-</div>
-
-<!-- ══ AUTH GATE (Disabled/Deleted in favor of Unified Hero) ══ -->
-
 <!-- ══ SIDEBAR ══ -->
 <aside class="sidebar">
   <div class="sb-logo">⚛ <span>FizikaLab</span></div>
   
   <div class="sb-nav">
     <a href="#" class="sb-link active">🏠 Bosh sahifa</a>
-    
-    <!-- Hidden links (visible after registration) -->
-    <div class="sb-nav-group" id="sbNavLinks">
-      <a href="#mavzular" class="sb-link">📚 Mavzular</a>
-      <a href="#formulalar" class="sb-link">⚡ Formulalar</a>
-      <a href="#quiz" class="sb-link">🧠 Quiz</a>
-      <a href="#tajribalar" class="sb-link">🔬 Tajribalar</a>
-    </div>
+    <a href="#mavzular" class="sb-link">📚 Mavzular</a>
+    <a href="#formulalar" class="sb-link">⚡ Formulalar</a>
+    <a href="#quiz" class="sb-link">🧠 Quiz</a>
+    <a href="#tajribalar" class="sb-link">🔬 Tajribalar</a>
   </div>
 
-  <div class="sb-footer" id="sbFooterArea">
-    <button class="auth-btn-sb" onclick="openGate()">🔑 Kirish</button>
+  <div class="sb-footer">
+    <div style="font-size:0.8rem;color:var(--muted);text-align:center;">⚛ FizikaLab v3.0</div>
   </div>
 </aside>
 
 <main class="content-wrapper">
-  <!-- HERO PORTAL -->
+  <!-- HERO -->
   <section class="hero" id="homeHero">
-    <div class="hero-portal">
+    <div class="hero-portal" style="justify-content: center; text-align: center;">
       <!-- GHOST FORMULAS -->
-      <div class="ghost-formula" style="top:10%;left:35%;animation-delay:-2s;">G = mg</div>
-      <div class="ghost-formula" style="top:60%;left:25%;animation-delay:-5s;">ρ = m/V</div>
-      <div class="ghost-formula" style="top:30%;right:30%;animation-delay:-1s;">F = ma</div>
+      <div class="ghost-formula" style="top:10%;left:15%;animation-delay:-2s;">G = mg</div>
+      <div class="ghost-formula" style="top:60%;left:10%;animation-delay:-5s;">ρ = m/V</div>
+      <div class="ghost-formula" style="top:30%;right:15%;animation-delay:-1s;">F = ma</div>
 
-      <!-- LEFT: Side Navigation -->
-      <div class="hero-side-l">
-        <h3>Antigravitatsiya</h3>
-        <div class="auth-nav-item">🔬 Mavzular <span class="lock">🔒</span></div>
-        <div class="auth-nav-item" style="color:white;background:rgba(99,102,241,0.08);">🧪 Tajribalar <span class="lock">🔒</span></div>
-        <div class="auth-nav-item">📝 Testlar <span class="lock">🔒</span></div>
-        <div class="auth-nav-item">📚 Kutubxona <span class="lock">🔒</span></div>
-        <div class="auth-nav-item">🏅 Yutuqlar <span class="lock">🔒</span></div>
-      </div>
-
-      <!-- CENTER: Main Auth Card -->
-      <div id="heroAuthCard">
-        <div style="text-align:center;margin-bottom:40px">
-          <div style="font-size:3.5rem;margin-bottom:15px;filter:drop-shadow(0 0 15px var(--t));">✨</div>
-          <h2 style="text-transform:none;">
-            Fizika <span>dunyosiga</span> <br>xush kelibsiz!
-          </h2>
-          <p style="color:var(--muted);font-size:0.95rem;max-width:380px;margin:10px auto 0;letter-spacing:0.5px;">Platformadan to'liq foydalanish uchun tizimga kiring 🌌</p>
-        </div>
-
-        <!-- TABS -->
-        <div class="auth-tabs" style="display:flex;gap:12px;margin-bottom:30px;justify-content:center;">
-          <button class="auth-tab active" id="tabReg" onclick="switchAuthTab('reg')">Ro'yxatdan O'tish</button>
-          <button class="auth-tab" id="tabLogin" onclick="switchAuthTab('login')">Kirish</button>
-        </div>
-
-        <!-- REGISTER PANEL -->
-        <div class="auth-panel active" id="panelReg">
-          <div class="inp-wrap"><label>To'liq ismingiz</label><input type="text" id="gRegName" placeholder="Asilbek"></div>
-          <div class="inp-wrap"><label>Sinf</label>
-            <select id="gRegClass">
-              <option value="">Sinfingizni tanlang...</option>
-              <option>6-A</option><option>6-B</option><option>6-C</option><option>6-D</option><option>Boshqa</option>
-            </select>
-          </div>
-          <div class="inp-wrap"><label>Parol</label><input type="password" id="gRegPass" placeholder="••••••••"></div>
-          
-          <div class="hologram-dots">
-            <div class="h-dot" style="background:#ef4444;color:#ef4444;"></div>
-            <div class="h-dot" style="background:#fbbf24;color:#fbbf24;"></div>
-            <div class="h-dot" style="background:#10b981;color:#10b981;"></div>
-            <div class="h-dot" style="background:#22d3ee;color:#22d3ee;"></div>
-          </div>
-
-          <div class="modal-err" id="gRegErr"></div>
-          <div class="modal-ok" id="gRegOk"></div>
-          <button class="btn-m primary" style="width:100%;padding:20px;justify-content:center;font-size:1.2rem;letter-spacing:1px;" onclick="doGateRegister()">🚀 Boshlash</button>
-        </div>
-
-        <!-- LOGIN PANEL (hidden) -->
-        <div class="auth-panel" id="panelLogin">
-          <div class="inp-wrap"><label>Login yoki Ism</label><input type="text" id="gLoginUser" placeholder="Asilbek"></div>
-          <div class="inp-wrap"><label>Parol</label><input type="password" id="gLoginPass" placeholder="••••••••"></div>
-          <div class="modal-err" id="gLoginErr"></div>
-          <div class="modal-ok" id="gLoginOk"></div>
-          <button class="btn-m primary" style="width:100%;padding:20px;justify-content:center;" onclick="doGateLogin()">🔑 Kirish</button>
-        </div>
-      </div>
-
-      <!-- UNLOCKED HERO UI -->
-      <div class="hero-unlocked" id="heroUnlocked">
+      <div style="max-width: 800px; z-index: 10;">
         <div style="font-size:5rem;margin-bottom:20px;">🧑‍🚀</div>
-        <h1>Fizika Dunyosi <span>Ochiq!</span></h1>
-        <p class="welcome-msg">Xush kelibsiz, <span id="welcomeName" style="color:var(--t)">O'quvchi</span>! Laboratoriya va darslar sizni kutmoqda. Barcha bo'limlar endi to'liq ochiq.</p>
-        <div style="display:flex;gap:20px;justify-content:center;">
+        <h1 style="font-size: clamp(3rem, 6vw, 5rem); line-height: 1.1;">Fizika Dunyosi <span>Ochiq!</span></h1>
+        <p style="color:var(--muted); font-size:1.2rem; max-width:600px; margin:20px auto 40px;">
+          Xush kelibsiz! Laboratoriya va darslar barcha uchun ochiq. 🌌 <br>
+          Fizika olamini biz bilan o'rganing.
+        </p>
+        <div style="display:flex;gap:20px;justify-content:center; flex-wrap: wrap;">
           <a href="#mavzular" class="btn-m primary">📚 Darslarni Boshlash</a>
           <a href="#tajribalar" class="btn-m secondary">🔬 Laboratoriyaga O'tish</a>
         </div>
       </div>
 
-      <!-- RIGHT: COSMIC ENGINE -->
-      <div class="hero-side-r">
-        <div class="atom">
+      <!-- COSMIC ENGINE -->
+      <div class="hero-side-r" style="position: absolute; right: 5%; opacity: 0.4; pointer-events: none;">
+        <div class="atom" style="position:relative;width:120px;height:120px;perspective:500px;">
           <div class="nucleus"></div>
           <div class="orbit"></div>
           <div class="orbit"></div>
           <div class="orbit"></div>
         </div>
-        <div style="color:var(--muted);font-size:0.8rem;text-align:center;letter-spacing:2px;opacity:0.6;margin-top:20px;">GRAVITY ENGINE v3.0</div>
       </div>
-
     </div>
   </section>
 
@@ -701,7 +334,7 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 </section>
 
 <!-- FORMULALAR -->
-<section class="sec" id="formulalar" style="background:var(--bg2);">
+<section class="sec" id="formulalar">
   <div class="sec-hdr fu"><div class="pill">Formulalar</div><h2>Asosiy Formulalar</h2><p>6-sinfda o'rganiladigan eng muhim formulalar</p></div>
   <div class="formulas-grid">
     <div class="formula-card fu"><div class="f-expr" style="color:var(--t)">v = s/t</div><div class="f-name">Tezlik formulasi</div><div class="f-desc">v — tezlik (m/s), s — yo'l (m), t — vaqt (s)</div></div>
@@ -723,7 +356,7 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 </section>
 
 <!-- TAJRIBALAR -->
-<section class="sec" id="tajribalar" style="background:var(--bg2);">
+<section class="sec" id="tajribalar">
   <div class="sec-hdr fu"><div class="pill">Tajriba</div><h2>Uy Tajribalari 🔬</h2><p>Uyda bajara oladigan fizika tajribalari</p></div>
   <div class="exp-grid">
     <div class="exp-card fu">
@@ -753,8 +386,8 @@ footer .flogo{font-family:'Exo 2',sans-serif;font-size:1.3rem;font-weight:800;co
 
 <!-- TOPIC MODAL -->
 <div class="overlay" id="topicOverlay" onclick="closeTopicOutside(event)">
-  <div class="modal-glass topic-modal" id="topicContent">
-    <button class="modal-close-x" onclick="closeOverlay('topicOverlay')">✕</button>
+  <div class="modal-glass" style="background:rgba(11,16,32,0.75);backdrop-filter:blur(30px);border:1px solid var(--t);border-radius:28px;max-width:600px;width:100%;padding:44px;position:relative;">
+    <button style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.5rem;" onclick="closeOverlay('topicOverlay')">✕</button>
     <div id="topicBody"></div>
   </div>
 </div>
@@ -771,7 +404,6 @@ function initStars(){
   H = canvas.height = innerHeight;
   stars = []; comets = [];
   const colors = ['#fff', '#22d3ee', '#8b5cf6', '#fbbf24', '#fff'];
-  // 800+ Stars in 3 parallax layers
   for(let i=0;i<850;i++){
     const layer = Math.random() > 0.8 ? 3 : (Math.random() > 0.4 ? 2 : 1);
     stars.push({
@@ -803,23 +435,17 @@ document.addEventListener('mousemove', e=>{
 
 function drawStars(){
   ctx.clearRect(0,0,W,H);
-  
-  // Draw Stars
   stars.forEach(s=>{
     s.a += s.da;
     if(s.a>1||s.a<0) s.da*=-1;
-    // Parallax movement
     s.ox += (mx * s.speed * 40 - s.ox)*0.05;
     s.oy += (my * s.speed * 40 - s.oy)*0.05;
-    
     ctx.beginPath();
     ctx.arc(s.x + s.ox, s.y + s.oy, s.r, 0, Math.PI*2);
     ctx.fillStyle = s.c;
     ctx.globalAlpha = Math.abs(s.a) * (s.layer/3);
     ctx.fill();
   });
-  
-  // Draw Comets
   spawnComet();
   comets.forEach((c, idx)=>{
     c.x += c.vx; c.y += c.vy;
@@ -834,7 +460,6 @@ function drawStars(){
       ctx.stroke();
     }
   });
-
   ctx.globalAlpha = 1;
   requestAnimationFrame(drawStars);
 }
@@ -848,148 +473,7 @@ document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
 // ── MODALS ──
 function closeOverlay(id){ document.getElementById(id).classList.remove('open'); }
 function closeAll(){ document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open')); }
-window.addEventListener('keydown', e=>{ if(e.key==='Escape' && !document.getElementById('authGate').style.opacity) closeAll(); });
-
-// ── AUTH & SESSION ──
-function switchAuthTab(t){
-  document.getElementById('tabReg').classList.toggle('active', t==='reg');
-  document.getElementById('tabLogin').classList.toggle('active', t==='login');
-  document.getElementById('panelReg').classList.toggle('active', t==='reg');
-  document.getElementById('panelLogin').classList.toggle('active', t==='login');
-}
-
-function openGate(){
-  // Now scrolls to Hero form instead of opening a modal
-  document.getElementById('homeHero').scrollIntoView({ behavior: 'smooth' });
-}
-
-function unlockSite(displayName){
-  // Hide the registration card in the Hero
-  const card = document.getElementById('heroAuthCard');
-  if(card) {
-    card.classList.add('hidden');
-    setTimeout(()=> card.style.display='none', 600);
-  }
-  
-  // Show the Welcome UI in the Hero
-  const welcome = document.getElementById('heroUnlocked');
-  if(welcome) {
-    welcome.style.display = 'block';
-    document.getElementById('welcomeName').textContent = displayName;
-  }
-
-  // Hide guest UI
-  document.getElementById('topAuthNav').classList.add('hidden');
-  document.getElementById('stickyAuthBanner').classList.add('hidden');
-  
-  // Show side nav links
-  document.getElementById('sbNavLinks').classList.add('visible');
-  
-  // Update sidebar footer
-  document.getElementById('sbFooterArea').innerHTML = `
-    <div style="display:flex;align-items:center;gap:12px;padding:10px;">
-      <div style="width:40px;height:40px;background:var(--mainv);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;">${displayName[0]}</div>
-      <div style="flex:1">
-        <div style="font-size:0.85rem;font-weight:700;color:white;">${displayName}</div>
-        <div style="font-size:0.7rem;color:var(--muted);cursor:pointer;" onclick="logoutSite()">Chiqish</div>
-      </div>
-    </div>
-  `;
-}
-
-function logoutSite(){
-  localStorage.removeItem('fizikalab_user');
-  location.reload();
-}
-
-// Gate Register
-function doGateRegister(){
-  const name  = document.getElementById('gRegName').value.trim();
-  const cls   = document.getElementById('gRegClass').value;
-  const pass  = document.getElementById('gRegPass').value;
-  const err   = document.getElementById('gRegErr');
-  const ok    = document.getElementById('gRegOk');
-  err.classList.remove('show'); ok.classList.remove('show');
-  if(!name||!cls||!pass){
-    err.textContent = '❌ Iltimos, barcha maydonlarni to\'ldiring!';
-    err.classList.add('show'); return;
-  }
-  if(pass.length < 4){
-    err.textContent = '❌ Parol kamida 4 ta belgi bo\'lishi kerak!';
-    err.classList.add('show'); return;
-  }
-  const user = {name, cls, date: new Date().toLocaleDateString()};
-  localStorage.setItem('fizikalab_user', JSON.stringify(user));
-  
-  // Save to all members for Admin view
-  let members = JSON.parse(localStorage.getItem('fizikalab_members') || '[]');
-  members.unshift(user); // Add to start
-  if(members.length > 50) members.pop(); // Keep only last 50
-  localStorage.setItem('fizikalab_members', JSON.stringify(members));
-
-  ok.textContent = `🎉 Tabriklaymiz, ${name}! Xush kelibsiz!`;
-  ok.classList.add('show');
-  setTimeout(()=> unlockSite(name), 1400);
-}
-
-// Gate Login
-function doGateLogin(){
-  const u   = document.getElementById('gLoginUser').value.trim();
-  const p   = document.getElementById('gLoginPass').value;
-  const err = document.getElementById('gLoginErr');
-  const ok  = document.getElementById('gLoginOk');
-  err.classList.remove('show'); ok.classList.remove('show');
-  // Admin login → redirect
-  if(u === 'Asilbek' && p === 'Asilbe5785'){
-    ok.textContent = '✅ Xush kelibsiz, Asilbek! Yo\'naltirilmoqda...';
-    ok.classList.add('show');
-    localStorage.setItem('fizikalab_admin','true');
-    setTimeout(()=>{ window.location.href='admin.html'; }, 1400);
-    return;
-  }
-  // Student login check
-  const saved = localStorage.getItem('fizikalab_user');
-  if(saved){
-    try{
-      const user = JSON.parse(saved);
-      if(p && p.length >= 4){
-        ok.textContent = `✅ Xush kelibsiz, ${user.name}!`;
-        ok.classList.add('show');
-        setTimeout(()=> unlockSite(user.name), 1200);
-        return;
-      }
-    }catch(e){}
-  }
-  err.textContent = '❌ Login yoki parol xato!';
-  err.classList.add('show');
-  ['gLoginUser','gLoginPass'].forEach(id=>{
-    const el = document.getElementById(id);
-    el.style.borderColor='var(--r)';
-    setTimeout(()=>el.style.borderColor='',1500);
-  });
-}
-document.addEventListener('keydown',e=>{
-  if(e.key==='Enter'){
-    if(document.getElementById('panelLogin').classList.contains('active')) doGateLogin();
-    else doGateRegister();
-  }
-});
-
-// ── CHECK EXISTING SESSION ──
-(function(){
-  const saved = localStorage.getItem('fizikalab_user');
-  if(saved){
-    try{
-      const user = JSON.parse(saved);
-      // Hide guest UI
-      document.getElementById('topAuthNav').classList.add('hidden');
-      document.getElementById('stickyAuthBanner').classList.add('hidden');
-      
-      const n = user.name || user.cosmo || "O'quvchi";
-      unlockSite(n);
-    }catch(e){ localStorage.removeItem('fizikalab_user'); }
-  }
-})();
+window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeAll(); });
 
 // ── QUIZ ──
 const Qs=[
@@ -1005,8 +489,10 @@ let cur=0,score=0,answered=false;
 function renderQ(){
   answered=false;
   const q=Qs[cur];
-  document.getElementById('qBar').style.width=((cur/Qs.length)*100)+'%';
-  document.getElementById('qCard').innerHTML=`
+  const bar = document.getElementById('qBar');
+  if(bar) bar.style.width=((cur/Qs.length)*100)+'%';
+  const card = document.getElementById('qCard');
+  if(card) card.innerHTML=`
     <div class="quiz-q">${cur+1}. ${q.q}</div>
     <div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answer(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}</div>
     <div class="quiz-fb" id="qfb"></div>
@@ -1016,9 +502,6 @@ function renderQ(){
     </div>`;
 }
 function answer(i){
-  const saved = localStorage.getItem('fizikalab_user');
-  if(!saved){ openGate(); return; }
-  
   if(answered)return; answered=true;
   const q=Qs[cur];
   document.querySelectorAll('.quiz-opt').forEach((o,idx)=>{
@@ -1032,11 +515,13 @@ function answer(i){
 function nextQ(){
   if(!answered)return; cur++;
   if(cur>=Qs.length){
-    document.getElementById('qBar').style.width='100%';
+    const bar = document.getElementById('qBar');
+    if(bar) bar.style.width='100%';
     const pct=Math.round((score/Qs.length)*100);
     const em=pct>=80?'🏆':pct>=50?'👍':'📚';
     const msg=pct>=80?"Ajoyib! Siz fizikachi bo'lasiz!":pct>=50?"Yaxshi! Yana o'qing.":"Qo'rqmang, mashq qiling!";
-    document.getElementById('qCard').innerHTML=`<div class="quiz-score"><div style="font-size:3rem;margin-bottom:10px">${em}</div><div class="score-big">${score}/${Qs.length}</div><div style="font-size:1.1rem;margin:12px 0;font-weight:700">${pct}% to'g'ri</div><p style="color:var(--muted);margin-bottom:24px">${msg}</p><button class="btn-neon primary" onclick="restartQ()">🔄 Qayta boshlash</button></div>`;
+    const card = document.getElementById('qCard');
+    if(card) card.innerHTML=`<div class="quiz-score"><div style="font-size:3rem;margin-bottom:10px">${em}</div><div class="score-big">${score}/${Qs.length}</div><div style="font-size:1.1rem;margin:12px 0;font-weight:700">${pct}% to'g'ri</div><p style="color:var(--muted);margin-bottom:24px">${msg}</p><button class="btn-neon primary" onclick="restartQ()">🔄 Qayta boshlash</button></div>`;
     return;
   }
   renderQ();
@@ -1054,14 +539,11 @@ const TD={
   issiqlik:{title:'🔥 Issiqlik va Temperatura',body:`<p><strong>Temperatura</strong> — jismning issiqligi. Selsiy (°C).</p><ul><li>🤲 Issiqlik o'tkazuvchanlik</li><li>🌡 Konveksiya</li><li>☀️ Nurlanish (Quyosh)</li></ul><p>💡 0°C — muz | 100°C — qaynash</p>`},
 };
 function openTopic(id){
-  const saved = localStorage.getItem('fizikalab_user');
-  if(!saved){ openGate(); return; }
-  
   const d=TD[id];
-  document.getElementById('topicBody').innerHTML=`<h2 style="font-family:'Exo 2',sans-serif;font-size:1.7rem;margin-bottom:16px">${d.title}</h2>${d.body}`;
+  document.getElementById('topicBody').innerHTML=`<h2 style="font-family:'Outfit',sans-serif;font-size:1.7rem;margin-bottom:16px">${d.title}</h2>${d.body}`;
   document.getElementById('topicOverlay').classList.add('open');
 }
- function closeTopicOutside(e){ if(e.target===document.getElementById('topicOverlay')) closeOverlay('topicOverlay'); }
+function closeTopicOutside(e){ if(e.target===document.getElementById('topicOverlay')) closeOverlay('topicOverlay'); }
 </script>
 </body>
 </html>
